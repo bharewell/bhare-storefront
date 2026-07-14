@@ -885,6 +885,18 @@
   /* category tiles: slow zoom-in on hover */
   .bh-grow .bh-tileimg2, .bh-drop .bh-tileimg2, .bh-spin .bh-tileimg2, .bh-shimmer .bh-tileimg2 { transform: scale(1); animation: none !important; transition: transform 1.4s cubic-bezier(.2,.7,.2,1); }
   .bh-grow:hover .bh-tileimg2, .bh-drop:hover .bh-tileimg2, .bh-spin:hover .bh-tileimg2, .bh-shimmer:hover .bh-tileimg2 { transform: scale(1.12); animation: none !important; }
+  /* Product detail extended fields */
+  .bh-eyebrow { font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:#9C7A4D; margin:0 0 14px; font-weight:700; }
+  .bh-product-headline { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:46px; line-height:1.08; margin:0 0 12px; color:#1B241C; }
+  .bh-product-subtitle { font-family:'Jost',sans-serif; font-size:14px; letter-spacing:.02em; color:#54604F; margin:0 0 22px; }
+  .bh-badges { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+  .bh-badge { display:inline-block; font-family:'Jost',sans-serif; font-size:10px; letter-spacing:.12em; text-transform:uppercase; font-weight:700; color:#014421; border:1px solid rgba(1,68,33,.35); border-radius:999px; padding:5px 12px; }
+  .bh-body { margin:0 0 32px; }
+  .bh-body p { font-family:'Jost',sans-serif; font-size:15.5px; line-height:1.78; color:#3F4A3C; margin:0 0 18px; }
+  .bh-body p:last-child { margin-bottom:0; }
+  .bh-studied { margin:0 0 32px; padding:0; list-style:none; }
+  .bh-studied li { font-family:'Jost',sans-serif; font-size:14.5px; line-height:1.7; color:#3F4A3C; padding:7px 0 7px 20px; border-bottom:1px solid rgba(1,68,33,.1); position:relative; }
+  .bh-studied li::before { content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:6px; height:6px; border-radius:50%; background:#014421; opacity:.55; }
   /* FAQ accordion */
   .bh-faq details { border-bottom:1px solid rgba(1,68,33,.16); }
   .bh-faq details:first-of-type { border-top:1px solid rgba(1,68,33,.16); }
@@ -1176,11 +1188,20 @@
         <div class="bh-proddetail" style="display:grid; grid-template-columns:1fr 1fr; gap:64px; margin-top:30px; align-items:start;">
           <div class="bh-vshot" onclick="{{ openLightbox }}" style="box-shadow:0 40px 80px -50px rgba(1,68,33,.4); border-radius:4px; cursor:zoom-in;"><div class="bh-vinner"><img class="vial" src="assets/vial-blank.webp" alt="{{ product.name }} research peptide vial"><div class="bh-vlabel"><div class="bhl-brand">bhare</div><div class="bhl-tag">Curated for Purity</div><div class="bhl-div"></div><div class="bhl-name">{{ product.name }}</div><div class="bhl-dose">{{ product.curDose }}</div><div class="bhl-ruo">For Research Use Only</div><div class="bhl-web">bharewell.com</div></div></div></div>
           <div>
-            <div style="font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:#9C7A4D; margin-bottom:14px; font-weight:700;">{{ product.catTag }}</div>
-            <h1 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:58px; line-height:.98; margin:0 0 10px; color:#1B241C;">{{ product.name }}</h1>
-            <div style="font-family:'Jost',sans-serif; font-size:14px; letter-spacing:.02em; color:#54604F; margin-bottom:22px;">{{ product.chemName }}</div>
+            <p class="bh-eyebrow">{{ product.sub }}</p>
+            <sc-if value="{{ product.hasHeadline }}" hint-placeholder-val="{{ false }}">
+              <h1 class="bh-product-headline">{{ product.headline }}</h1>
+              <p class="bh-product-subtitle">{{ product.subtitle }}</p>
+            </sc-if>
+            <sc-if value="{{ product.hasNoHeadline }}" hint-placeholder-val="{{ true }}">
+              <h1 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:58px; line-height:.98; margin:0 0 10px; color:#1B241C;">{{ product.name }}</h1>
+              <div style="font-family:'Jost',sans-serif; font-size:14px; letter-spacing:.02em; color:#54604F; margin-bottom:22px;">{{ product.chemName }}</div>
+            </sc-if>
+            <sc-if value="{{ product.hasBadges }}" hint-placeholder-val="{{ false }}">
+              <div class="bh-badges"><sc-for list="{{ product.badgeItems }}" as="b" hint-placeholder-count="2"><span class="bh-badge">{{ b.text }}</span></sc-for></div>
+            </sc-if>
 
-            <div style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#7C8472; font-weight:700; margin-bottom:11px;">Dosage</div>
+            <div style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#7C8472; font-weight:700; margin-bottom:11px;">{{ product.amountLabelText }}</div>
             <div style="display:flex; gap:10px; margin-bottom:26px; max-width:340px;">
               <sc-for list="{{ product.sizes }}" as="s" hint-placeholder-count="2"><button onclick="{{ s.select }}" style="{{ s.tabStyle }}">{{ s.label }}</button></sc-for>
             </div>
@@ -1220,6 +1241,30 @@
           </div>
         </div>
       </section>
+
+      <!-- Extended product editorial content -->
+      <sc-if value="{{ product.hasBody }}" hint-placeholder-val="{{ false }}">
+        <section style="max-width:1180px; margin:0 auto; padding:0 36px;">
+          <div style="border-top:1px solid rgba(1,68,33,.12); padding-top:40px; max-width:680px;">
+            <div class="bh-body"><sc-for list="{{ product.bodyItems }}" as="bi" hint-placeholder-count="2"><p>{{ bi.text }}</p></sc-for></div>
+          </div>
+        </section>
+      </sc-if>
+      <sc-if value="{{ product.hasStudied }}" hint-placeholder-val="{{ false }}">
+        <section style="max-width:1180px; margin:0 auto; padding:0 36px 32px;">
+          <div style="max-width:680px;">
+            <div style="font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:#9C7A4D; font-weight:700; margin-bottom:14px;">Studied For</div>
+            <ul class="bh-studied"><sc-for list="{{ product.studiedItems }}" as="si" hint-placeholder-count="2"><li>{{ si.text }}</li></sc-for></ul>
+          </div>
+        </section>
+      </sc-if>
+      <sc-if value="{{ product.hasFaq }}" hint-placeholder-val="{{ false }}">
+        <section style="max-width:1180px; margin:0 auto; padding:0 36px 20px;">
+          <div style="max-width:720px;">
+            <div class="bh-faq"><sc-for list="{{ product.faqItems }}" as="fi" hint-placeholder-count="2"><details><summary style="display:flex; justify-content:space-between; align-items:center; gap:20px; padding:22px 4px;"><span class="bh-faq-q" style="font-family:'Cormorant Garamond',serif; font-weight:400; font-size:22px; line-height:1.2; color:#1B241C; transition:color .2s ease;">{{ fi.q }}</span><span class="bh-faq-ico" style="flex:none; font-family:'Jost',sans-serif; font-weight:300; font-size:29px; line-height:1; color:#014421;">+</span></summary><p class="bh-faq-a" style="font-family:'Jost',sans-serif; font-weight:300; font-size:15.5px; line-height:1.78; color:#54604F; margin:0; padding:0 4px 26px;">{{ fi.a }}</p></details></sc-for></div>
+          </div>
+        </section>
+      </sc-if>
 
       <!-- Certificate of Analysis -->
       <section style="max-width:1180px; margin:0 auto; padding:0 36px 20px;">
@@ -1817,11 +1862,18 @@ class Component extends DCLogic {
 
   get catalog() {
     return [
-      { id:'bpc157', name:'BPC-157', sub:'Regenerative', group:'recovery', tagline:'Body Protection Compound',
+      { id:'bpc157', name:'BPC-157', sub:'Repair Compound', group:'recovery', tagline:'Body Protection Compound',
         sizes:[{label:'5 MG',price:49.99},{label:'10 MG',price:84.99}],
         blurb:'Studied for tissue repair and gut healing.',
         desc:'BPC-157 is a synthetic pentadecapeptide derived from a protein found in gastric juice, widely studied in research models for its role in tissue repair, angiogenesis, and gut-lining integrity. Each vial is lyophilized for stability and ships with a batch-specific certificate of analysis.',
-        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Sequence',value:'GEPPPGKPADDAGLV'}] },
+        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Sequence',value:'GEPPPGKPADDAGLV'}],
+        subtitle:'Body Protection Compound',
+        headline:'The repair compound studied before anyone was thinking about female biology.',
+        badges:['Best Seller','Womens Research Focus'],
+        body:['Most connective tissue and gut-repair studies were conducted in male animal models. The response profiles and mechanism interactions documented in that research reflect male hormonal environments — not the changing estrogen environment most female researchers are investigating.','BPC-157 works through the VEGF/nitric oxide system and growth hormone receptors — pathways that operate independently of sex hormone levels. One of the cleaner tools for studying tissue repair in research models where the hormonal environment has changed.','The research question bhare is built around: what do these mechanisms look like when you study them in female biology?'],
+        studied:['Connective tissue repair in varied hormonal environments','Gut-lining integrity research','Angiogenesis via VEGF/nitric oxide pathway'],
+        amountLabel:'Research Amount',
+        faq:[{q:'Why is BPC-157 relevant to female biology research?',a:'Most tissue repair research used male models. BPC-157 VEGF/nitric oxide mechanism operates independently of sex hormone status — making it useful for studying repair in post-estrogen environments.'},{q:'What differentiates bhare testing?',a:'Every batch HPLC-verified (≥99%) + LC-MS identity confirmed at ISO/IEC 17025 accredited lab. COA ships with every vial. bhare tests per batch, not per production run.'},{q:'Is this for human use?',a:'No. Research and laboratory use only, per 21 CFR 201.128.'},{q:'How should BPC-157 be stored?',a:'Lyophilized: -20°C. Once reconstituted: 2-8°C, use within documented stability window.'}] },
       { id:'tb500', name:'TB-500', sub:'Regenerative', group:'recovery', tagline:'Thymosin Beta-4 Fragment',
         sizes:[{label:'5 MG',price:54.99},{label:'10 MG',price:94.99}],
         blurb:'Studied for recovery and muscle repair.',
@@ -2345,6 +2397,12 @@ class Component extends DCLogic {
     ];
     const _sa=this.state.subMode!==false;
     return { ...p, catTag:(_tagMap[p.group]||'RESEARCH COMPOUND'), chemName:(p.tagline), profile, slotId:'bh-prod-'+p.id, area:({recovery:'Repair',longevity:'Aging',cognition:'Brain',vitality:'Hormones'})[p.group]||'', sizes, curNum:cur.price.toFixed(2), fromNum:Math.min.apply(null, p.sizes.map(function(s){return s.price;})).toFixed(2), subNum:(cur.price*0.85).toFixed(2), subSaveFmt:(cur.price*0.15).toFixed(2), curPrice:cur.price, curSize:cur.label, curDose:cur.label+' / 2 ML', proof:(function(){var _pop={bpc157:1,tb500:1,ghkcu:1,melanotanii:1,cjc1295:1,ipamorelin:1,pt141:1,semax:1};if(!_pop[p.id])return '';var seed=0;for(var i=0;i<p.id.length;i++){seed=(seed*31+p.id.charCodeAt(i))>>>0;}var day=Math.floor(Date.now()/86400000);var h=(seed^(day*2654435761))>>>0;h=((h^(h>>>13))*1274126177)>>>0;h=(h^(h>>>16))>>>0;var n=32+(h%56);return 'Ordered '+n+' times in the past week';})(),
+      hasHeadline:!!(p.headline), hasNoHeadline:!(p.headline), hasBadges:!!(p.badges&&p.badges.length), hasBody:!!(p.body&&p.body.length), hasStudied:!!(p.studied&&p.studied.length), hasFaq:!!(p.faq&&p.faq.length),
+      amountLabelText:(p.amountLabel||'Research Amount'),
+      badgeItems:(p.badges||[]).map(function(b){return {text:b};}),
+      bodyItems:(p.body||[]).map(function(b){return {text:b};}),
+      studiedItems:(p.studied||[]).map(function(s){return {text:s};}),
+      faqItems:(p.faq||[]).map(function(f){return {q:f.q,a:f.a};}),
       open:()=>this.openProduct(p.id),
       add:(e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); this.flyToCart(e); var s=this; setTimeout(function(){ s.addToCart(p.id, cur.label, cur.price, 1); }, 600); } };
   }
