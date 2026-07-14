@@ -1667,20 +1667,16 @@
         <div style="display:grid; grid-template-columns:1.3fr .9fr; gap:54px; align-items:start;">
           <div>
             <div style="font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:#014421; font-weight:700; margin-bottom:18px;">Contact &amp; Shipping</div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;"><input placeholder="First name" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><input placeholder="Last name" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"></div>
-            <input placeholder="Institution / Lab name (optional)" style="width:100%; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff; margin-bottom:16px;">
-            <input placeholder="Email address" style="width:100%; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff; margin-bottom:16px;">
-            <input placeholder="Street address" style="width:100%; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff; margin-bottom:16px;">
-            <div style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:16px; margin-bottom:30px;"><input placeholder="City" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><input placeholder="State" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><input placeholder="ZIP" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"></div>
-            <div style="font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:#014421; font-weight:700; margin-bottom:18px;">Payment</div>
-            <div style="display:flex; gap:8px; align-items:center; margin-bottom:14px; filter:grayscale(1); opacity:.62;">
-              <div style="height:24px; width:38px; border:1px solid #C9C3B4; border-radius:3px; background:#fff; display:flex; align-items:center; justify-content:center; font-family:'Jost',sans-serif; font-size:9px; font-weight:800; font-style:italic; letter-spacing:.02em; color:#1A1F71;">VISA</div>
-              <div style="height:24px; width:38px; border:1px solid #C9C3B4; border-radius:3px; background:#fff; display:flex; align-items:center; justify-content:center;"><svg width="30" height="20" viewBox="0 0 30 20"><circle cx="12" cy="10" r="6.5" fill="#EB001B"></circle><circle cx="18" cy="10" r="6.5" fill="#F79E1B" fill-opacity=".85"></circle></svg></div>
-              <div style="height:24px; width:38px; border:1px solid #C9C3B4; border-radius:3px; background:#006FCF; display:flex; align-items:center; justify-content:center; font-family:'Jost',sans-serif; font-size:7px; font-weight:800; letter-spacing:.02em; color:#fff; line-height:1; text-align:center;">AMEX</div>
-              <div style="height:24px; width:38px; border:1px solid #C9C3B4; border-radius:3px; background:#000; display:flex; align-items:center; justify-content:center; gap:2px; font-family:'Jost',sans-serif; font-size:9px; font-weight:600; color:#fff;"><svg width="9" height="11" viewBox="0 0 14 17" fill="#fff"><path d="M11.2 9c0-1.6 1.3-2.4 1.4-2.5-0.8-1.1-2-1.3-2.4-1.3-1-0.1-2 0.6-2.5 0.6s-1.3-0.6-2.2-0.6c-1.1 0-2.2 0.7-2.8 1.7-1.2 2.1-0.3 5.2 0.9 6.9 0.6 0.8 1.3 1.8 2.2 1.7 0.9 0 1.2-0.6 2.3-0.6s1.4 0.6 2.3 0.5c0.9 0 1.5-0.8 2.1-1.7 0.7-1 0.9-1.9 0.9-2-0.1 0-1.8-0.7-1.8-2.6zM9.6 4.1c0.5-0.6 0.8-1.4 0.7-2.2-0.7 0-1.5 0.5-2 1-0.4 0.5-0.8 1.3-0.7 2.1 0.8 0 1.5-0.4 2-0.9z"></path></svg>Pay</div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;"><input id="co-first" placeholder="First name" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><input id="co-last" placeholder="Last name" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"></div>
+            <input id="co-inst" placeholder="Institution / Lab name (optional)" style="width:100%; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff; margin-bottom:16px;">
+            <input id="co-email" placeholder="Email address" style="width:100%; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff; margin-bottom:16px;">
+            <input id="co-addr" placeholder="Street address" style="width:100%; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff; margin-bottom:16px;">
+            <div style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:16px; margin-bottom:30px;"><input id="co-city" placeholder="City" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><input id="co-state" placeholder="State" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><input id="co-zip" placeholder="ZIP" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"></div>
+            <div style="font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:#014421; font-weight:700; margin-bottom:14px;">Payment</div>
+            <div style="border:1px solid rgba(1,68,33,.18); border-radius:4px; padding:18px 20px; background:#F9F7F1; margin-bottom:8px;">
+              <div style="font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:#9C7A4D; font-weight:700; margin-bottom:8px;">Invoice on Submission</div>
+              <p style="font-size:13.5px; line-height:1.65; color:#54604F; margin:0;">After placing your order, you will receive a secure payment link by email within 1 business day. We accept Venmo, PayPal, and ACH bank transfer.</p>
             </div>
-            <input placeholder="Card number" style="width:100%; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff; margin-bottom:16px;">
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;"><input placeholder="MM / YY" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><input placeholder="CVC" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"></div>
           </div>
           <div style="background:#FCFAF4; border:1px solid rgba(1,68,33,.14); border-radius:4px; padding:28px;">
             <div style="font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:#014421; font-weight:700; margin-bottom:20px;">Order Summary</div>
@@ -1694,8 +1690,8 @@
             <sc-if value="{{ hasDiscount }}" hint-placeholder-val="{{ false }}"><div style="display:flex; justify-content:space-between; padding:4px 0; font-size:14px; color:#3F6B43;"><span>{{ discountLabel }}</span><span style="white-space:nowrap;">{{ discountAmtFmt }}</span></div></sc-if>
             <div style="display:flex; justify-content:space-between; padding:4px 0; font-size:14px; color:#54604F;"><span>Shipping</span><span>{{ shippingFmt }}</span></div>
             <div style="display:flex; justify-content:space-between; padding:14px 0 0; margin-top:10px; border-top:1px solid rgba(1,68,33,.16); font-size:18px; color:#014421; font-weight:700;"><span>Total</span><span>{{ totalFmt }}</span></div>
-            <div style="border:1px solid rgba(194,168,120,.45); border-radius:4px; padding:16px 18px; background:#fff; margin-top:22px;"><div style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#9C7A4D; font-weight:700; margin-bottom:7px;">Research Use Only</div><p style="font-size:12px; line-height:1.6; color:#54604F; margin:0;">By placing this order I confirm I am a qualified researcher acquiring these materials for laboratory research only. These products are not drugs or supplements and are not for human or veterinary consumption.</p></div><div style="display:flex; align-items:center; justify-content:center; gap:6px; margin-top:24px; margin-bottom:-8px; font-family:'Jost',sans-serif; font-size:11px; color:#5A6356;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#5A6356" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="1.5"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg><span>Secure checkout</span></div><button class="bh-btn" onclick="{{ placeOrder }}" style="width:100%; cursor:pointer; background:#014421; color:#F5F1E8; border:none; padding:17px; font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; font-weight:600; border-radius:2px; margin-top:24px;">Place Order</button>
-            <p style="font-size:12px; color:#9AA38E; text-align:center; margin:14px 0 0;">Simulated checkout · no payment processed</p>
+            <div style="border:1px solid rgba(194,168,120,.45); border-radius:4px; padding:16px 18px; background:#fff; margin-top:22px;"><div style="font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#9C7A4D; font-weight:700; margin-bottom:7px;">Research Use Only</div><p style="font-size:12px; line-height:1.6; color:#54604F; margin:0;">By placing this order I confirm I am a qualified researcher acquiring these materials for laboratory research only. These products are not drugs or supplements and are not for human or veterinary consumption.</p></div><div style="display:flex; align-items:center; justify-content:center; gap:6px; margin-top:24px; margin-bottom:-8px; font-family:'Jost',sans-serif; font-size:11px; color:#5A6356;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#5A6356" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="1.5"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg><span>Secure checkout</span></div><button class="bh-btn" onclick="{{ placeOrder }}" disabled="{{ checkoutLoading }}" style="width:100%; cursor:pointer; background:#014421; color:#F5F1E8; border:none; padding:17px; font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; font-weight:600; border-radius:2px; margin-top:24px; opacity:{{ checkoutLoading ? 0.65 : 1 }};">{{ checkoutLoading ? 'Processing...' : 'Place Order' }}</button>
+            <sc-if value="{{ checkoutError }}" hint-placeholder-val="{{ false }}"><p style="font-size:13px; color:#C0392B; text-align:center; margin:12px 0 0;">{{ checkoutError }}</p></sc-if>
           </div>
         </div>
       </section>
@@ -1709,7 +1705,7 @@
         <div style="width:64px; height:64px; border:1.5px solid #014421; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 30px; color:#014421; font-size:28px;">✓</div>
         <div style="font-size:11.5px; letter-spacing:.24em; text-transform:uppercase; color:#9C7A4D; margin-bottom:16px; font-weight:600;">Order Confirmed</div>
         <h1 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:56px; line-height:1.02; margin:0 0 20px; color:#1B241C;">Thank you for your order.</h1>
-        <p style="font-size:17px; line-height:1.7; color:#54604F; margin:0 0 10px;">Your order <strong style="color:#014421;">{{ orderNum }}</strong> is confirmed. A receipt and certificates of analysis are on their way to your inbox.</p>
+        <p style="font-size:17px; line-height:1.7; color:#54604F; margin:0 0 10px;">Your order <strong style="color:#014421;">{{ orderNum }}</strong> is confirmed. You will receive a secure payment link by email within 1 business day.</p>
         <a class="bh-btn" onclick="{{ goShop }}" style="cursor:pointer; display:inline-block; background:#014421; color:#F5F1E8; padding:16px 34px; font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; font-weight:600; text-decoration:none; border-radius:2px;">Continue Shopping</a><div style="margin-top:34px; font-size:12px; line-height:1.6; color:#9AA38E; max-width:440px;">For research use only. The materials in this order are not drugs, supplements, or food, and are not for human or veterinary consumption.</div>
       </section>
     </div>
@@ -1817,7 +1813,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script="">
 class Component extends DCLogic {
-  state = { page:'home', productId:null, qty:1, cart:[], cartOpen:false, subGate:false, orderNum:null, contactSent:false, contactFirstErr:false, contactLastErr:false, contactEmailErr:false, contactSending:false, contactError:false, partnerSent:false, navOpen:false, sizeSel:{}, filter:null, acctTab:'signin', transitioning:false, legalTopic:'terms', authMode:'signin', isMember:false, memberAuthed:false, memberEmail:'', memberJoin:'', acctLoginErr:'', acctRegErr:'', subMode:true, subFreq:'Monthly', coaQ:'', checkoutAgeOk:false, stackIds:[], stackCat:'all', stackSearchQ:'', catalogCat:'all', catalogSearchQ:'', catalogSort:'popular', stackDrawer:false, discountInput:'', discountApplied:null, discountError:false, coaModal:false };
+  state = { page:'home', productId:null, qty:1, cart:[], cartOpen:false, subGate:false, orderNum:null, contactSent:false, contactFirstErr:false, contactLastErr:false, contactEmailErr:false, contactSending:false, contactError:false, partnerSent:false, navOpen:false, sizeSel:{}, filter:null, acctTab:'signin', transitioning:false, legalTopic:'terms', authMode:'signin', isMember:false, memberAuthed:false, memberEmail:'', memberJoin:'', acctLoginErr:'', acctRegErr:'', subMode:true, subFreq:'Monthly', coaQ:'', checkoutAgeOk:false, stackIds:[], stackCat:'all', stackSearchQ:'', catalogCat:'all', catalogSearchQ:'', catalogSort:'popular', stackDrawer:false, discountInput:'', discountApplied:null, discountError:false, coaModal:false, checkoutLoading:false, checkoutError:'' };
 
   get catalog() {
     return [
@@ -2268,7 +2264,46 @@ class Component extends DCLogic {
   removeCartItem(e, id, size){ var self=this; var row=(e&&e.currentTarget&&e.currentTarget.closest)?e.currentTarget.closest('.bh-citem'):null; if(row){ row.classList.add('bh-removing'); setTimeout(function(){ self.removeFromCart(id,size); },250); } else { this.removeFromCart(id,size); } }
   fmt(n){ return '$'+n.toFixed(2); }
   isMemberLoggedIn(){ try{ return !!localStorage.getItem('bhare-member-token'); }catch(e){ return false; } }
-  placeOrder(){ const num='BHR-'+Math.floor(100000+Math.random()*900000); this.transitionTo(()=>this.setState({page:'confirm', orderNum:num, cart:[], cartOpen:false})); }
+  async placeOrder(){
+    var firstName=(document.getElementById('co-first')||{}).value||''; firstName=firstName.trim();
+    var lastName=(document.getElementById('co-last')||{}).value||''; lastName=lastName.trim();
+    var email=(document.getElementById('co-email')||{}).value||''; email=email.trim();
+    var address1=(document.getElementById('co-addr')||{}).value||''; address1=address1.trim();
+    var city=(document.getElementById('co-city')||{}).value||''; city=city.trim();
+    var province=(document.getElementById('co-state')||{}).value||''; province=province.trim();
+    var postal=(document.getElementById('co-zip')||{}).value||''; postal=postal.trim();
+    if(!firstName||!lastName||!email||!address1||!city||!province||!postal){
+      this.setState({checkoutError:'Please fill in all required fields.'});return;
+    }
+    if(!this.emOk(email)){this.setState({checkoutError:'Please enter a valid email address.'});return;}
+    this.setState({checkoutLoading:true,checkoutError:''});
+    var MURL='https://api.bharewell.com';
+    var PK='pk_0ab22d51049894f8909c0671c8a406a0c113bd2c28fa3a46789cefba5a0a7f8f';
+    var RID='reg_01KXFGR5Q0J2W5BEQHTMMBG6Z3';
+    var SID='so_01KXFHMP1NS6TV303RBQW3QDXQ';
+    var VM={'bpc157|5 MG':'variant_01KXFGRWD019CJNRYRD16166X7','tb500|5 MG':'variant_01KXFGWC95NJHFS1JM66VXVSDZ','tb500|10 MG':'variant_01KXFGWC96QPTEQ3KK6YFTFEYA','ghkcu|50 MG':'variant_01KXFGWCD2SK3T3080CYNQJV7Y','ghkcu|100 MG':'variant_01KXFGWCD2CK6C2BPV03NN3A1F','ta1|10 MG':'variant_01KXFGWCG6WA58NYCDEP1HFYV7','epitalon|10 MG':'variant_01KXFGWCKBM2339P40KB43689B','epitalon|20 MG':'variant_01KXFGWCKBEFA5R1DHGK7DYMGW','epitalon|50 MG':'variant_01KXFGWCKB3BB9ZVVT9R8DA7V5','nad|100 MG':'variant_01KXFGWCQ9W6ANQAEA90TNH2GQ','nad|500 MG':'variant_01KXFGWCQ9PQ0QE3P6M26ZPWV3','motsc|10 MG':'variant_01KXFGWCV0FJCP76CCXQJ8BKSV','semax|30 MG':'variant_01KXFGWCXVJMFSRSNPD7P2RKV6','selank|30 MG':'variant_01KXFGWD0MM6GTZX9FGY12KMJ0','ipamorelin|5 MG':'variant_01KXFGWD3DMEY0Q4TJCJXT8VFT','ipamorelin|10 MG':'variant_01KXFGWD3D0J4W2AX7HJFGW6B4','cjc1295|5 MG':'variant_01KXFGWD6R6QXMKS12014KPQCW','cjc1295|10 MG':'variant_01KXFGWD6RHAQ709HA20HHDRHG','pt141|10 MG':'variant_01KXFGWDA0NTGA26M48V5XV8BX','melanotanii|10 MG':'variant_01KXFGWDE2QW3QNEDRW213E628','glutathione|600 MG':'variant_01KXFGWDJYJBRR84143FSRXM6E','aod9604|5 MG':'variant_01KXFGWDNDRAA9RT14WMRD24FZ','tesamorelin|5 MG':'variant_01KXFGWDRDQAPH763N9CGC0YDW','tesamorelin|10 MG':'variant_01KXFGWDRDX3JQ8MRJERJRQVA8','sermorelin|5 MG':'variant_01KXFGWDV15W5BN8R47TYVHNWY','kisspeptin|5 MG':'variant_01KXFGWDXNPDH68ANWFK48CAQB','dsip|5 MG':'variant_01KXFGWE09T70PY46K9X3063TA','retatrutide|5 MG':'variant_01KXFGWE2NAD3YK37SD1ZS3BPC','retatrutide|10 MG':'variant_01KXFGWE2P7T8E5DKJEYZ4ER0R'};
+    var hdrs={'Content-Type':'application/json','x-publishable-api-key':PK};
+    var self=this;
+    try{
+      var cartR=await fetch(MURL+'/store/carts',{method:'POST',headers:hdrs,body:JSON.stringify({region_id:RID})});
+      var cartD=await cartR.json(); var cartId=cartD.cart.id;
+      for(var i=0;i<self.state.cart.length;i++){
+        var it=self.state.cart[i]; var vid=VM[it.id+'|'+it.size];
+        if(!vid) continue;
+        await fetch(MURL+'/store/carts/'+cartId+'/line-items',{method:'POST',headers:hdrs,body:JSON.stringify({variant_id:vid,quantity:it.qty})});
+      }
+      await fetch(MURL+'/store/carts/'+cartId,{method:'POST',headers:hdrs,body:JSON.stringify({email:email,shipping_address:{first_name:firstName,last_name:lastName,address_1:address1,city:city,country_code:'us',province:province,postal_code:postal}})});
+      await fetch(MURL+'/store/carts/'+cartId+'/shipping-methods',{method:'POST',headers:hdrs,body:JSON.stringify({option_id:SID})});
+      var pcR=await fetch(MURL+'/store/payment-collections',{method:'POST',headers:hdrs,body:JSON.stringify({cart_id:cartId})}); var pcD=await pcR.json();
+      await fetch(MURL+'/store/payment-collections/'+pcD.payment_collection.id+'/payment-sessions',{method:'POST',headers:hdrs,body:JSON.stringify({provider_id:'pp_system_default'})});
+      var ordR=await fetch(MURL+'/store/carts/'+cartId+'/complete',{method:'POST',headers:hdrs}); var ordD=await ordR.json();
+      if(ordD.type!=='order') throw new Error(ordD.message||'Order failed');
+      var orderNum='#'+ordD.order.display_id;
+      self.transitionTo(function(){ self.setState({page:'confirm',orderNum:orderNum,cart:[],cartOpen:false,checkoutLoading:false,checkoutError:''}); });
+    }catch(err){
+      self.setState({checkoutLoading:false,checkoutError:'Something went wrong. Please try again or contact support.'});
+    }
+  }
 
   get compoundProfiles(){ return {
     bpc157:{cas:'137525-51-0', mw:'1419.5', formula:'C62H98N16O22', seq:'GEPPPGKPADDAGLV'},
