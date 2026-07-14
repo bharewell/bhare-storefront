@@ -2382,6 +2382,15 @@
 
 </div>
 </x-dc>
+<script>
+(function(){
+  var ENDPOINT='https://api.bharewell.com/store/analytics';
+  var PK='pk_0ab22d51049894f8909c0671c8a406a0c113bd2c28fa3a46789cefba5a0a7f8f';
+  var sid=sessionStorage.getItem('bh_sid')||(function(){var id='s'+Date.now().toString(36)+Math.random().toString(36).slice(2);sessionStorage.setItem('bh_sid',id);return id;})();
+  window._bhTrack=function(type,product_id,page){try{fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','x-publishable-api-key':PK},body:JSON.stringify({type:type,product_id:product_id||null,session_id:sid,page:page||null}),keepalive:true}).catch(function(){});}catch(e){}};
+  window._bhTrack('pageview',null,location.pathname);
+})();
+</script>
 <script type="text/x-dc" data-dc-script="">
 class Component extends DCLogic {
   state = { page:'home', productId:null, qty:1, cart:[], cartOpen:false, subGate:false, coSummaryOpen:false, orderNum:null, contactSent:false, contactFirstErr:false, contactLastErr:false, contactEmailErr:false, contactSending:false, contactError:false, partnerSent:false, navOpen:false, sizeSel:{}, filter:null, acctTab:'signin', transitioning:false, legalTopic:'terms', authMode:'signin', isMember:false, memberAuthed:false, memberEmail:'', memberJoin:'', acctLoginErr:'', acctRegErr:'', subMode:true, subFreq:'Monthly', coaQ:'', checkoutAgeOk:false, stackIds:[], stackCat:'all', stackSearchQ:'', catalogCat:'all', catalogSearchQ:'', catalogSort:'popular', stackDrawer:false, discountInput:'', discountApplied:null, discountError:false, coaModal:false, subStep:1 };
@@ -2561,7 +2570,7 @@ class Component extends DCLogic {
     this.setState({transitioning:true, navOpen:false});
     this._t = setTimeout(()=>{ try{ window.scrollTo(0,0); }catch(e){} apply(); this.setState({transitioning:false}, ()=>{ try{ window.scrollTo({top:0, left:0, behavior:'smooth'}); }catch(e){ window.scrollTo(0,0); } }); }, 150);
   }
-  go(page){ this.syncUrl(page); var self=this; this.transitionTo(function(){ self.setState({page, cartOpen:false, subGate:false}); if(page==='science'||page==='compliance'||page==='coa'||page==='terms'||page==='privacy'||page==='returns'||page==='shipping'){ self.initPageReveal(page); } }); }
+  go(page){ this.syncUrl(page); if(window._bhTrack){ if(page==='checkout') window._bhTrack('checkout_start',null,page); } var self=this; this.transitionTo(function(){ self.setState({page, cartOpen:false, subGate:false}); if(page==='science'||page==='compliance'||page==='coa'||page==='terms'||page==='privacy'||page==='returns'||page==='shipping'){ self.initPageReveal(page); } }); }
   syncUrl(page){ try{ var paths={home:'/',science:'/science',compliance:'/compliance',terms:'/terms',privacy:'/privacy',quiz:'/bhare-quiz',coa:'/lab-reports',contact:'/contact',partners:'/partners',stack:'/stack-builder',shop:'/catalog',account:'/account',returns:'/returns',shipping:'/shipping'}; var pth=paths[page]; if(pth&&location.pathname!==pth){ history.pushState({},'',pth); } }catch(e){} }
   route(){ try{ var p=(location.pathname||'/').toLowerCase().replace(/\/+$/,'')||'/'; if(p==='/terms-of-service'){ p='/terms'; } var _pm=p.match(/^\/products\/([^\/]+)$/); if(_pm){ this._routed=true; var _prod=this.findProductBySlug(_pm[1]); if(_prod){ if(this.state.page!=='product'||this.state.productId!==_prod.id){ this.openProduct(_prod.id, true); } } else if(this.state.page==='product'){ this.closeProduct(true); } return; } var map={'/':'home','/science':'science','/compliance':'compliance','/terms':'terms','/privacy':'privacy','/bhare-quiz':'quiz','/lab-reports':'coa','/coa-library':'coa','/contact':'contact','/partners':'partners','/stack-builder':'shop','/catalog':'shop','/account':'account'}; var pg=map[p]; if(p==='/shipping'){ pg='shipping'; } else if(p==='/returns'){ pg='returns'; } else if(p==='/terms'){ pg='legal'; this.setState({legalTopic:'terms'}); } else if(p==='/privacy'){ pg='legal'; this.setState({legalTopic:'privacy'}); } else if(p==='/faq'){ pg='home'; this._pendingFaqScroll=true; } if(!this._routed){ this._routed=true; if(pg==='shop' && (window.innerWidth||document.documentElement.clientWidth)<=768){ pg='home'; try{ history.replaceState({},'','/'); }catch(e){} } } if(pg==='shop'){ try{ var fq=new URLSearchParams(location.search).get('filter'); if(fq && ['repair','aging','brain','growth'].indexOf(fq)>=0){ this.setState({catalogCat:fq}); } }catch(e){} } if(pg&&pg!==this.state.page){ try{ [].slice.call(document.querySelectorAll('.ftr-acc[open]')).forEach(function(d){ d.open=false; }); }catch(e){} if(this.state.page==='quiz'){ try{ if(window.bhareUnmountQuiz) window.bhareUnmountQuiz(); }catch(e){} } this.setState({page:pg, cartOpen:false}); if(pg==='science'||pg==='compliance'||pg==='coa'||pg==='terms'||pg==='privacy'||pg==='returns'||pg==='shipping'){ this.initPageReveal(pg); } } if(this._pendingFaqScroll){ this._pendingFaqScroll=false; var _self=this; setTimeout(function(){ _self.scrollToFaq(); },600); } }catch(e){} }
   goLegal2(t){ this.setState({legalTopic:t}); this.go('legal'); try{ var _m={shipping:'/shipping',refunds:'/returns',terms:'/terms',privacy:'/privacy'}; if(_m[t]&&location.pathname!==_m[t]) history.replaceState({},'',_m[t]); }catch(e){} }
@@ -2846,6 +2855,7 @@ class Component extends DCLogic {
     const ex = cart.find(c=>c.id===id && c.size===size && (!!c.sub)===(!!sub));
     if(ex) ex.qty += qty; else cart.push({id, size, price, qty, sub:!!sub});
     this.setState({cart, cartOpen:true});
+    if(window._bhTrack) window._bhTrack('add_to_cart', id);
   }
   popCart(){ try{ var c=document.getElementById('bh-cart-ic'); if(!c) return; c.style.transition='transform .2s cubic-bezier(.3,1.5,.5,1)'; c.style.transform='scale(1.4)'; setTimeout(function(){ c.style.transform='scale(1)'; }, 200); }catch(e){} }
   pdpAddToCart(){
@@ -2872,7 +2882,7 @@ class Component extends DCLogic {
   removeCartItem(e, id, size){ var self=this; var row=(e&&e.currentTarget&&e.currentTarget.closest)?e.currentTarget.closest('.bh-citem'):null; if(row){ row.classList.add('bh-removing'); setTimeout(function(){ self.removeFromCart(id,size); },250); } else { this.removeFromCart(id,size); } }
   fmt(n){ return '$'+n.toFixed(2); }
   isMemberLoggedIn(){ try{ return !!localStorage.getItem('bhare-member-token'); }catch(e){ return false; } }
-  placeOrder(){ const num='BHR-'+Math.floor(100000+Math.random()*900000); this.transitionTo(()=>this.setState({page:'confirm', orderNum:num, cart:[], cartOpen:false})); }
+  placeOrder(){ const num='BHR-'+Math.floor(100000+Math.random()*900000); if(window._bhTrack) window._bhTrack('checkout_complete',null,'confirm'); this.transitionTo(()=>this.setState({page:'confirm', orderNum:num, cart:[], cartOpen:false})); }
 
   get compoundProfiles(){ return {
     bpc157:{cas:'137525-51-0', mw:'1419.5', formula:'C62H98N16O22', seq:'GEPPPGKPADDAGLV'},
