@@ -313,7 +313,7 @@
   function undim(){ var a=el('bhare-ag-account'); if(a){ a.style.opacity='1'; a.style.pointerEvents='auto'; } }
   var ok=false; try{ok=sessionStorage.getItem(KEY)==='yes';}catch(e){}
   if(hasCk(DISMISS)) ok=true;
-  if(ok){ if(gate) gate.style.display='none'; armMp(); } else { lock(); }
+  if(ok){ if(gate) gate.style.display='none'; armMp(5000+Math.floor(Math.random()*2001)); } else { lock(); }
   var agEnter=el('bhare-ag-enter');
   agEnter.addEventListener('click',function(){if(agEnter.disabled)return;try{sessionStorage.setItem(KEY,'yes');}catch(e){}
     var exitBtn=el('bhare-ag-exit'), merged=el('bhare-ag-verified');
@@ -396,11 +396,11 @@
   function mpMark(){ try{ localStorage.setItem(MP_SEEN,'1'); }catch(e){} }
   function mpValid(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
   function showMembersPop(){ if(!membersPop||mpShown||mpSeen()) return; mpShown=true; disarmMp(); lock(); membersPop.style.display='flex'; membersPop.setAttribute('aria-hidden','false'); void membersPop.offsetWidth; membersPop.classList.add('bmp-show'); var inp=el('bmp-email'); if(inp) setTimeout(function(){ try{inp.focus();}catch(e){} },360); }
-  function hideMembersPop(){ if(!membersPop) return; mpMark(); membersPop.classList.remove('bmp-show'); membersPop.setAttribute('aria-hidden','true'); unlock(); setTimeout(function(){ membersPop.style.display='none'; },320); }
+  function hideMembersPop(){ if(!membersPop) return; membersPop.classList.remove('bmp-show'); membersPop.setAttribute('aria-hidden','true'); unlock(); setTimeout(function(){ membersPop.style.display='none'; },320); }
   function mpExit(e){ if(mpShown||mpSeen()) return; if(!e.relatedTarget && (e.clientY==null||e.clientY<=0)){ showMembersPop(); } }
   function mpEsc(e){ if((e.key==='Escape'||e.keyCode===27)&&mpShown){ hideMembersPop(); } }
   function disarmMp(){ if(mpTimer){ clearTimeout(mpTimer); mpTimer=null; } document.removeEventListener('mouseout',mpExit); }
-  function armMp(){ return; /* auto-open suppressed: members modal opens only on explicit user interaction */ if(mpArmed||!membersPop||mpSeen()) return; mpArmed=true; mpTimer=setTimeout(showMembersPop,4000); document.addEventListener('mouseout',mpExit); document.addEventListener('keydown',mpEsc); }
+  function armMp(delay){ if(mpArmed||!membersPop||mpSeen()) return; mpArmed=true; mpTimer=setTimeout(showMembersPop,delay||4000); document.addEventListener('mouseout',mpExit); document.addEventListener('keydown',mpEsc); }
   if(membersPop){
     var mpClose=el('bmp-close'); if(mpClose) mpClose.addEventListener('click',hideMembersPop);
     var mpDecline=el('bmp-decline'); if(mpDecline) mpDecline.addEventListener('click',hideMembersPop);
@@ -1010,13 +1010,13 @@
     .bh-mobnav .bh-mn-tab{flex:1; text-align:center; padding:14px 6px 15px; font-family:'Jost',sans-serif; font-size:12.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:rgba(245,241,232,.6); text-decoration:none; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; white-space:nowrap;}
     .bh-mobnav .bh-mn-tab--on{color:#C2A878; border-bottom-color:#C2A878;}
     .bh-mobnav .bh-mn-tab:active{color:#F5F1E8;}
-    .bh-mn-plist{display:flex; flex-direction:column; flex:1!important; min-height:0!important; max-height:360px!important; overflow-y:scroll!important; overflow-x:hidden; -webkit-overflow-scrolling:touch!important; padding:4px 0 0;}
+    .bh-mn-plist{display:flex; flex-direction:column; flex:1!important; min-height:0!important; max-height:380px!important; overflow-y:scroll!important; overflow-x:hidden; -webkit-overflow-scrolling:touch!important; padding:8px 12px; gap:6px;}
     .bh-mobnav .bh-mn-top{flex-shrink:0!important;}
     .bh-mobnav .bh-mn-tabs, .bh-mobnav .bh-mn-top{flex:none;}
     .bh-mobnav .bh-mn-wordmark{flex:none;}
-    .bh-mobnav .bh-mn-prow{display:flex; align-items:center; gap:16px; min-height:80px; padding:12px 20px; text-decoration:none; cursor:pointer; background:transparent; border-bottom:1px solid rgba(255,255,255,.15);}
-    .bh-mobnav .bh-mn-prow:active{background:rgba(255,255,255,.06);}
-    .bh-mn-pimg{flex-shrink:0; width:64px; height:64px; border-radius:8px; object-fit:contain; background:#F5F1E8!important; padding:4px; box-sizing:border-box;}
+    .bh-mobnav .bh-mn-prow{display:flex; align-items:center; gap:14px; min-height:72px; padding:10px 14px; text-decoration:none; cursor:pointer; background:rgba(255,255,255,0.06); border-radius:10px; border-bottom:none;}
+    .bh-mobnav .bh-mn-prow:active{background:rgba(255,255,255,.12);}
+    .bh-mn-pimg{flex-shrink:0; width:56px; height:56px; border-radius:8px; object-fit:cover; background:#F5F1E8!important; box-sizing:border-box;}
     .bh-mn-pname{font-family:'Jost',sans-serif; font-size:15px; font-weight:500; letter-spacing:.01em; color:#ffffff; flex:1;}
     .bh-mn-pbadge{flex-shrink:0; font-family:'Jost',sans-serif; font-size:11px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:#d4be91; background:rgba(212,190,145,0.25); padding:4px 10px; border-radius:20px;}5px 10px; border-radius:9999px;}
     .bh-mobnav .bh-mn-shopall{display:flex!important; flex-shrink:0!important; align-items:center; justify-content:flex-end; gap:6px; margin:12px 20px 4px!important; padding:14px 0 10px!important; font-family:'Jost',sans-serif; font-size:14px!important; font-weight:600; letter-spacing:.02em; text-transform:none; color:#C2A878!important; text-decoration:none!important; cursor:pointer; border-top:1px solid rgba(255,255,255,.1)!important; background:transparent!important;}
@@ -1441,7 +1441,7 @@
     <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
     <div class="bh-fade">
       <!-- Hero -->
-      <section class="bh-hero" style="position:relative; width:100%; height:100vh; min-height:600px; max-height:none; overflow:hidden; background:#EAE4D6;">
+      <section class="bh-hero" style="position:relative; width:100%; height:max(100vh,56.25vw); min-height:600px; max-height:none; overflow:hidden; background:#EAE4D6;">
         <img class="bh-heroimg-d" src="assets/hero-desktop.webp" alt="bhare research peptide vials — GHK-Cu and BPC-157" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:right top;">
         <img class="bh-heroimg-m" src="assets/hero-mobile-new.webp" alt="bhare research peptide vials" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center bottom; display:none;">
         <div class="bh-hero-ov" onClick="{{ goShop }}" style="position:absolute; inset:0; cursor:pointer; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; text-align:left; padding:0 clamp(28px,6vw,80px); z-index:2;">
