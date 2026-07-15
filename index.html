@@ -2946,6 +2946,9 @@ class Component extends DCLogic {
       return {name:p?p.name:ci.id, size:ci.size, qty:ci.qty, lineFmt:fmt(ci.price*ci.qty)};
     });
     if(window._bhTrack) window._bhTrack('checkout_complete',null,'confirm');
+    window._bhOrderItems=items.map(function(i){return {name:i.name,size:i.size,qty:i.qty,unit_price:i.lineFmt?0:0};});
+    var rawItems=cart.map(function(ci){var p=cat.find(function(x){return x.id===ci.id;});return {name:p?p.name:ci.id,size:ci.size,qty:ci.qty,unit_price:ci.price};});
+    window._bhOrderItems=rawItems;
     this.transitionTo(function(){
       self.setState({page:'confirm', orderNum:ref, orderTotal:total, orderEmail:email, orderItems:items, cart:[], cartOpen:false});
       self._loadPayPal(ref,total);
@@ -2966,6 +2969,8 @@ class Component extends DCLogic {
           return actions.order.capture().then(function(details){
             var c2=document.getElementById('bh-paypal-container');
             if(c2){c2.innerHTML='<div style="background:rgba(1,68,33,.1);border:1px solid rgba(1,68,33,.3);border-radius:6px;padding:20px 22px;text-align:center;"><div style="font-family:Jost,sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#014421;font-weight:700;margin-bottom:8px;">Payment Confirmed</div><div style="font-size:15px;color:#1B241C;line-height:1.5;">Thank you'+(details.payer&&details.payer.name?', '+details.payer.name.given_name:'')+'. Your order is confirmed and will ship within 1–2 business days.</div></div>';}
+            var firstEl=document.getElementById('bh-co-first');
+            try{fetch('https://api.bharewell.com/store/paypal-order',{method:'POST',headers:{'Content-Type':'application/json','x-publishable-api-key':'pk_0ab22d51049894f8909c0671c8a406a0c113bd2c28fa3a46789cefba5a0a7f8f'},body:JSON.stringify({paypal_order_id:data.orderID,paypal_capture_id:(details.purchase_units&&details.purchase_units[0]&&details.purchase_units[0].payments&&details.purchase_units[0].payments.captures&&details.purchase_units[0].payments.captures[0]?details.purchase_units[0].payments.captures[0].id:''),ref:ref,email:(details.payer&&details.payer.email_address?details.payer.email_address:''),first_name:(firstEl?firstEl.value.trim():(details.payer&&details.payer.name?details.payer.name.given_name:'')),total:total,items:window._bhOrderItems||[]})});}catch(e){}
           });
         },
         onError:function(){
