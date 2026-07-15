@@ -46,7 +46,7 @@
 }
 #bhare-agegate > div { -webkit-overflow-scrolling: touch; }
 @media (max-width: 480px) {
-  #bhare-agegate { padding: 10px !important; }
+  #bhare-agegate { padding: max(env(safe-area-inset-top, 16px), 16px) 14px 14px !important; }
   #bhare-agegate > div { border-radius: 14px !important; }
   #bhare-ag-account { padding: 22px 20px 28px !important; }
 }
@@ -2599,7 +2599,7 @@
           <div style="display:flex; align-items:center; gap:8px;">
             <button onclick="{{ upsellPrev }}" style="cursor:pointer;background:#fff;border:1px solid rgba(1,68,33,.22);border-radius:50%;width:34px;height:34px;color:#014421;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1;padding:0;">&#8249;</button>
             <div style="flex:1;display:flex;align-items:center;gap:12px;background:#fff;border:1px solid rgba(1,68,33,.10);border-radius:10px;padding:10px 12px;min-width:0;">
-              <div style="width:68px;height:68px;flex-shrink:0;border-radius:8px;overflow:hidden;background:radial-gradient(ellipse 90% 80% at 60% 35%, #ece1cd, #d2c4a8);">{{ currentUpsell.imgElSm }}</div>
+              <div style="width:68px;height:68px;flex-shrink:0;border-radius:8px;overflow:hidden;background:radial-gradient(ellipse 90% 80% at 60% 35%, #ece1cd, #d2c4a8);">{{ currentUpsell.imgEl }}</div>
               <div style="flex:1;min-width:0;">
                 <div style="font-size:13px;font-weight:700;color:#1B241C;line-height:1.25;margin-bottom:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ currentUpsell.name }}</div>
                 <button onclick="{{ currentUpsell.add }}" style="cursor:pointer;background:#014421;color:#F5F1E8;border:none;border-radius:9999px;padding:8px 16px;font-size:12px;font-weight:700;font-family:'Jost',sans-serif;white-space:nowrap;">Add to Cart {{ currentUpsell.priceFmt }}</button>
@@ -3623,26 +3623,21 @@ class Component extends DCLogic {
 (function(){
   function initBsCarInfinite(){
     var car=document.getElementById('bh-bscar');
-    if(!car||car._bsInited) return;
-    car._bsInited=true;
-    // Clone all current children and append to make 3x loop
+    if(!car||window._bsCarInited) return;
+    window._bsCarInited=true;
     var kids=Array.prototype.slice.call(car.children);
     if(kids.length<2) return;
     kids.forEach(function(k){ car.appendChild(k.cloneNode(true)); });
     kids.forEach(function(k){ car.insertBefore(k.cloneNode(true), car.firstChild); });
-    // Scroll to second set (the middle)
     var oneW=kids.reduce(function(a,k){ return a+k.offsetWidth+22; },0);
     car.scrollLeft=oneW;
-    var ticking=false;
+    var scrollTimer;
     car.addEventListener('scroll',function(){
-      if(ticking) return;
-      ticking=true;
-      requestAnimationFrame(function(){
-        ticking=false;
-        var max=car.scrollWidth-car.clientWidth;
-        if(car.scrollLeft<oneW*0.4){ car.scrollLeft+=oneW; }
-        else if(car.scrollLeft>oneW*1.6){ car.scrollLeft-=oneW; }
-      });
+      clearTimeout(scrollTimer);
+      scrollTimer=setTimeout(function(){
+        if(car.scrollLeft<oneW*0.3){ car.scrollLeft+=oneW; }
+        else if(car.scrollLeft>oneW*1.7){ car.scrollLeft-=oneW; }
+      },150);
     },{passive:true});
   }
   if(document.readyState==='loading'){
@@ -3652,10 +3647,8 @@ class Component extends DCLogic {
   } else {
     setTimeout(initBsCarInfinite,800);
   }
-  // Re-init if carousel gets re-rendered (watch for new cards)
   var obs=new MutationObserver(function(){
-    var car=document.getElementById('bh-bscar');
-    if(car&&!car._bsInited) setTimeout(initBsCarInfinite,400);
+    if(!window._bsCarInited && document.getElementById('bh-bscar')) setTimeout(initBsCarInfinite,400);
   });
   obs.observe(document.body,{childList:true,subtree:true});
 })();
