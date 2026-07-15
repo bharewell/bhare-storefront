@@ -1010,16 +1010,18 @@
     .bh-mobnav .bh-mn-tab{flex:1; text-align:center; padding:14px 6px 15px; font-family:'Jost',sans-serif; font-size:12.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:rgba(245,241,232,.6); text-decoration:none; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; white-space:nowrap;}
     .bh-mobnav .bh-mn-tab--on{color:#C2A878; border-bottom-color:#C2A878;}
     .bh-mobnav .bh-mn-tab:active{color:#F5F1E8;}
-    .bh-mn-plist{display:flex; flex-direction:column; flex:1!important; min-height:0!important; max-height:286px!important; overflow-y:scroll!important; overflow-x:hidden; -webkit-overflow-scrolling:touch!important; padding:8px 0 0;}
+    .bh-mn-plist{display:flex; flex-direction:column; flex:1!important; min-height:0!important; max-height:360px!important; overflow-y:scroll!important; overflow-x:hidden; -webkit-overflow-scrolling:touch!important; padding:4px 0 0;}
     .bh-mobnav .bh-mn-top{flex-shrink:0!important;}
     .bh-mobnav .bh-mn-tabs, .bh-mobnav .bh-mn-top{flex:none;}
     .bh-mobnav .bh-mn-wordmark{flex:none;}
-    .bh-mobnav .bh-mn-prow{display:flex; align-items:center; gap:16px; min-height:68px; padding:14px 20px; text-decoration:none; cursor:pointer; background:transparent; border-bottom:1px solid rgba(255,255,255,.08);}
-    .bh-mn-pimg{flex-shrink:0; width:52px; height:52px; border-radius:6px; object-fit:contain; background:rgba(255,255,255,0.06)!important;}
+    .bh-mobnav .bh-mn-prow{display:flex; align-items:center; gap:14px; min-height:80px; padding:14px 20px; text-decoration:none; cursor:pointer; background:transparent; border-bottom:1px solid rgba(255,255,255,.1);}
+    .bh-mobnav .bh-mn-prow:active{background:rgba(255,255,255,.06);}
+    .bh-mn-pimg{flex-shrink:0; width:68px; height:68px; border-radius:10px; object-fit:contain; background:rgba(255,255,255,0.1)!important; padding:4px; box-sizing:border-box;}
     .bh-mn-pname{font-family:'Jost',sans-serif; font-size:15px; font-weight:500; letter-spacing:.01em; color:#ffffff; flex:1;}
     .bh-mn-pbadge{flex-shrink:0; font-family:'Jost',sans-serif; font-size:11px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:#d4be91; background:rgba(212,190,145,0.25); padding:4px 10px; border-radius:20px;}5px 10px; border-radius:9999px;}
-    .bh-mobnav .bh-mn-shopall{display:block!important; flex-shrink:0!important; text-align:right!important; padding:14px 4px 8px!important; font-family:'Jost',sans-serif; font-size:14px!important; font-weight:500; letter-spacing:normal; text-transform:none; color:rgba(255,255,255,0.85)!important; text-decoration:underline!important; text-underline-offset:3px!important; cursor:pointer; border-top:none!important; background:rgba(8,24,12,0.9)!important;}
+    .bh-mobnav .bh-mn-shopall{display:flex!important; flex-shrink:0!important; align-items:center; justify-content:flex-end; gap:6px; margin:12px 20px 4px!important; padding:14px 0 10px!important; font-family:'Jost',sans-serif; font-size:14px!important; font-weight:600; letter-spacing:.02em; text-transform:none; color:#C2A878!important; text-decoration:none!important; cursor:pointer; border-top:1px solid rgba(255,255,255,.1)!important; background:transparent!important;}
     .bh-mobnav .bh-mn-shopall::before{display:none!important;}
+    .bh-mobnav .bh-mn-shopall:active{color:#d4be91!important;}
     .bh-mn-shopall span{font-size:15px;}
     .bh-mn-primary{display:flex; flex-direction:column; gap:30px; padding:26px 24px 0;}
     .bh-mobnav .bh-mn-primary a{font-family:'Jost',sans-serif; font-size:24px; font-weight:600; color:#F5F1E8; text-decoration:none; letter-spacing:.01em; cursor:pointer; line-height:1;}
@@ -1439,7 +1441,7 @@
     <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
     <div class="bh-fade">
       <!-- Hero -->
-      <section class="bh-hero" style="position:relative; width:100%; height:660px; min-height:620px; max-height:720px; overflow:hidden; background:#EAE4D6;">
+      <section class="bh-hero" style="position:relative; width:100%; height:100vh; min-height:600px; max-height:none; overflow:hidden; background:#EAE4D6;">
         <img class="bh-heroimg-d" src="assets/hero-desktop.webp" alt="bhare research peptide vials — GHK-Cu and BPC-157" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:right center;">
         <img class="bh-heroimg-m" src="assets/hero-mobile-new.webp" alt="bhare research peptide vials" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center bottom; display:none;">
         <div class="bh-hero-ov" onClick="{{ goShop }}" style="position:absolute; inset:0; cursor:pointer; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; text-align:left; padding:0 clamp(28px,6vw,80px); z-index:2;">
@@ -2036,6 +2038,148 @@
     </div>
     </sc-if>
 
+    <!-- ============ FAQ ============ -->
+    <sc-if value="{{ isFaq }}" hint-placeholder-val="{{ false }}">
+    <div class="bh-compliance" data-screen-label="FAQ">
+      <section class="bh-rv" style="max-width:860px; margin:0 auto; padding:80px 36px 30px; text-align:center;">
+        <div style="font-size:11.5px; letter-spacing:.24em; text-transform:uppercase; color:#9C7A4D; margin-bottom:18px; font-weight:600;">Support</div>
+        <h1 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:64px; line-height:1.02; margin:0 0 24px; color:#1B241C;">Frequently Asked Questions.</h1>
+        <p style="font-size:19px; line-height:1.7; color:#54604F; margin:0;">Last updated: July 2026.</p>
+      </section>
+
+      <section class="bh-rv" style="max-width:860px; margin:0 auto; padding:24px 36px;">
+        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(24px,2.8vw,36px); line-height:1.1; margin:0 0 4px; color:#1B241C;">Product &amp; Research Information</h2>
+        <div class="bh-faq" style="margin-top:20px;">
+          <details>
+            <summary style="display:flex; justify-content:space-between; align-items:center; padding:20px 4px;">
+              <span class="bh-faq-q" style="font-family:'Jost',sans-serif; font-weight:500; font-size:16px; line-height:1.4; color:#1B241C; transition:color .2s ease; padding-right:16px;">What are the products offered by bhare intended for?</span>
+              <span class="bh-faq-ico" style="flex:none; font-family:'Jost',sans-serif; font-weight:300; font-size:26px; line-height:1; color:#014421;">+</span>
+            </summary>
+            <p class="bh-faq-a" style="font-family:'Jost',sans-serif; font-weight:300; font-size:15px; line-height:1.78; color:#54604F; margin:0; padding:0 4px 24px;">All products sold by bhare are intended strictly for laboratory research purposes only. They are not for human or animal consumption, not for therapeutic use, and not approved for use in food, drugs, cosmetics, or medical devices. By purchasing, you acknowledge you are a qualified individual or institution capable of handling these materials safely and lawfully.</p>
+          </details>
+          <details>
+            <summary style="display:flex; justify-content:space-between; align-items:center; padding:20px 4px;">
+              <span class="bh-faq-q" style="font-family:'Jost',sans-serif; font-weight:500; font-size:16px; line-height:1.4; color:#1B241C; transition:color .2s ease; padding-right:16px;">Are your products approved by the FDA?</span>
+              <span class="bh-faq-ico" style="flex:none; font-family:'Jost',sans-serif; font-weight:300; font-size:26px; line-height:1; color:#014421;">+</span>
+            </summary>
+            <p class="bh-faq-a" style="font-family:'Jost',sans-serif; font-weight:300; font-size:15px; line-height:1.78; color:#54604F; margin:0; padding:0 4px 24px;">No. None of the products sold by bhare have been evaluated or approved by the U.S. Food and Drug Administration (FDA). Our products are not intended to diagnose, treat, cure, or prevent any disease.</p>
+          </details>
+          <details>
+            <summary style="display:flex; justify-content:space-between; align-items:center; padding:20px 4px;">
+              <span class="bh-faq-q" style="font-family:'Jost',sans-serif; font-weight:500; font-size:16px; line-height:1.4; color:#1B241C; transition:color .2s ease; padding-right:16px;">Can I use your products for self-experimentation or supplementation?</span>
+              <span class="bh-faq-ico" style="flex:none; font-family:'Jost',sans-serif; font-weight:300; font-size:26px; line-height:1; color:#014421;">+</span>
+            </summary>
+            <p class="bh-faq-a" style="font-family:'Jost',sans-serif; font-weight:300; font-size:15px; line-height:1.78; color:#54604F; margin:0; padding:0 4px 24px;">Absolutely not. All products are strictly for research and development use only. Human or animal use of any kind is prohibited.</p>
+          </details>
+          <details>
+            <summary style="display:flex; justify-content:space-between; align-items:center; padding:20px 4px;">
+              <span class="bh-faq-q" style="font-family:'Jost',sans-serif; font-weight:500; font-size:16px; line-height:1.4; color:#1B241C; transition:color .2s ease; padding-right:16px;">Can I ask for dosing instructions or advice?</span>
+              <span class="bh-faq-ico" style="flex:none; font-family:'Jost',sans-serif; font-weight:300; font-size:26px; line-height:1; color:#014421;">+</span>
+            </summary>
+            <p class="bh-faq-a" style="font-family:'Jost',sans-serif; font-weight:300; font-size:15px; line-height:1.78; color:#54604F; margin:0; padding:0 4px 24px;">No. We do not provide dosing, administration, or usage instructions of any kind. Providing such guidance would violate regulatory guidelines.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="bh-rv" style="max-width:860px; margin:0 auto; padding:24px 36px;">
+        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(24px,2.8vw,36px); line-height:1.1; margin:0 0 4px; color:#1B241C;">Ordering &amp; Eligibility</h2>
+        <div class="bh-faq" style="margin-top:20px;">
+          <details>
+            <summary style="display:flex; justify-content:space-between; align-items:center; padding:20px 4px;">
+              <span class="bh-faq-q" style="font-family:'Jost',sans-serif; font-weight:500; font-size:16px; line-height:1.4; color:#1B241C; transition:color .2s ease; padding-right:16px;">Do I need to be a licensed professional to order?</span>
+              <span class="bh-faq-ico" style="flex:none; font-family:'Jost',sans-serif; font-weight:300; font-size:26px; line-height:1; color:#014421;">+</span>
+            </summary>
+            <p class="bh-faq-a" style="font-family:'Jost',sans-serif; font-weight:300; font-size:15px; line-height:1.78; color:#54604F; margin:0; padding:0 4px 24px;">By placing an order, you certify that you are at least 21 years of age and represent a qualified laboratory, research institution, or authorized entity. We reserve the right to request verification and to cancel or refuse orders.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="bh-rv" style="max-width:860px; margin:0 auto; padding:24px 36px;">
+        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(24px,2.8vw,36px); line-height:1.1; margin:0 0 4px; color:#1B241C;">Payment Information</h2>
+        <div class="bh-faq" style="margin-top:20px;">
+          <details>
+            <summary style="display:flex; justify-content:space-between; align-items:center; padding:20px 4px;">
+              <span class="bh-faq-q" style="font-family:'Jost',sans-serif; font-weight:500; font-size:16px; line-height:1.4; color:#1B241C; transition:color .2s ease; padding-right:16px;">What payment methods do you accept?</span>
+              <span class="bh-faq-ico" style="flex:none; font-family:'Jost',sans-serif; font-weight:300; font-size:26px; line-height:1; color:#014421;">+</span>
+            </summary>
+            <p class="bh-faq-a" style="font-family:'Jost',sans-serif; font-weight:300; font-size:15px; line-height:1.78; color:#54604F; margin:0; padding:0 4px 24px;">We accept PayPal and Venmo through secure, trusted payment processors. We do not store payment card information.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="bh-rv" style="max-width:860px; margin:0 auto; padding:24px 36px;">
+        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(24px,2.8vw,36px); line-height:1.1; margin:0 0 4px; color:#1B241C;">Shipping &amp; Delivery</h2>
+        <div class="bh-faq" style="margin-top:20px;">
+          <details>
+            <summary style="display:flex; justify-content:space-between; align-items:center; padding:20px 4px;">
+              <span class="bh-faq-q" style="font-family:'Jost',sans-serif; font-weight:500; font-size:16px; line-height:1.4; color:#1B241C; transition:color .2s ease; padding-right:16px;">Do you ship internationally?</span>
+              <span class="bh-faq-ico" style="flex:none; font-family:'Jost',sans-serif; font-weight:300; font-size:26px; line-height:1; color:#014421;">+</span>
+            </summary>
+            <p class="bh-faq-a" style="font-family:'Jost',sans-serif; font-weight:300; font-size:15px; line-height:1.78; color:#54604F; margin:0; padding:0 4px 24px;">Yes. International shipping is available; however, buyers are responsible for compliance with local import laws and regulations. We are not responsible for customs delays, holds, or seizures.</p>
+          </details>
+          <details>
+            <summary style="display:flex; justify-content:space-between; align-items:center; padding:20px 4px;">
+              <span class="bh-faq-q" style="font-family:'Jost',sans-serif; font-weight:500; font-size:16px; line-height:1.4; color:#1B241C; transition:color .2s ease; padding-right:16px;">How long does shipping take?</span>
+              <span class="bh-faq-ico" style="flex:none; font-family:'Jost',sans-serif; font-weight:300; font-size:26px; line-height:1; color:#014421;">+</span>
+            </summary>
+            <p class="bh-faq-a" style="font-family:'Jost',sans-serif; font-weight:300; font-size:15px; line-height:1.78; color:#54604F; margin:0; padding:0 4px 24px;">Orders are generally processed within 1–2 business days. Estimated U.S. delivery time is 5–7 business days. Delivery times may vary due to carrier delays or customs processing for international orders.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="bh-rv" style="max-width:860px; margin:0 auto; padding:24px 36px;">
+        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(24px,2.8vw,36px); line-height:1.1; margin:0 0 4px; color:#1B241C;">Returns &amp; Documentation</h2>
+        <div class="bh-faq" style="margin-top:20px;">
+          <details>
+            <summary style="display:flex; justify-content:space-between; align-items:center; padding:20px 4px;">
+              <span class="bh-faq-q" style="font-family:'Jost',sans-serif; font-weight:500; font-size:16px; line-height:1.4; color:#1B241C; transition:color .2s ease; padding-right:16px;">Do you offer refunds or returns?</span>
+              <span class="bh-faq-ico" style="flex:none; font-family:'Jost',sans-serif; font-weight:300; font-size:26px; line-height:1; color:#014421;">+</span>
+            </summary>
+            <p class="bh-faq-a" style="font-family:'Jost',sans-serif; font-weight:300; font-size:15px; line-height:1.78; color:#54604F; margin:0; padding:0 4px 24px;">Due to the nature of research products, all sales are final. Issues must be reported within 7–10 days of delivery by emailing <a href="mailto:support@bharewell.com" style="color:#9C7A4D;">support@bharewell.com</a>.</p>
+          </details>
+          <details>
+            <summary style="display:flex; justify-content:space-between; align-items:center; padding:20px 4px;">
+              <span class="bh-faq-q" style="font-family:'Jost',sans-serif; font-weight:500; font-size:16px; line-height:1.4; color:#1B241C; transition:color .2s ease; padding-right:16px;">Do you provide Certificates of Analysis (COAs)?</span>
+              <span class="bh-faq-ico" style="flex:none; font-family:'Jost',sans-serif; font-weight:300; font-size:26px; line-height:1; color:#014421;">+</span>
+            </summary>
+            <p class="bh-faq-a" style="font-family:'Jost',sans-serif; font-weight:300; font-size:15px; line-height:1.78; color:#54604F; margin:0; padding:0 4px 24px;">Yes. COAs are available upon request for most products. COAs are provided for informational purposes only and do not imply FDA approval or authorization for human use.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="bh-rv" style="max-width:860px; margin:0 auto; padding:24px 36px;">
+        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(24px,2.8vw,36px); line-height:1.1; margin:0 0 4px; color:#1B241C;">Liability &amp; Compliance</h2>
+        <div class="bh-faq" style="margin-top:20px;">
+          <details>
+            <summary style="display:flex; justify-content:space-between; align-items:center; padding:20px 4px;">
+              <span class="bh-faq-q" style="font-family:'Jost',sans-serif; font-weight:500; font-size:16px; line-height:1.4; color:#1B241C; transition:color .2s ease; padding-right:16px;">What happens if I misuse the product?</span>
+              <span class="bh-faq-ico" style="flex:none; font-family:'Jost',sans-serif; font-weight:300; font-size:26px; line-height:1; color:#014421;">+</span>
+            </summary>
+            <p class="bh-faq-a" style="font-family:'Jost',sans-serif; font-weight:300; font-size:15px; line-height:1.78; color:#54604F; margin:0; padding:0 4px 24px;">bhare disclaims all liability for improper or unauthorized use of its products. Responsibility for safe handling, storage, and lawful use transfers to the purchaser upon delivery.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="bh-rv" style="max-width:860px; margin:0 auto; padding:24px 36px;">
+        <h2 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:clamp(24px,2.8vw,36px); line-height:1.1; margin:0 0 4px; color:#1B241C;">Contact &amp; Support</h2>
+        <div class="bh-faq" style="margin-top:20px;">
+          <details>
+            <summary style="display:flex; justify-content:space-between; align-items:center; padding:20px 4px;">
+              <span class="bh-faq-q" style="font-family:'Jost',sans-serif; font-weight:500; font-size:16px; line-height:1.4; color:#1B241C; transition:color .2s ease; padding-right:16px;">Who can I contact if I have questions?</span>
+              <span class="bh-faq-ico" style="flex:none; font-family:'Jost',sans-serif; font-weight:300; font-size:26px; line-height:1; color:#014421;">+</span>
+            </summary>
+            <div class="bh-faq-a" style="padding:0 4px 24px;">
+              <p style="font-family:'Jost',sans-serif; font-weight:400; font-size:15px; line-height:1.78; color:#1B241C; margin:0 0 4px;"><strong>bhare</strong></p>
+              <p style="font-family:'Jost',sans-serif; font-weight:300; font-size:15px; line-height:1.78; color:#54604F; margin:0;">Email: <a href="mailto:support@bharewell.com" style="color:#9C7A4D;">support@bharewell.com</a></p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <div style="height:80px;"></div>
+    </div>
+    </sc-if>
+
     <!-- ============ LEGAL ============ -->
     <sc-if value="{{ isLegal }}" hint-placeholder-val="{{ true }}">
     <div class="bh-fade">
@@ -2309,7 +2453,7 @@
           <details class="ftr-acc" name="ftr"><summary>Catalog<span class="ftr-ico"><span class="ftr-p">+</span><span class="ftr-m">–</span></span></summary><div class="ftr-links"><a class="bh-link" href="/catalog" onclick="{{ ftAll }}">All Compounds</a></div></details>
           <details class="ftr-acc" name="ftr"><summary>Standards<span class="ftr-ico"><span class="ftr-p">+</span><span class="ftr-m">–</span></span></summary><div class="ftr-links"><a class="bh-link" href="/lab-reports" onclick="{{ ftCOA }}">Lab Reports</a><a class="bh-link" href="/lab-reports" onclick="{{ ftCOA }}">COA Library</a><a class="bh-link" href="/compliance" onclick="{{ ftCompliance }}">Compliance</a></div></details>
           <details class="ftr-acc" name="ftr"><summary>Company<span class="ftr-ico"><span class="ftr-p">+</span><span class="ftr-m">–</span></span></summary><div class="ftr-links"><a class="bh-link" href="/science" onclick="{{ goScience }}">The Science</a><a class="bh-link" href="/contact" onclick="{{ ftContact }}">Contact</a><a class="bh-link" href="https://partners.bharewell.com">Affiliates</a></div></details>
-          <details class="ftr-acc" name="ftr"><summary>Support<span class="ftr-ico"><span class="ftr-p">+</span><span class="ftr-m">–</span></span></summary><div class="ftr-links"><a class="bh-link" href="/#faq" onclick="{{ ftFaq }}">FAQ</a><a class="bh-link" href="/shipping" onclick="{{ ftShipping }}">Shipping Policy</a><a class="bh-link" href="/privacy" onclick="{{ goPrivacy }}">Privacy Policy</a><a class="bh-link" href="/terms" onclick="{{ goTerms }}">Terms & Conditions</a><a class="bh-link" href="/returns" onclick="{{ ftRefunds }}">Refund Policy</a></div></details>
+          <details class="ftr-acc" name="ftr"><summary>Support<span class="ftr-ico"><span class="ftr-p">+</span><span class="ftr-m">–</span></span></summary><div class="ftr-links"><a class="bh-link" href="/faq" onclick="{{ ftFaq }}">FAQ</a><a class="bh-link" href="/shipping" onclick="{{ ftShipping }}">Shipping Policy</a><a class="bh-link" href="/privacy" onclick="{{ goPrivacy }}">Privacy Policy</a><a class="bh-link" href="/terms" onclick="{{ goTerms }}">Terms & Conditions</a><a class="bh-link" href="/returns" onclick="{{ ftRefunds }}">Refund Policy</a></div></details>
         </div>
       </div>
     </div>
@@ -2601,12 +2745,12 @@ class Component extends DCLogic {
     this.setState({transitioning:true, navOpen:false});
     this._t = setTimeout(()=>{ try{ window.scrollTo(0,0); }catch(e){} apply(); this.setState({transitioning:false}, ()=>{ try{ window.scrollTo({top:0, left:0, behavior:'smooth'}); }catch(e){ window.scrollTo(0,0); } }); }, 150);
   }
-  go(page){ this.syncUrl(page); if(window._bhTrack){ if(page==='checkout') window._bhTrack('checkout_start',null,page); } var self=this; this.transitionTo(function(){ self.setState({page, cartOpen:false, subGate:false}); if(page==='science'||page==='compliance'||page==='coa'||page==='terms'||page==='privacy'||page==='returns'||page==='shipping'){ self.initPageReveal(page); } }); }
-  syncUrl(page){ try{ var paths={home:'/',science:'/science',compliance:'/compliance',terms:'/terms',privacy:'/privacy',quiz:'/bhare-quiz',coa:'/lab-reports',contact:'/contact',partners:'/partners',stack:'/stack-builder',shop:'/catalog',account:'/account',returns:'/returns',shipping:'/shipping'}; var pth=paths[page]; if(pth&&location.pathname!==pth){ history.pushState({},'',pth); } }catch(e){} }
-  route(){ try{ var p=(location.pathname||'/').toLowerCase().replace(/\/+$/,'')||'/'; if(p==='/terms-of-service'){ p='/terms'; } var _pm=p.match(/^\/products\/([^\/]+)$/); if(_pm){ this._routed=true; var _prod=this.findProductBySlug(_pm[1]); if(_prod){ if(this.state.page!=='product'||this.state.productId!==_prod.id){ this.openProduct(_prod.id, true); } } else if(this.state.page==='product'){ this.closeProduct(true); } return; } var map={'/':'home','/science':'science','/compliance':'compliance','/terms':'terms','/privacy':'privacy','/bhare-quiz':'quiz','/lab-reports':'coa','/coa-library':'coa','/contact':'contact','/partners':'partners','/stack-builder':'shop','/catalog':'shop','/account':'account'}; var pg=map[p]; if(p==='/shipping'){ pg='shipping'; } else if(p==='/returns'){ pg='returns'; } else if(p==='/terms'){ pg='legal'; this.setState({legalTopic:'terms'}); } else if(p==='/privacy'){ pg='legal'; this.setState({legalTopic:'privacy'}); } else if(p==='/faq'){ pg='home'; this._pendingFaqScroll=true; } if(!this._routed){ this._routed=true; if(pg==='shop' && (window.innerWidth||document.documentElement.clientWidth)<=768){ pg='home'; try{ history.replaceState({},'','/'); }catch(e){} } } if(pg==='shop'){ try{ var fq=new URLSearchParams(location.search).get('filter'); if(fq && ['repair','aging','brain','growth'].indexOf(fq)>=0){ this.setState({catalogCat:fq}); } }catch(e){} } if(pg&&pg!==this.state.page){ try{ [].slice.call(document.querySelectorAll('.ftr-acc[open]')).forEach(function(d){ d.open=false; }); }catch(e){} if(this.state.page==='quiz'){ try{ if(window.bhareUnmountQuiz) window.bhareUnmountQuiz(); }catch(e){} } this.setState({page:pg, cartOpen:false}); if(pg==='science'||pg==='compliance'||pg==='coa'||pg==='terms'||pg==='privacy'||pg==='returns'||pg==='shipping'){ this.initPageReveal(pg); } } if(this._pendingFaqScroll){ this._pendingFaqScroll=false; var _self=this; setTimeout(function(){ _self.scrollToFaq(); },600); } }catch(e){} }
+  go(page){ this.syncUrl(page); if(window._bhTrack){ if(page==='checkout') window._bhTrack('checkout_start',null,page); } var self=this; this.transitionTo(function(){ self.setState({page, cartOpen:false, subGate:false}); if(page==='science'||page==='compliance'||page==='coa'||page==='terms'||page==='privacy'||page==='returns'||page==='shipping'||page==='faq'){ self.initPageReveal(page); } }); }
+  syncUrl(page){ try{ var paths={home:'/',science:'/science',compliance:'/compliance',terms:'/terms',privacy:'/privacy',quiz:'/bhare-quiz',coa:'/lab-reports',contact:'/contact',partners:'/partners',stack:'/stack-builder',shop:'/catalog',account:'/account',returns:'/returns',shipping:'/shipping',faq:'/faq'}; var pth=paths[page]; if(pth&&location.pathname!==pth){ history.pushState({},'',pth); } }catch(e){} }
+  route(){ try{ var p=(location.pathname||'/').toLowerCase().replace(/\/+$/,'')||'/'; if(p==='/terms-of-service'){ p='/terms'; } var _pm=p.match(/^\/products\/([^\/]+)$/); if(_pm){ this._routed=true; var _prod=this.findProductBySlug(_pm[1]); if(_prod){ if(this.state.page!=='product'||this.state.productId!==_prod.id){ this.openProduct(_prod.id, true); } } else if(this.state.page==='product'){ this.closeProduct(true); } return; } var map={'/':'home','/science':'science','/compliance':'compliance','/terms':'terms','/privacy':'privacy','/bhare-quiz':'quiz','/lab-reports':'coa','/coa-library':'coa','/contact':'contact','/partners':'partners','/stack-builder':'shop','/catalog':'shop','/account':'account'}; var pg=map[p]; if(p==='/shipping'){ pg='shipping'; } else if(p==='/returns'){ pg='returns'; } else if(p==='/terms'){ pg='legal'; this.setState({legalTopic:'terms'}); } else if(p==='/privacy'){ pg='legal'; this.setState({legalTopic:'privacy'}); } else if(p==='/faq'){ pg='faq'; } if(!this._routed){ this._routed=true; if(pg==='shop' && (window.innerWidth||document.documentElement.clientWidth)<=768){ pg='home'; try{ history.replaceState({},'','/'); }catch(e){} } } if(pg==='shop'){ try{ var fq=new URLSearchParams(location.search).get('filter'); if(fq && ['repair','aging','brain','growth'].indexOf(fq)>=0){ this.setState({catalogCat:fq}); } }catch(e){} } if(pg&&pg!==this.state.page){ try{ [].slice.call(document.querySelectorAll('.ftr-acc[open]')).forEach(function(d){ d.open=false; }); }catch(e){} if(this.state.page==='quiz'){ try{ if(window.bhareUnmountQuiz) window.bhareUnmountQuiz(); }catch(e){} } this.setState({page:pg, cartOpen:false}); if(pg==='science'||pg==='compliance'||pg==='coa'||pg==='terms'||pg==='privacy'||pg==='returns'||pg==='shipping'||pg==='faq'){ this.initPageReveal(pg); } } if(this._pendingFaqScroll){ this._pendingFaqScroll=false; var _self=this; setTimeout(function(){ _self.scrollToFaq(); },600); } }catch(e){} }
   goLegal2(t){ this.setState({legalTopic:t}); this.go('legal'); try{ var _m={shipping:'/shipping',refunds:'/returns',terms:'/terms',privacy:'/privacy'}; if(_m[t]&&location.pathname!==_m[t]) history.replaceState({},'',_m[t]); }catch(e){} }
   scrollToFaq(){ try{ var el=document.querySelector('.bh-faq'); if(el){ var y=el.getBoundingClientRect().top+(window.pageYOffset||document.documentElement.scrollTop||0)-16; window.scrollTo({top:y,behavior:'smooth'}); } }catch(e){} }
-  goFaq(){ var self=this; this.transitionTo(function(){ self.setState({page:'home', cartOpen:false, subGate:false}); }); try{ history.pushState({},'','/#faq'); }catch(e){} setTimeout(function(){ self.scrollToFaq(); },520); }
+  goFaq(){ this.go('faq'); }
   sendContactMsg(){
     if(this.state.contactSending) return;
     var g=function(id){var el=document.getElementById(id);return el?el.value.trim():'';};
@@ -2848,7 +2992,7 @@ class Component extends DCLogic {
     var self=this;
     setTimeout(function(){ try{
       if(page==='science'){ self.revealGroup([].slice.call(document.querySelectorAll('.bh-sci-page .bh-rv')), {stagger:0}); }
-      else if(page==='compliance'||page==='terms'||page==='privacy'||page==='returns'||page==='shipping'){ self.revealGroup([].slice.call(document.querySelectorAll('.bh-compliance .bh-rv')), {stagger:100}); }
+      else if(page==='compliance'||page==='terms'||page==='privacy'||page==='returns'||page==='shipping'||page==='faq'){ self.revealGroup([].slice.call(document.querySelectorAll('.bh-compliance .bh-rv')), {stagger:100}); }
       else if(page==='coa'){ var cards=[].slice.call(document.querySelectorAll('.bh-coa-page .bh-cascade')); cards.forEach(function(c,i){ var diag=Math.floor(i/3)+(i%3); setTimeout(function(){c.classList.add('bh-in');}, 80+diag*100); }); }
     }catch(e){} }, 40);
   }
@@ -3140,8 +3284,8 @@ class Component extends DCLogic {
       products:searched, noResults:(searched.length===0), catalogCards, catalogPills, catAllCls:(this.state.catalogCat==='best'?'':'bh-catfp--on'), catBestCls:(this.state.catalogCat==='best'?'bh-catfp--on':''), setCatAll:()=>this.setState({catalogCat:'all'}), setCatBest:()=>this.setState({catalogCat:'best'}), catalogSearchVal:this.state.catalogSearchQ, onCatalogSearch:(e)=>this.setState({catalogSearchQ:e.target.value}), catalogSortVal:(this.state.catalogSort||'popular'), onCatalogSort:(e)=>this.setState({catalogSort:e.target.value}), onSearch:(e)=>this.setState({searchQ:e.target.value}), openLightbox:()=>this.openLightbox(), filters, featured:all.slice(0,4), stkReta, stkMela, stkGhk, stkBpc, addStackA:()=>this.addStackToCart(['ipamorelin','cjc1295']), addStackB:()=>this.addStackToCart(['ghkcu','bpc157']), stackAtotal:this.fmt(stkReta.price0+stkMela.price0), stackBtotal:this.fmt(stkGhk.price0+stkBpc.price0), isStack:page==='stack', goStack:()=>this.go('shop'), goCatalogLink:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.setState({filter:null, catalogCat:'all'}); this.go('shop');}, goStackLink:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('shop');}, stackPills, stackCards, stackSearchVal:this.state.stackSearchQ, onStackSearch:(e)=>this.setState({stackSearchQ:e.target.value}), stackSelected, stackTitle, stackMobLabel, stackTitleStyle:(this.state.stackIds.length===0?'color:#5A6356;font-style:italic;':'color:#14241A;'), stackTitleMuted:(this.state.stackIds.length===0), stackEmpty:(this.state.stackIds.length===0), stackHasItems:(this.state.stackIds.length>0), stackCount:this.state.stackIds.length, stackSubtotalFmt:this.fmt(_sbSub), addAllStack:()=>this.addAllStack(), stackDrawer:this.state.stackDrawer, toggleStackDrawer:()=>this.toggleStackDrawer(), scrollGridTop:()=>{try{var g=document.getElementById('sb-grid');if(g)window.scrollTo(0,g.getBoundingClientRect().top+window.scrollY-90);}catch(e){}}, goQuizFromStack:()=>{this.go('quiz');}, bestSellers:['bpc157','ghkcu','melanotanii','retatrutide'].map(id=>all.find(x=>x.id===id)).filter(Boolean), bestSellersCarousel:(()=>{ const ids=['bpc157','ghkcu','melanotanii','retatrutide','cjc1295']; const badgeMap={bpc157:[{t:'NEW',bg:'#014421'}], ghkcu:[{t:'15% OFF',bg:'#014421'}]}; const saleMap={ghkcu:0.15}; return ids.map(id=>all.find(x=>x.id===id)).filter(Boolean).map(p=>{ const sel=this.state.sizeSel[p.id]??0; const priceNum=+p.fromNum; const pct=saleMap[p.id]||0; const priceOut=pct?+(priceNum*(1-pct)).toFixed(2):priceNum; const badges=badgeMap[p.id]||[]; return Object.assign({}, p, { badges:badges, hasBadges:badges.length>0, onSale:pct>0, priceFmt:this.fmt(priceOut), origFmt:this.fmt(priceNum), hasDots:p.sizes.length>1, dots:p.sizes.map((s,i)=>({ label:s.label, select:s.select, style:'width:16px;height:16px;border-radius:50%;cursor:pointer;padding:0;'+(i===sel?'background:#014421;border:1.5px solid #014421;box-shadow:0 0 0 2px rgba(1,68,33,.18);':'background:#fff;border:1.5px solid rgba(1,68,33,.35);') })) }); }); })(), bsScrollPrev:()=>{ var c=document.getElementById('bh-bscar'); if(c) c.scrollBy({left:-322,behavior:'smooth'}); }, bsScrollNext:()=>{ var c=document.getElementById('bh-bscar'); if(c) c.scrollBy({left:322,behavior:'smooth'}); }, featuredCompound:(()=>{ const d=this.decorate(this.catalog.find(x=>x.id==='ghkcu')||this.catalog[0]); return { id:d.id, name:d.name, chemName:d.chemName, desc:d.desc, pills:d.pills, priceFmt:this.fmt(+d.fromNum), curDose:d.curDose, open:()=>this.openProduct(d.id), add:(e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); this.addStackToCart([d.id]); } }; })(), researchAreas:[ {name:'Tissue Remodeling', open:()=>this.goCatalogFilter('repair')}, {name:'Neuropeptide', open:()=>this.goCatalogFilter('brain')}, {name:'GH Axis', open:()=>this.goCatalogFilter('growth')}, {name:'Geroscience', open:()=>this.goCatalogFilter('aging')} ], raCards:[ {name:'Repair', bg:'#DCE9D5', img:'assets/tile-repair-bpc.webp', imgStyle:'', open:()=>this.goCatalogFilter('repair')}, {name:'Aging', bg:'#D7E7F2', img:'assets/tile-aging-ghkcu.webp', imgStyle:'', open:()=>this.goCatalogFilter('aging')}, {name:'Brain', bg:'#F6DCE6', img:'assets/tile-brain-retatrutide.webp', imgStyle:'', open:()=>this.goCatalogFilter('brain')}, {name:'Hormones', bg:'#DCE9D5', img:'assets/tile-hormones-cjc.webp', imgStyle:'', open:()=>{ this.setState({filter:null, catalogCat:'all'}); this.go('shop'); }} ], goSubscribe:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.setState({subMode:true, filter:null, catalogCat:'all'}); this.go('shop');}, product:selected, displayPrice:(this.state.subMode?selected.subNum:selected.curNum), groups, filters, legal:this.legalData, legalDoc:this.legalDocs[this.state.legalTopic||'terms'], isAccount:page==='account', acctEmailErr:this.state.acctEmailErr||'', acctResetErr:this.state.acctResetErr||'', acctSignin:(this.state.authMode||'signin')==='signin', acctCreate:this.state.authMode==='create', acctSubmitLabel:(this.state.authMode==='create')?'Become a member':'Sign in', acctFootNote:(this.state.authMode==='create')?'By creating an account you agree to our terms & privacy policy.':'New here? Create an account to unlock a members-only welcome offer.', acctTabSignin:'flex:1;cursor:pointer;border:none;padding:12px;font-family:inherit;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;border-radius:2px;'+((this.state.authMode||'signin')==='signin'?'background:#014421;color:#F5F1E8;':'background:transparent;color:#54604F;'), acctTabCreate:'flex:1;cursor:pointer;border:none;padding:12px;font-family:inherit;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;border-radius:2px;'+(this.state.authMode==='create'?'background:#014421;color:#F5F1E8;':'background:transparent;color:#54604F;'),acctSubmitStyle:'width:100%;background:#014421;border:none;padding:16px;font-family:Jost,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;border-radius:2px;cursor:pointer;color:'+((this.state.authMode==='create')?'#C8B083':'#F5F1E8'), acctTabs:(!this.state.memberAuthed && ((this.state.authMode||'signin')==='signin'||this.state.authMode==='create')), acctForgot:this.state.authMode==='forgot', acctSent:this.state.authMode==='sent', acctReset:this.state.authMode==='reset', acctDone:this.state.authMode==='done',
       qty:this.state.qty, bundles,
       coaModal:this.state.coaModal, openCoaModal:()=>this.setState({coaModal:true}), closeCoaModal:()=>this.setState({coaModal:false}), stopProp:(e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); },
-      isHome:page==='home', isProduct:page==='product', navHome:page==='home'?'bh-on':'', isShop:page==='shop', isAbout:page==='about', isScience:page==='science', isCompliance:page==='compliance', isTerms:page==='terms', isPrivacy:page==='privacy', isQuiz:page==='quiz', termsSections:this.termsSections, privacySections:this.privacySections, returnsSections:this.returnsSections, shippingSections:this.shippingSections, isPartners:page==='partners',
-      isLegal:page==='legal', isReturns:page==='returns', isShipping:page==='shipping', isContact:page==='contact', navCatalog:page==='shop'?'bh-on':'', navScience:page==='about'?'bh-on':'', navCompliance:page==='legal'?'bh-on':'', navContact:page==='contact'?'bh-on':'', navCOA:page==='coa'?'bh-on':'', isCOA:page==='coa', coaList:(function(self){var full=self.coaList;var q=(self.state.coaQ||'').trim().toLowerCase();return q?full.filter(function(c){return c.name.toLowerCase().indexOf(q)>=0;}):full;})(this), onCoaSearch:(e)=>this.setState({coaQ:e.target.value}), notMember:!this.state.isMember, subMode:this.state.subMode, toggleSub:()=>this.setState(s=>({subMode:!s.subMode})), subSwitchStyle:('position:relative; flex:none; width:46px; height:26px; border:none; border-radius:999px; cursor:pointer; padding:0; transition:background .2s ease; background:'+(this.state.subMode?'#014421':'#C9C2B4')+';'), subKnobStyle:('position:absolute; top:3px; left:'+(this.state.subMode?'23px':'3px')+'; width:20px; height:20px; border-radius:50%; background:#F5F1E8; transition:left .2s ease; display:block; box-shadow:0 1px 2px rgba(0,0,0,.2);'), setBuyOnce:()=>this.setState({subMode:false}), setBuySub:()=>this.setState({subMode:true}), buyOnceStyle:('flex:1; cursor:pointer; border:none; border-radius:999px; padding:12px 14px; font-family:inherit; font-size:12px; letter-spacing:.04em; font-weight:600; white-space:nowrap; transition:all .2s ease;'+(this.state.subMode?'background:transparent; color:#54604F;':'background:#014421; color:#F5F1E8;')), buySubStyle:('flex:1; cursor:pointer; border:none; border-radius:999px; padding:12px 14px; font-family:inherit; font-size:12px; letter-spacing:.04em; font-weight:600; white-space:nowrap; transition:all .2s ease;'+(this.state.subMode?'background:#014421; color:#F5F1E8;':'background:transparent; color:#54604F;')), addCartLabel:(this.state.subMode?'Add Replenishment Plan':'Add to Cart'), isCheckout:page==='checkout', showAgeGate:(page==='checkout'&&!this.state.checkoutAgeOk), confirmAge21:()=>this.setState({checkoutAgeOk:true}), declineAge21:()=>{try{window.location.replace('https://www.google.com');}catch(e){window.location.href='https://www.google.com';}}, isConfirm:page==='confirm', isProtocol:page==='protocol',
+      isHome:page==='home', isProduct:page==='product', navHome:page==='home'?'bh-on':'', isShop:page==='shop', isAbout:page==='about', isScience:page==='science', isCompliance:page==='compliance', isTerms:page==='terms', isPrivacy:page==='privacy', isQuiz:page==='quiz', isFaq:page==='faq', termsSections:this.termsSections, privacySections:this.privacySections, returnsSections:this.returnsSections, shippingSections:this.shippingSections, isPartners:page==='partners',
+      isLegal:page==='legal', isReturns:page==='returns', isShipping:page==='shipping', isContact:page==='contact', isFaqPage:page==='faq', navCatalog:page==='shop'?'bh-on':'', navScience:page==='about'?'bh-on':'', navCompliance:page==='legal'?'bh-on':'', navContact:page==='contact'?'bh-on':'', navCOA:page==='coa'?'bh-on':'', isCOA:page==='coa', coaList:(function(self){var full=self.coaList;var q=(self.state.coaQ||'').trim().toLowerCase();return q?full.filter(function(c){return c.name.toLowerCase().indexOf(q)>=0;}):full;})(this), onCoaSearch:(e)=>this.setState({coaQ:e.target.value}), notMember:!this.state.isMember, subMode:this.state.subMode, toggleSub:()=>this.setState(s=>({subMode:!s.subMode})), subSwitchStyle:('position:relative; flex:none; width:46px; height:26px; border:none; border-radius:999px; cursor:pointer; padding:0; transition:background .2s ease; background:'+(this.state.subMode?'#014421':'#C9C2B4')+';'), subKnobStyle:('position:absolute; top:3px; left:'+(this.state.subMode?'23px':'3px')+'; width:20px; height:20px; border-radius:50%; background:#F5F1E8; transition:left .2s ease; display:block; box-shadow:0 1px 2px rgba(0,0,0,.2);'), setBuyOnce:()=>this.setState({subMode:false}), setBuySub:()=>this.setState({subMode:true}), buyOnceStyle:('flex:1; cursor:pointer; border:none; border-radius:999px; padding:12px 14px; font-family:inherit; font-size:12px; letter-spacing:.04em; font-weight:600; white-space:nowrap; transition:all .2s ease;'+(this.state.subMode?'background:transparent; color:#54604F;':'background:#014421; color:#F5F1E8;')), buySubStyle:('flex:1; cursor:pointer; border:none; border-radius:999px; padding:12px 14px; font-family:inherit; font-size:12px; letter-spacing:.04em; font-weight:600; white-space:nowrap; transition:all .2s ease;'+(this.state.subMode?'background:#014421; color:#F5F1E8;':'background:transparent; color:#54604F;')), addCartLabel:(this.state.subMode?'Add Replenishment Plan':'Add to Cart'), isCheckout:page==='checkout', showAgeGate:(page==='checkout'&&!this.state.checkoutAgeOk), confirmAge21:()=>this.setState({checkoutAgeOk:true}), declineAge21:()=>{try{window.location.replace('https://www.google.com');}catch(e){window.location.href='https://www.google.com';}}, isConfirm:page==='confirm', isProtocol:page==='protocol',
       mainClass: this.state.transitioning ? 'bh-exit' : '',
       cart, cartCount, hasItems:cartCount>0, cartHasSub, cartOpen:this.state.cartOpen, subGate:this.state.subGate, coSummaryOpen:this.state.coSummaryOpen, coSummaryClosed:!this.state.coSummaryOpen, toggleCoSummary:()=>this.setState(s=>({coSummaryOpen:!s.coSummaryOpen})),
       subStep1:(this.state.subStep!==2), subStep2:(this.state.subStep===2),
