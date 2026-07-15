@@ -1677,9 +1677,9 @@
                       <span style="display:flex; align-items:center; gap:5px; margin-top:8px;">
                         <span style="font-family:'Jost',sans-serif; font-size:12.5px; color:#7C8472;">Delivered</span>
                         <select onchange="{{ onSubFreq }}" onclick="{{ stopProp }}" style="appearance:none; -webkit-appearance:none; -moz-appearance:none; font-family:'Jost',sans-serif; font-size:14px; color:#54604F; background:#fff url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='12'%20height='12'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23014421'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpolyline%20points='6%209%2012%2015%2018%209'/%3E%3C/svg%3E") no-repeat right 12px center; background-size:11px; border:1px solid rgba(0,0,0,0.18); border-radius:20px; padding:6px 28px 6px 12px; cursor:pointer; outline:none;">
-                          <option>every 1 month</option>
-                          <option>every 2 months</option>
-                          <option>every 3 months</option>
+                          <option value="30">every 1 month</option>
+                          <option value="60">every 2 months</option>
+                          <option value="90">every 3 months</option>
                         </select>
                       </span>
                     </span>
@@ -2225,6 +2225,14 @@
             <div style="display:flex; justify-content:space-between; align-items:center; gap:16px; padding:16px 0; border-top:1px solid rgba(1,68,33,.14); border-bottom:1px solid rgba(1,68,33,.14); margin-bottom:30px;"><span style="font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:#7C8472; font-weight:600;">Member perks</span><span style="font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:#014421; font-weight:700;">Active</span></div>
             <button onclick="{{ signOut }}" style="width:100%; background:#014421; color:#F5F1E8; border:none; padding:16px; font-family:Jost,sans-serif; font-size:12px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; border-radius:2px; cursor:pointer;">Sign Out</button>
           </div>
+          <!-- SUBSCRIPTIONS -->
+          <div style="margin-top:36px;">
+            <div style="font-size:11.5px; letter-spacing:.2em; text-transform:uppercase; color:#9C7A4D; font-weight:600; margin-bottom:18px;">Active Subscriptions</div>
+            <div id="bh-subs-loading" style="font-size:14px; color:#7C8472; padding:18px 0;">Loading subscriptions...</div>
+            <div id="bh-subs-empty" style="display:none; font-size:14px; color:#7C8472; padding:18px 0;">No active subscriptions.</div>
+            <div id="bh-subs-list" style="display:none; display:flex; flex-direction:column; gap:16px;"></div>
+          </div>
+        </div>
         </div></sc-if>
         <sc-if value="{{ acctTabs }}" hint-placeholder-val="{{ true }}">
         <div style="max-width:460px; margin:0 auto;">
@@ -2568,7 +2576,7 @@
 </script>
 <script type="text/x-dc" data-dc-script="">
 class Component extends DCLogic {
-  state = { page:'home', productId:null, qty:1, cart:[], cartOpen:false, subGate:false, coSummaryOpen:false, orderNum:null, orderTotal:0, orderEmail:'', orderItems:[], contactSent:false, contactFirstErr:false, contactLastErr:false, contactEmailErr:false, contactSending:false, contactError:false, partnerSent:false, navOpen:false, sizeSel:{}, filter:null, acctTab:'signin', transitioning:false, legalTopic:'terms', authMode:'signin', isMember:false, memberAuthed:false, memberEmail:'', memberJoin:'', acctLoginErr:'', acctRegErr:'', subMode:true, subFreq:'Monthly', coaQ:'', checkoutAgeOk:false, stackIds:[], stackCat:'all', stackSearchQ:'', catalogCat:'all', catalogSearchQ:'', catalogSort:'popular', stackDrawer:false, discountInput:'', discountApplied:null, discountError:false, coaModal:false, subStep:1 };
+  state = { page:'home', productId:null, qty:1, cart:[], cartOpen:false, subGate:false, coSummaryOpen:false, orderNum:null, orderTotal:0, orderEmail:'', orderItems:[], contactSent:false, contactFirstErr:false, contactLastErr:false, contactEmailErr:false, contactSending:false, contactError:false, partnerSent:false, navOpen:false, sizeSel:{}, filter:null, acctTab:'signin', transitioning:false, legalTopic:'terms', authMode:'signin', isMember:false, memberAuthed:false, memberEmail:'', memberJoin:'', acctLoginErr:'', acctRegErr:'', subMode:true, subFreq:'30', subFreqDays:30, coaQ:'', checkoutAgeOk:false, stackIds:[], stackCat:'all', stackSearchQ:'', catalogCat:'all', catalogSearchQ:'', catalogSort:'popular', stackDrawer:false, discountInput:'', discountApplied:null, discountError:false, coaModal:false, subStep:1 };
 
   get catalog() {
     return [
@@ -2775,7 +2783,7 @@ class Component extends DCLogic {
     if(!tok) return;
     fetch(self.MEMBER_API+'/members/me',{ headers:{ 'Authorization':'Bearer '+tok } })
       .then(function(r){
-        if(r.status===200){ return r.json().then(function(d){ self.setState({ memberAuthed:true, memberEmail:(d&&d.email)||'', memberJoin:self.fmtJoin(d&&(d.created_at||d.joined_at||d.join_date||d.createdAt)) }); }); }
+        if(r.status===200){ return r.json().then(function(d){ var em=(d&&d.email)||''; self.setState({ memberAuthed:true, memberEmail:em, memberJoin:self.fmtJoin(d&&(d.created_at||d.joined_at||d.join_date||d.createdAt)) }); if(em) setTimeout(function(){ self._loadMemberSubs(em); }, 400); }); }
         if(r.status===401){ try{ localStorage.removeItem('bhare_member_token'); }catch(e){} self.setState({ memberAuthed:false }); }
       }).catch(function(){});
   }
@@ -2827,6 +2835,51 @@ class Component extends DCLogic {
       }).catch(function(){ self.setState({acctRegErr:'Something went wrong, please try again.'}); });
   }
   memberSignOut(){ try{ localStorage.removeItem('bhare_member_token'); }catch(e){} window.location.reload(); }
+  _loadMemberSubs(email){
+    var loading=document.getElementById('bh-subs-loading');
+    var empty=document.getElementById('bh-subs-empty');
+    var list=document.getElementById('bh-subs-list');
+    if(!email||!loading)return;
+    var API='https://api.bharewell.com/store/paypal-subscription';
+    var PK='pk_0ab22d51049894f8909c0671c8a406a0c113bd2c28fa3a46789cefba5a0a7f8f';
+    function statusBadge(s){var m={active:'#014421',paused:'#9C7A4D',cancelled:'#7C8472'};return'<span style="font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:'+((m[s]||'#7C8472'))+';background:'+(s==='active'?'rgba(1,68,33,.1)':s==='paused'?'rgba(156,122,77,.1)':'rgba(0,0,0,.07)')+';border-radius:999px;padding:3px 9px;">'+s+'</span>';}
+    function intervalLabel(d){return d===30?'every 1 month':d===60?'every 2 months':d===90?'every 3 months':'every '+d+' days';}
+    function nextDate(iso){try{var d=new Date(iso);return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}catch(e){return '';}}
+    function patchSub(id,action,intervalDays,cb){
+      var body={action:action};if(intervalDays)body.interval_days=intervalDays;
+      fetch(API+'/'+id,{method:'PATCH',headers:{'Content-Type':'application/json','x-publishable-api-key':PK},body:JSON.stringify(body)})
+        .then(function(r){return r.json();}).then(function(d){if(d.ok&&cb)cb(d.subscription);}).catch(function(){alert('Something went wrong. Try again or contact support@bharewell.com.');});
+    }
+    function renderSubs(subs){
+      if(!subs||!subs.length){if(loading)loading.style.display='none';if(empty)empty.style.display='block';return;}
+      if(loading)loading.style.display='none';
+      if(list){list.style.display='flex';list.innerHTML=subs.map(function(s){
+        var canManage=s.status!=='cancelled';
+        var intervalSel=['30','60','90'].map(function(d){return'<option value="'+d+'"'+(String(s.interval_days)===d?' selected':'')+'>'+intervalLabel(parseInt(d))+'</option>';}).join('');
+        return '<div id="bhsub-'+s.id+'" style="background:#FCFAF4;border:1px solid rgba(1,68,33,.18);border-radius:6px;padding:20px 22px;">'
+          +'<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px;">'
+          +'<div><div style="font-size:13.5px;font-weight:700;color:#1B241C;margin-bottom:4px;">'+s.product_name+' — '+s.size+'</div>'
+          +'<div style="font-size:12px;color:#54604F;">'+intervalLabel(s.interval_days)+' · $'+s.discounted_price.toFixed(2)+' per cycle</div></div>'
+          +statusBadge(s.status)+'</div>'
+          +(s.status!=='cancelled'?'<div style="font-size:11.5px;color:#7C8472;margin-bottom:16px;">Next billing: '+nextDate(s.next_billing_date)+'</div>':'')
+          +(canManage?'<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">'
+            +(s.status==='active'?'<button onclick="window._bhSubPause(\''+s.id+'\')" style="font-family:Jost,sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;cursor:pointer;border:1px solid rgba(1,68,33,.3);border-radius:4px;padding:7px 14px;background:#fff;color:#014421;">Pause</button>':'')
+            +(s.status==='paused'?'<button onclick="window._bhSubResume(\''+s.id+'\')" style="font-family:Jost,sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;cursor:pointer;border:none;border-radius:4px;padding:7px 14px;background:#014421;color:#F5F1E8;">Resume</button>':'')
+            +'<select onchange="window._bhSubChangeInterval(\''+s.id+'\',this.value)" style="font-family:Jost,sans-serif;font-size:12px;border:1px solid rgba(1,68,33,.22);border-radius:4px;padding:7px 10px;background:#fff;color:#1B241C;cursor:pointer;">'+intervalSel+'</select>'
+            +'<button onclick="window._bhSubCancel(\''+s.id+'\')" style="font-family:Jost,sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;cursor:pointer;border:none;border-radius:4px;padding:7px 14px;background:transparent;color:#7C8472;">Cancel</button>'
+            +'</div>':'')
+          +'</div>';
+      }).join('');}
+    }
+    window._bhSubPause=function(id){patchSub(id,'pause',null,function(s){var el=document.getElementById('bhsub-'+id);if(el)el.outerHTML=renderCard(s);renderSubs([s]);});};
+    window._bhSubResume=function(id){patchSub(id,'resume',null,function(s){renderSubs([s]);});};
+    window._bhSubCancel=function(id){if(!confirm('Cancel this subscription? This cannot be undone.'))return;patchSub(id,'cancel',null,function(s){var el=document.getElementById('bhsub-'+id);if(el){var b=el.querySelector('div[style*="gap:8px"]');if(b)b.remove();var st=el.querySelector('span');if(st)st.outerHTML=statusBadge('cancelled');}});};
+    window._bhSubChangeInterval=function(id,days){patchSub(id,'change_interval',parseInt(days),function(s){var el=document.getElementById('bhsub-'+id);if(el){var nb=el.querySelector('div[style*="Next billing"]');if(nb)nb.textContent='Next billing: '+nextDate(s.next_billing_date);}});};
+    fetch(API+'?email='+encodeURIComponent(email),{headers:{'x-publishable-api-key':PK}})
+      .then(function(r){return r.json();})
+      .then(function(d){renderSubs(d.subscriptions||[]);})
+      .catch(function(){if(loading)loading.textContent='Could not load subscriptions.';});
+  }
   memberForgot(){
     var el=document.getElementById('acct-forgot-email'); var v=el?el.value.trim():'';
     if(!this.emOk(v)){ if(el) el.style.borderColor='#B23A2E'; this.setState({acctEmailErr:'Please enter a valid email address.'}); return; }
@@ -3093,14 +3146,41 @@ class Component extends DCLogic {
     window._bhOrderItems=items.map(function(i){return {name:i.name,size:i.size,qty:i.qty,unit_price:i.lineFmt?0:0};});
     var rawItems=cart.map(function(ci){var p=cat.find(function(x){return x.id===ci.id;});return {name:p?p.name:ci.id,size:ci.size,qty:ci.qty,unit_price:ci.price};});
     window._bhOrderItems=rawItems;
+    var _bpc157SubItem=rawItems.length===1&&cart[0]&&cart[0].sub&&cart[0].id==='bpc157'?cart[0]:null;
+    var _subInfo=_bpc157SubItem?{isSub:true,productId:'bpc157',productName:'BPC-157',size:_bpc157SubItem.size,unitPrice:_bpc157SubItem.price,intervalDays:self.state.subFreqDays||30,email:email,firstName:first}:null;
+    window._bhSubInfo=_subInfo;
     this.transitionTo(function(){
-      self.setState({page:'confirm', orderNum:ref, orderTotal:total, orderEmail:email, orderItems:items, cart:[], cartOpen:false});
-      self._loadPayPal(ref,total);
+      self.setState({page:'confirm', orderNum:ref, orderTotal:total, orderEmail:email, orderItems:items, cart:[], cartOpen:false, isSub:!!_subInfo, subConfirmInfo:_subInfo});
+      self._loadPayPal(ref,total,_subInfo);
     });
   }
-  _loadPayPal(ref,total){
+  _loadPayPal(ref,total,subInfo){
     var PAYPAL_CLIENT_ID='ATSKOqsyE1YkwsrRx2g6sHEOfpDeYEpHhu_Moiw3ejE6JG8Vet1D3N1jT-Z2Ori4QCqDa0NqbOXWwWlB';
-    function render(){
+    // BPC-157 subscription plan IDs per interval — fill once plans are created in PayPal dashboard
+    var BPC157_PLANS={'30':'BPC157_PLAN_30_DAYS','60':'BPC157_PLAN_60_DAYS','90':'BPC157_PLAN_90_DAYS'};
+    var isSub=!!(subInfo&&subInfo.isSub);
+    function renderSub(){
+      var c=document.getElementById('bh-paypal-container');
+      if(!c||!window.paypal)return;
+      c.innerHTML='';
+      var planId=BPC157_PLANS[String(subInfo.intervalDays)]||BPC157_PLANS['30'];
+      window.paypal.Buttons({
+        style:{layout:'vertical',color:'gold',shape:'rect',label:'subscribe',height:44},
+        createSubscription:function(data,actions){
+          return actions.subscription.create({plan_id:planId});
+        },
+        onApprove:function(data){
+          var c2=document.getElementById('bh-paypal-container');
+          if(c2){c2.innerHTML='<div style="background:rgba(1,68,33,.1);border:1px solid rgba(1,68,33,.3);border-radius:6px;padding:20px 22px;text-align:center;"><div style="font-family:Jost,sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#014421;font-weight:700;margin-bottom:8px;">Subscription Active</div><div style="font-size:15px;color:#1B241C;line-height:1.5;">Thank you'+(subInfo.firstName?', '+subInfo.firstName:'')+'. Your BPC-157 subscription is confirmed. First shipment processes within 1–2 business days.</div><div style="font-size:12px;color:#54604F;margin-top:10px;">Billed every '+subInfo.intervalDays+' days · Cancel or pause anytime from your account.</div></div>';}
+          try{fetch('https://api.bharewell.com/store/paypal-subscription',{method:'POST',headers:{'Content-Type':'application/json','x-publishable-api-key':'pk_0ab22d51049894f8909c0671c8a406a0c113bd2c28fa3a46789cefba5a0a7f8f'},body:JSON.stringify({paypal_subscription_id:data.subscriptionID,plan_id:planId,email:subInfo.email,first_name:subInfo.firstName,product_id:subInfo.productId,product_name:subInfo.productName,size:subInfo.size,unit_price:subInfo.unitPrice,interval_days:subInfo.intervalDays,ref:ref})});}catch(e){}
+        },
+        onError:function(){
+          var c3=document.getElementById('bh-paypal-container');
+          if(c3)c3.innerHTML='<div style="color:#C0392B;font-size:13px;text-align:center;padding:16px;">Something went wrong. Please try again or email support@bharewell.com.</div>';
+        }
+      }).render('#bh-paypal-container');
+    }
+    function renderOneTime(){
       var c=document.getElementById('bh-paypal-container');
       if(!c||!window.paypal)return;
       c.innerHTML='';
@@ -3123,6 +3203,7 @@ class Component extends DCLogic {
         }
       }).render('#bh-paypal-container');
     }
+    var render=isSub?renderSub:renderOneTime;
     function waitAndRender(tries){
       var c=document.getElementById('bh-paypal-container');
       if(!c){if(tries>0)setTimeout(function(){waitAndRender(tries-1);},200);return;}
@@ -3130,7 +3211,7 @@ class Component extends DCLogic {
       if(document.getElementById('bh-pp-sdk'))return;
       var s=document.createElement('script');
       s.id='bh-pp-sdk';
-      s.src='https://www.paypal.com/sdk/js?client-id='+PAYPAL_CLIENT_ID+'&currency=USD&intent=capture&enable-funding=venmo,paylater&disable-funding=card,credit';
+      s.src='https://www.paypal.com/sdk/js?client-id='+PAYPAL_CLIENT_ID+'&currency=USD&vault=true&enable-funding=venmo,paylater&disable-funding=card,credit';
       s.onload=render;
       s.onerror=function(){
         var c4=document.getElementById('bh-paypal-container');
@@ -3308,7 +3389,7 @@ class Component extends DCLogic {
       oneCardStyle:('cursor:pointer;border-radius:10px;padding:16px 18px;background:#fff;display:flex;align-items:center;justify-content:space-between;gap:14px;transition:border-color .2s ease,background .2s ease;'+(!_sa?'border:1.5px solid #014421;background:#F6F8F3;':'border:1.5px solid rgba(27,36,28,.18);')),
       oneLabelStyle:"font-family:'Jost',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.01em;color:#1B241C",
       onePriceStyle:"font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;line-height:1;color:#1B241C",
-      selectSub:()=>this.setState({subMode:true}), selectOneTime:()=>this.setState({subMode:false}), onSubFreq:(e)=>this.setState({subFreq:e.target.value}), 
+      selectSub:()=>this.setState({subMode:true}), selectOneTime:()=>this.setState({subMode:false}), onSubFreq:(e)=>this.setState({subFreq:e.target.value, subFreqDays:parseInt(e.target.value)||30}),
       subCardCls:('bh-subcard'+(_sa?' sel':'')), onePriceFmt:('$'+selected.curNum), subPriceFmt:this.fmt(+(selected.curPrice*0.9).toFixed(2)), strikeFmt:('$'+selected.curNum), atcPriceFmt:(_sa?this.fmt(+(selected.curPrice*0.9).toFixed(2)):('$'+selected.curNum)),
       atcLabel:(this.state.pdpAdded?'Added':('Add to Cart \u00B7 '+(_sa?this.fmt(+(selected.curPrice*0.9).toFixed(2)):('$'+selected.curNum)))),
       atcStyle:('width:100%;cursor:pointer;color:#F5F1E8;border:none;padding:18px;font-family:\'Jost\',sans-serif;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;border-radius:8px;transition:background .3s ease;display:flex;align-items:center;justify-content:center;gap:10px;background:'+(this.state.pdpAdded?'#2E7D4F':'#014421')+';'),
