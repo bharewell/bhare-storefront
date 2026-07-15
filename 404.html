@@ -1225,6 +1225,10 @@
     .bh-pdp-buyrow .bh-btn{ min-height:52px!important; border-radius:9999px!important; }
     .bh-pdp-topbar{ display:flex!important; }
   }
+  /* Sticky ATC morph: hide with slide-down when the static ATC button is in view */
+  .bh-pdp-sticky{ transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease; }
+  .bh-pdp-sticky.bh-atc-anim{ transform:translateY(100%); opacity:0; }
+  .bh-pdp-sticky.bh-atc-off{ display:none!important; }
   /* ===================== ANIMATION SYSTEM ===================== */
   @keyframes bhUp20 { from { opacity:0; transform:translateY(20px);} to { opacity:1; transform:none;} }
   .bh-rv { opacity:0; transform:translateY(20px); transition:opacity .4s ease-out, transform .4s ease-out; }
@@ -2368,15 +2372,28 @@
         <div class="bh-co-grid" style="display:grid; grid-template-columns:1.3fr .9fr; gap:54px; align-items:start;">
           <div class="bh-co-form">
             <div style="font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:#014421; font-weight:700; margin-bottom:18px;">Contact &amp; Shipping</div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;"><input id="bh-co-first" placeholder="First name" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><input placeholder="Last name" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"></div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+              <div><input id="bh-co-first" placeholder="First name" style="width:100%; box-sizing:border-box; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><span id="bh-co-first-err" style="display:none; color:#C0392B; font-size:12px; margin-top:4px;">Required</span></div>
+              <div><input id="bh-co-last" placeholder="Last name" style="width:100%; box-sizing:border-box; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><span id="bh-co-last-err" style="display:none; color:#C0392B; font-size:12px; margin-top:4px;">Required</span></div>
+            </div>
             <input placeholder="Institution / Lab name (optional)" style="width:100%; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff; margin-bottom:16px;">
-            <input id="bh-co-email" placeholder="Email address" style="width:100%; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff; margin-bottom:16px;">
-            <input placeholder="Street address" style="width:100%; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff; margin-bottom:16px;">
-            <div style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:16px; margin-bottom:30px;"><input placeholder="City" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><input placeholder="State" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><input placeholder="ZIP" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"></div>
+            <div style="margin-bottom:16px;"><input id="bh-co-email" placeholder="Email address" style="width:100%; box-sizing:border-box; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><span id="bh-co-email-err" style="display:none; color:#C0392B; font-size:12px; margin-top:4px;">Required</span></div>
+            <input id="bh-co-phone" type="tel" placeholder="Phone number" style="width:100%; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff; margin-bottom:8px; box-sizing:border-box;">
+            <label style="display:flex; align-items:flex-start; gap:8px; font-size:12px; color:#54604F; margin-bottom:16px; cursor:pointer;"><input id="bh-co-sms" type="checkbox" style="margin-top:2px; accent-color:#014421; flex-shrink:0;"> <span>I agree to receive SMS order updates. Message &amp; data rates may apply. Reply STOP to opt out.</span></label>
+            <div style="margin-bottom:16px;"><input id="bh-co-street" placeholder="Street address" style="width:100%; box-sizing:border-box; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><span id="bh-co-street-err" style="display:none; color:#C0392B; font-size:12px; margin-top:4px;">Required</span></div>
+            <div style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:16px; margin-bottom:30px;">
+              <div><input id="bh-co-city" placeholder="City" style="width:100%; box-sizing:border-box; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><span id="bh-co-city-err" style="display:none; color:#C0392B; font-size:12px; margin-top:4px;">Required</span></div>
+              <div><input id="bh-co-state" placeholder="State" style="width:100%; box-sizing:border-box; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><span id="bh-co-state-err" style="display:none; color:#C0392B; font-size:12px; margin-top:4px;">Required</span></div>
+              <div><input id="bh-co-zip" placeholder="ZIP" style="width:100%; box-sizing:border-box; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><span id="bh-co-zip-err" style="display:none; color:#C0392B; font-size:12px; margin-top:4px;">Required</span></div>
+            </div>
             <div style="font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:#014421; font-weight:700; margin-bottom:18px;">Payment</div>
-            <div style="background:#F5F9F5; border:1px solid rgba(1,68,33,.2); border-radius:4px; padding:16px 18px; display:flex; align-items:center; gap:14px;">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#014421" stroke-width="1.5" style="flex:none;"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
-              <div><div style="font-family:'Jost',sans-serif; font-size:13px; font-weight:600; color:#014421; margin-bottom:3px;">PayPal &amp; Venmo</div><div style="font-family:'Jost',sans-serif; font-size:12px; color:#54604F; line-height:1.5;">Payment buttons appear on the next screen. No card required.</div></div>
+            <div style="background:#F5F9F5; border:1px solid rgba(1,68,33,.2); border-radius:4px; padding:16px 18px;">
+              <div style="display:flex; align-items:center; gap:14px; margin-bottom:7px;">
+                <span aria-label="PayPal" style="font-family:Verdana,Arial,sans-serif; font-size:20px; font-weight:bold; font-style:italic; letter-spacing:-.5px; line-height:1;"><span style="color:#003087;">Pay</span><span style="color:#009cde;">Pal</span></span>
+                <span style="width:1px; height:22px; background:rgba(1,68,33,.18); flex:none;"></span>
+                <span aria-label="Venmo" style="font-family:Verdana,Arial,sans-serif; font-size:20px; font-weight:bold; color:#3D95CE; letter-spacing:-.5px; line-height:1;">venmo</span>
+              </div>
+              <div style="font-family:'Jost',sans-serif; font-size:12px; color:#54604F; line-height:1.5;">Payment buttons appear on the next screen. No card required.</div>
             </div>
           </div>
           <div class="bh-co-summary" style="background:#FCFAF4; border:1px solid rgba(1,68,33,.14); border-radius:4px; padding:28px;">
@@ -2402,6 +2419,11 @@
     <sc-if value="{{ isConfirm }}" hint-placeholder-val="{{ true }}">
     <div class="bh-fade">
       <section style="max-width:660px; margin:0 auto; padding:72px 24px 100px;">
+        <div style="display:flex;justify-content:center;margin-bottom:24px;">
+          <div style="width:72px;height:72px;border-radius:50%;background:rgba(1,68,33,.1);border:2px solid rgba(1,68,33,.25);display:flex;align-items:center;justify-content:center;">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#014421" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+        </div>
         <div style="font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:#9C7A4D; font-weight:700; margin-bottom:10px;">Thank you</div>
         <h1 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:40px; line-height:1.05; margin:0 0 16px; color:#1B241C;">Your order was received.</h1>
         <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:24px; gap:16px; flex-wrap:wrap;">
@@ -2542,6 +2564,21 @@
             </div>
           </sc-for>
         </div>
+        <sc-if value="{{ hasCartUpsell }}" hint-placeholder-val="{{ false }}">
+        <div id="bh-upsell-section" style="padding:0 28px 18px; border-top:1px solid rgba(1,68,33,.08);">
+          <div style="font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#9C7A4D; font-weight:700; padding:14px 0 10px;">Psst… this goes well with these too!</div>
+          <div id="bh-upsell-scroll" style="display:flex; gap:12px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; -ms-overflow-style:none;">
+            <sc-for list="{{ cartUpsell }}" as="u" hint-placeholder-count="2">
+              <div style="min-width:110px;background:#fff;border:1px solid rgba(1,68,33,.16);border-radius:6px;padding:10px;text-align:center;flex-shrink:0;">
+                {{ u.imgElSm }}
+                <div style="font-size:12px;font-weight:600;color:#1B241C;margin:6px 0 2px;line-height:1.2;">{{ u.name }}</div>
+                <div style="font-size:11px;color:#7C8472;margin-bottom:8px;">{{ u.priceFmt }}</div>
+                <button onclick="{{ u.add }}" style="cursor:pointer;background:#014421;color:#F5F1E8;border:none;border-radius:4px;padding:6px 10px;font-size:11px;font-weight:600;font-family:inherit;">+ Add</button>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        </sc-if>
         <div style="padding:22px 28px; border-top:1px solid rgba(1,68,33,.14);"><div style="display:flex; justify-content:space-between; margin-bottom:16px;"><span style="font-size:15px; color:#54604F;">Subtotal</span><span style="font-size:18px; font-weight:700; color:#014421;">{{ subtotalFmt }}</span></div><div style="font-size:11px; line-height:1.55; color:#7C8472; text-align:center; margin:14px 0 2px;">For research use only · Not for human or veterinary consumption.</div><sc-if value="{{ cartHasSub }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px; line-height:1.6; color:#54604F; text-align:left; margin:0 0 14px; padding:12px 14px; background:rgba(1,68,33,.05); border:1px solid rgba(1,68,33,.12); border-radius:4px; overflow-wrap:break-word;">Subscribe &amp; Save orders are billed automatically every 30 days at the discounted price. Cancel anytime from your account.</div></sc-if><button class="bh-btn" onclick="{{ goCheckout }}" style="width:100%; cursor:pointer; background:#014421; color:#F5F1E8; border:none; padding:16px; font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; font-weight:600; border-radius:2px;">Checkout</button></div>
       </div>
       </sc-if>
@@ -2955,7 +2992,24 @@ class Component extends DCLogic {
     try{ if(self.state.cartOpen||self.state.subGate) self.setState({cartOpen:false, subGate:false}); }catch(e){}
     try{ var setMenuTop=function(){ var n=document.getElementById('bh-nav'); if(n){ var b=Math.round(n.getBoundingClientRect().bottom); if(b>0) document.documentElement.style.setProperty('--bh-menu-top', b+'px'); } }; setMenuTop(); [120,400,1000].forEach(function(d){ setTimeout(setMenuTop,d); }); window.addEventListener('resize', setMenuTop); window.addEventListener('scroll', function(){ if(!document.querySelector('.bh-mobnav.bh-open')) setMenuTop(); }, {passive:true}); }catch(e){}
     try{ var onPdpScroll=function(){ var bar=document.getElementById('bh-pdp-topbar'); if(!bar) return; var btn=document.querySelector('.bh-pdp-buyrow [data-bhare-buy]'); if(!btn){ bar.classList.remove('bh-show'); return; } var top=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--bh-menu-top'))||88; var r=btn.getBoundingClientRect(); bar.classList.toggle('bh-show', r.bottom < top+6); }; window.addEventListener('scroll', onPdpScroll, {passive:true}); window.addEventListener('resize', onPdpScroll); self._onPdpScroll=onPdpScroll; }catch(e){}
-    try{ var atcIO=new IntersectionObserver(function(ents){ ents.forEach(function(en){ if(en.isIntersecting) en.target.classList.add('atc-revealed'); }); }, {threshold:0.2, rootMargin:'0px 0px -10% 0px'}); self._atcIO=atcIO; self._observeAtc=function(){ var b=document.querySelector('.bh-pdp-buyrow'); if(b && !b._atcObs){ b._atcObs=true; atcIO.observe(b); } }; self._observeAtc(); }catch(e){}
+    try{ var atcIO=new IntersectionObserver(function(ents){ ents.forEach(function(en){ if(en.isIntersecting) en.target.classList.add('atc-revealed'); }); }, {threshold:0.2, rootMargin:'0px 0px -10% 0px'}); self._atcIO=atcIO;
+      // Sticky ATC morph: when the static ATC button is visible, slide the sticky bar out; when scrolled past, slide it back in.
+      var stickyIO=new IntersectionObserver(function(ents){
+        var stickyEl=document.querySelector('.bh-pdp-sticky'); if(!stickyEl) return;
+        ents.forEach(function(en){
+          if(en.isIntersecting){
+            stickyEl.classList.add('bh-atc-anim');
+            clearTimeout(stickyEl._bhAtcT);
+            stickyEl._bhAtcT=setTimeout(function(){ stickyEl.classList.add('bh-atc-off'); }, 300);
+          } else {
+            clearTimeout(stickyEl._bhAtcT);
+            stickyEl.classList.remove('bh-atc-off');
+            requestAnimationFrame(function(){ stickyEl.classList.remove('bh-atc-anim'); });
+          }
+        });
+      }, {threshold:0.05});
+      self._stickyAtcIO=stickyIO;
+      self._observeAtc=function(){ var b=document.querySelector('.bh-pdp-buyrow'); if(b && !b._atcObs){ b._atcObs=true; atcIO.observe(b); } var sb=document.querySelector('.bh-pdp-buyrow [data-bhare-buy]'); if(sb && !sb._stkObs){ sb._stkObs=true; stickyIO.observe(sb); } }; self._observeAtc(); }catch(e){}
     try{ document.addEventListener('click', function(e){ var t=e.target&&e.target.closest?e.target.closest('a,button'):null; if(!t) return; if(t.closest('.bh-press,.bh-burger,.bh-mobnav-close,.bh-dosetabs,.bh-bscar-arrow,.bh-purchase-grid,.bh-catsort,.bh-catfp,.bh-catbar,.bh-mn-search,.bh-co-mobsum-row,.bhq-opt,.bhq-back,.bh-padd,.bh-bs-addfull,.bhq-radd,.bhq-addall,summary,[data-bhare-buy],[data-noscroll]')) return; setTimeout(function(){ try{ window.scrollTo({top:0,left:0,behavior:'smooth'}); }catch(_){ window.scrollTo(0,0); } }, 70); }, false); }catch(e){}
     try{ self.checkMemberAuth(); }catch(e){}
     try{ document.addEventListener('click', function(e){ var a=(e.target&&e.target.closest)?e.target.closest('.ftr-acc .ftr-links a'):null; if(a){ var d=a.closest('.ftr-acc'); if(d) d.open=false; } }); }catch(e){}
@@ -3169,20 +3223,34 @@ class Component extends DCLogic {
   isMemberLoggedIn(){ try{ return !!localStorage.getItem('bhare-member-token'); }catch(e){ return false; } }
   placeOrder(){
     var self=this;
+    var EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    var required=['bh-co-first','bh-co-last','bh-co-email','bh-co-street','bh-co-city','bh-co-state','bh-co-zip'];
+    var firstBad=null;
+    required.forEach(function(id){
+      var el=document.getElementById(id);
+      var err=document.getElementById(id+'-err');
+      if(!el) return;
+      var v=(el.value||'').trim();
+      var bad=!v;
+      if(!bad && id==='bh-co-email' && !EMAIL_RE.test(v)){ bad=true; if(err) err.textContent='Enter a valid email address'; }
+      else if(err) err.textContent='Required';
+      if(bad){
+        el.style.borderColor='#C0392B'; el.style.outline='none';
+        if(err){ err.style.display='block'; }
+        if(!firstBad) firstBad=el;
+      } else {
+        el.style.borderColor='rgba(1,68,33,.22)';
+        if(err){ err.style.display='none'; }
+      }
+    });
+    if(firstBad){
+      try{ firstBad.scrollIntoView({behavior:'smooth', block:'center'}); }catch(e){}
+      try{ firstBad.focus({preventScroll:true}); }catch(e){ try{ firstBad.focus(); }catch(_){} }
+      return;
+    }
     var firstEl=document.getElementById('bh-co-first');
     var emailEl=document.getElementById('bh-co-email');
-    var first=(firstEl?(firstEl.value||'').trim():'');
     var email=(emailEl?(emailEl.value||'').trim():'');
-    if(!first){
-      if(firstEl){firstEl.style.borderColor='#C0392B';firstEl.style.outline='none';firstEl.focus();}
-      return;
-    }
-    if(!email||email.indexOf('@')<1){
-      if(emailEl){emailEl.style.borderColor='#C0392B';emailEl.style.outline='none';emailEl.focus();}
-      return;
-    }
-    if(firstEl) firstEl.style.borderColor='rgba(1,68,33,.22)';
-    if(emailEl) emailEl.style.borderColor='rgba(1,68,33,.22)';
     var cart=this.state.cart;
     var disc=this.state.discountApplied;
     var subtotal=cart.reduce(function(a,c){return a+c.price*c.qty;},0);
@@ -3203,6 +3271,52 @@ class Component extends DCLogic {
     window._bhOrderItems=items.map(function(i){return {name:i.name,size:i.size,qty:i.qty,unit_price:i.lineFmt?0:0};});
     var rawItems=cart.map(function(ci){var p=cat.find(function(x){return x.id===ci.id;});return {name:p?p.name:ci.id,size:ci.size,qty:ci.qty,unit_price:ci.price};});
     window._bhOrderItems=rawItems;
+    // Create Medusa cart asynchronously (non-blocking) so payment capture can be linked to a backend cart
+    (async function createMedusaCart(){
+      try {
+        var VARIANT_MAP = {
+          bpc157: {'5 MG':'variant_01KXFGRWD019CJNRYRD16166X7'},
+          ghkcu:  {'50 MG':'variant_01KXFGWCD2SK3T3080CYNQJV7Y','100 MG':'variant_01KXFGWCD2CK6C2BPV03NN3A1F'},
+          ta1:    {'10 MG':'variant_01KXFGWCG6WA58NYCDEP1HFYV7'},
+          epitalon:{'10 MG':'variant_01KXFGWCKBM2339P40KB43689B','20 MG':'variant_01KXFGWCKBEFA5R1DHGK7DYMGW','50 MG':'variant_01KXFGWCKB3BB9ZVVT9R8DA7V5'},
+          nad:    {'100 MG':'variant_01KXFGWCQ9W6ANQAEA90TNH2GQ','500 MG':'variant_01KXFGWCQ9PQ0QE3P6M26ZPWV3'},
+          semax:  {'30 MG':'variant_01KXFGWCXVJMFSRSNPD7P2RKV6'},
+          selank: {'30 MG':'variant_01KXFGWD0MM6GTZX9FGY12KMJ0'},
+          ipamorelin:{'5 MG':'variant_01KXFGWD3DMEY0Q4TJCJXT8VFT','10 MG':'variant_01KXFGWD3D0J4W2AX7HJFGW6B4'},
+          glutathione:{'600 MG':'variant_01KXFGWDJYJBRR84143FSRXM6E'},
+          aod9604:{'5 MG':'variant_01KXFGWDNDRAA9RT14WMRD24FZ'},
+          sermorelin:{'5 MG':'variant_01KXFGWDV15W5BN8R47TYVHNWY'},
+          kisspeptin:{'5 MG':'variant_01KXFGWDXNPDH68ANWFK48CAQB'},
+          dsip:   {'5 MG':'variant_01KXFGWE09T70PY46K9X3063TA'}
+        };
+        var PK='pk_0ab22d51049894f8909c0671c8a406a0c113bd2c28fa3a46789cefba5a0a7f8f';
+        var REGION='reg_01KXFGR5Q0J2W5BEQHTMMBG6Z3';
+        var MEDUSA_BASE='https://api.bharewell.com';
+        // 1. Create cart
+        var cartRes = await fetch(MEDUSA_BASE+'/store/carts', {
+          method:'POST',
+          headers:{'Content-Type':'application/json','x-publishable-api-key':PK},
+          body: JSON.stringify({region_id: REGION, email: email})
+        });
+        var cartData = await cartRes.json();
+        var cartId = cartData.cart && cartData.cart.id;
+        if(!cartId) return;
+        // 2. Add line items for known variants (skip products with no Medusa variant yet)
+        for(var k=0;k<cart.length;k++){
+          var ci=cart[k];
+          var vm=VARIANT_MAP[ci.id];
+          var vid=vm && vm[ci.size];
+          if(!vid) continue;
+          await fetch(MEDUSA_BASE+'/store/carts/'+cartId+'/line-items', {
+            method:'POST',
+            headers:{'Content-Type':'application/json','x-publishable-api-key':PK},
+            body: JSON.stringify({variant_id:vid, quantity:ci.qty})
+          });
+        }
+        // Store cart ID for the paypal-order endpoint
+        window._bhMedusaCartId = cartId;
+      } catch(e) {}
+    })();
     this.transitionTo(function(){
       self.setState({page:'confirm', orderNum:ref, orderTotal:total, orderEmail:email, orderItems:items, cart:[], cartOpen:false});
       self._loadPayPal(ref,total);
@@ -3224,7 +3338,7 @@ class Component extends DCLogic {
             var c2=document.getElementById('bh-paypal-container');
             if(c2){c2.innerHTML='<div style="background:rgba(1,68,33,.1);border:1px solid rgba(1,68,33,.3);border-radius:6px;padding:20px 22px;text-align:center;"><div style="font-family:Jost,sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#014421;font-weight:700;margin-bottom:8px;">Payment Confirmed</div><div style="font-size:15px;color:#1B241C;line-height:1.5;">Thank you'+(details.payer&&details.payer.name?', '+details.payer.name.given_name:'')+'. Your order is confirmed and will ship within 1–2 business days.</div></div>';}
             var firstEl=document.getElementById('bh-co-first');
-            try{fetch('https://api.bharewell.com/store/paypal-order',{method:'POST',headers:{'Content-Type':'application/json','x-publishable-api-key':'pk_0ab22d51049894f8909c0671c8a406a0c113bd2c28fa3a46789cefba5a0a7f8f'},body:JSON.stringify({paypal_order_id:data.orderID,paypal_capture_id:(details.purchase_units&&details.purchase_units[0]&&details.purchase_units[0].payments&&details.purchase_units[0].payments.captures&&details.purchase_units[0].payments.captures[0]?details.purchase_units[0].payments.captures[0].id:''),ref:ref,email:(details.payer&&details.payer.email_address?details.payer.email_address:''),first_name:(firstEl?firstEl.value.trim():(details.payer&&details.payer.name?details.payer.name.given_name:'')),total:total,items:window._bhOrderItems||[]})});}catch(e){}
+            try{fetch('https://api.bharewell.com/store/paypal-order',{method:'POST',headers:{'Content-Type':'application/json','x-publishable-api-key':'pk_0ab22d51049894f8909c0671c8a406a0c113bd2c28fa3a46789cefba5a0a7f8f'},body:JSON.stringify({paypal_order_id:data.orderID,paypal_capture_id:(details.purchase_units&&details.purchase_units[0]&&details.purchase_units[0].payments&&details.purchase_units[0].payments.captures&&details.purchase_units[0].payments.captures[0]?details.purchase_units[0].payments.captures[0].id:''),ref:ref,email:(details.payer&&details.payer.email_address?details.payer.email_address:''),first_name:(firstEl?firstEl.value.trim():(details.payer&&details.payer.name?details.payer.name.given_name:'')),total:total,items:window._bhOrderItems||[],cart_id:window._bhMedusaCartId||''})});}catch(e){}
           });
         },
         onError:function(){
@@ -3367,6 +3481,38 @@ class Component extends DCLogic {
         inc:()=>this.changeQty(ci.id,ci.size,1), dec:()=>this.changeQty(ci.id,ci.size,-1), remove:(e)=>this.removeCartItem(e,ci.id,ci.size) };
     });
     const cartCount = cart.reduce((a,c)=>a+c.qty,0);
+    // --- Cart cross-sell ("Psst…" upsell carousel) ---
+    const _CROSS_SELL = {
+      retatrutide: ['ghkcu','bpc157','cjc1295'],
+      bpc157:      ['ghkcu','tb500','ipamorelin'],
+      ghkcu:       ['bpc157','epitalon','semax'],
+      tb500:       ['bpc157','ipamorelin','cjc1295'],
+      cjc1295:     ['ipamorelin','bpc157','ghkcu'],
+      ipamorelin:  ['cjc1295','bpc157','ghkcu'],
+      semax:       ['selank','ghkcu','dsip'],
+      selank:      ['semax','ghkcu','dsip'],
+      epitalon:    ['ghkcu','motsc','ta1'],
+      nad:         ['glutathione','ta1','ghkcu'],
+      motsc:       ['epitalon','nad','ta1'],
+      ta1:         ['epitalon','motsc','nad'],
+      glutathione: ['nad','ta1','ghkcu'],
+      aod9604:     ['cjc1295','ipamorelin','bpc157'],
+      sermorelin:  ['ipamorelin','cjc1295','ghkcu'],
+      kisspeptin:  ['ta1','ghkcu','epitalon'],
+      dsip:        ['semax','selank','ghkcu']
+    };
+    const cartUpsell = (()=>{
+      const inCart={}; this.state.cart.forEach(c=>{ inCart[c.id]=1; });
+      const sug=[];
+      this.state.cart.forEach(c=>{ (_CROSS_SELL[c.id]||[]).forEach(id=>{ if(!inCart[id] && sug.indexOf(id)<0 && cat.some(x=>x.id===id)) sug.push(id); }); });
+      return sug.slice(0,4).map(id=>{
+        const p=cat.find(x=>x.id===id);
+        const _src='assets/pv-'+id+'.webp';
+        return { id, name:p.name, priceFmt:this.fmt(p.sizes[0].price),
+          imgElSm: React.createElement('img',{src:_src, alt:p.name, style:{width:'48px',height:'48px',borderRadius:'4px',border:'1px solid #E8E2D6',objectFit:'cover',background:'#ECE1CD'}}),
+          add:(e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); this.addToCart(id, p.sizes[0].label, p.sizes[0].price, 1); } };
+      });
+    })();
     const cartHasSub = this.state.cart.some(c=>c.sub);
     const subtotal = this.state.cart.reduce((a,c)=>a+c.price*c.qty,0);
     const shipping = subtotal>=200 || subtotal===0 ? 0 : 18;
@@ -3400,6 +3546,8 @@ class Component extends DCLogic {
       cart, cartCount, hasItems:cartCount>0, cartHasSub, cartOpen:this.state.cartOpen, subGate:this.state.subGate, coSummaryOpen:this.state.coSummaryOpen, coSummaryClosed:!this.state.coSummaryOpen, toggleCoSummary:()=>this.setState(s=>({coSummaryOpen:!s.coSummaryOpen})),
       subStep1:(this.state.subStep!==2), subStep2:(this.state.subStep===2),
       cartEmpty:cart.length===0, cartNotEmpty:cart.length>0,
+      cartUpsell, hasCartUpsell:cartUpsell.length>0,
+      openVenmo:(e)=>{ if(e&&e.preventDefault) e.preventDefault(); var handle='BHARE_VENMO_HANDLE_PLACEHOLDER'; var note=encodeURIComponent(this.state.orderNum||'bhare order'); var amount=(this.state.orderTotal||0).toFixed(2); var url='https://venmo.com/u/'+handle+'?txn=pay&amount='+amount+'&note='+note; window.open(url,'_blank'); },
       subtotalFmt:this.fmt(subtotal), shippingFmt:_shipAfter===0?'Free':this.fmt(_shipAfter), totalFmt:this.fmt(_total),
       discountInputVal:this.state.discountInput, onDiscountInput:(e)=>this.setState({discountInput:e.target.value, discountError:false}), applyDiscount:()=>this.applyDiscount(), discountError:this.state.discountError,
       hasDiscount:!!_disc, discountLabel:(_disc?('Discount — '+_disc.code):''), discountAmtFmt:(_disc && _disc.tier==='TSH')?'Free shipping':('-'+this.fmt(_discAmt)),
