@@ -41,6 +41,15 @@
 #bhare-agegate a:hover{color:#014421;}
 #bhare-agegate ::-webkit-scrollbar{width:8px;}
 #bhare-agegate ::-webkit-scrollbar-thumb{background:#DDD6C7;border-radius:4px;}
+@supports (height: 100dvh) {
+  #bhare-agegate > div { max-height: min(calc(100dvh - 32px), 88dvh) !important; }
+}
+#bhare-agegate > div { -webkit-overflow-scrolling: touch; }
+@media (max-width: 480px) {
+  #bhare-agegate { padding: 10px !important; }
+  #bhare-agegate > div { border-radius: 14px !important; }
+  #bhare-ag-account { padding: 22px 20px 28px !important; }
+}
 </style>
 <div id="bhare-agegate" role="dialog" aria-modal="true" style="position:fixed;inset:0;z-index:2147483600;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(18,24,18,.86);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);font-family:'Jost',-apple-system,BlinkMacSystemFont,sans-serif;">
   <div style="position:relative;width:100%;max-width:480px;max-height:calc(100vh - 48px);overflow-y:auto;background:#F5F1E8;border:1px solid rgba(1,68,33,.16);box-shadow:0 40px 90px rgba(0,0,0,.45);border-radius:16px;">
@@ -316,7 +325,7 @@
   function undim(){ var a=el('bhare-ag-account'); if(a){ a.style.opacity='1'; a.style.pointerEvents='auto'; } }
   var ok=false; try{ok=sessionStorage.getItem(KEY)==='yes';}catch(e){}
   if(hasCk(DISMISS)) ok=true;
-  if(ok){ if(gate) gate.style.display='none'; armMp(5000+Math.floor(Math.random()*2001)); } else { lock(); }
+  if(ok){ if(gate) gate.style.display='none'; armMp(50000); } else { lock(); }
   var agEnter=el('bhare-ag-enter');
   agEnter.addEventListener('click',function(){if(agEnter.disabled)return;try{sessionStorage.setItem(KEY,'yes');}catch(e){}
     var exitBtn=el('bhare-ag-exit'), merged=el('bhare-ag-verified');
@@ -882,6 +891,26 @@
   .bh-hl2{opacity:0;animation:bhHeroIn .7s cubic-bezier(.16,.84,.3,1) .25s forwards;}
   .bh-hl3{opacity:0;animation:bhHeroIn .7s cubic-bezier(.16,.84,.3,1) .5s forwards;}
   @keyframes bhDrawerIn { from { transform: translateX(100%);} to { transform: translateX(0);} }
+  @keyframes bhCartUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  @media (max-width: 768px) {
+    #bh-cart-drawer {
+      position: absolute !important;
+      top: auto !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      max-height: 92dvh !important;
+      border-radius: 20px 20px 0 0 !important;
+      animation: bhCartUp .42s cubic-bezier(.22,1,.36,1) both !important;
+      overflow: hidden;
+    }
+    #bh-cart-drawer > div:first-child {
+      border-radius: 20px 20px 0 0 !important;
+    }
+  }
   @keyframes bhBackdropIn { from { opacity:0;} to { opacity:1;} }
   @keyframes bhItemIn { from { opacity:0; transform: translateY(16px);} to { opacity:1; transform:none;} }
   .bh-citem { animation: bhItemIn .45s cubic-bezier(.2,.9,.3,1) both; max-height:240px; transition: opacity 200ms ease, max-height 250ms ease, padding 250ms ease; }
@@ -1489,7 +1518,7 @@
           <button class="bh-bscar-arrow bh-bscar-prev" type="button" onClick="{{ bsScrollPrev }}" aria-label="Scroll left">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </button>
-          <div id="bh-bscar" class="bh-bscar" style="display:flex; gap:22px; overflow-x:scroll; scroll-snap-type:x mandatory; padding:8px 0 22px; scroll-padding-left:0;">
+          <div id="bh-bscar" class="bh-bscar" style="display:flex; gap:22px; overflow-x:scroll; scroll-snap-type:x proximity; padding:8px 0 22px; scroll-padding-left:0;">
             <sc-for list="{{ bestSellersCarousel }}" as="p" hint-placeholder-count="5">
               <div class="bh-bscard" style="flex:0 0 300px; scroll-snap-align:start; background:#fff; border-radius:12px; box-shadow:0 2px 14px rgba(1,68,33,.08); overflow:hidden; display:flex; flex-direction:column; font-family:'Jost',sans-serif;">
                 <div onClick="{{ p.open }}" style="position:relative; cursor:pointer;">
@@ -2543,7 +2572,7 @@
   <sc-if value="{{ cartOpen }}" hint-placeholder-val="{{ false }}">
   <div style="position:fixed; inset:0; z-index:60;">
     <div onclick="{{ closeCart }}" style="position:absolute; inset:0; background:rgba(1,46,23,.4); backdrop-filter:blur(2px); animation:bhBackdropIn .3s ease both;"></div>
-    <div style="position:absolute; top:0; right:0; height:100%; width:430px; max-width:92vw; background:#F5F1E8; box-shadow:-30px 0 70px -30px rgba(1,46,23,.5); display:flex; flex-direction:column; animation:bhDrawerIn .42s cubic-bezier(.3,1.1,.4,1) both;">
+    <div id="bh-cart-drawer" style="position:absolute; top:0; right:0; height:100%; width:430px; max-width:92vw; background:#F5F1E8; box-shadow:-30px 0 70px -30px rgba(1,46,23,.5); display:flex; flex-direction:column; animation:bhDrawerIn .42s cubic-bezier(.3,1.1,.4,1) both;">
       <div style="padding:26px 28px; border-bottom:1px solid rgba(1,68,33,.14); display:flex; justify-content:space-between; align-items:center;"><span style="font-family:'Jost',sans-serif; font-size:28px; font-weight:600; color:#014421;">Your Cart</span><button class="bh-press" onclick="{{ closeCart }}" style="cursor:pointer; background:none; border:none; font-size:22px; color:#54604F; line-height:1;">×</button></div>
       <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ false }}"><div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px; text-align:center;"><p style="font-size:16px; color:#7C8472; margin:0 0 22px;">Your cart is empty.</p><a class="bh-btn" onclick="{{ goShop }}" style="cursor:pointer; background:#014421; color:#F5F1E8; padding:14px 28px; font-size:12px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; text-decoration:none; border-radius:2px;">Browse Peptides</a></div></sc-if>
       <sc-if value="{{ cartNotEmpty }}" hint-placeholder-val="{{ true }}">
@@ -2565,17 +2594,18 @@
           </sc-for>
         </div>
         <sc-if value="{{ hasCartUpsell }}" hint-placeholder-val="{{ false }}">
-        <div id="bh-upsell-section" style="padding:0 28px 18px; border-top:1px solid rgba(1,68,33,.08);">
-          <div style="font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#9C7A4D; font-weight:700; padding:14px 0 10px;">Psst… this goes well with these too!</div>
-          <div id="bh-upsell-scroll" style="display:flex; gap:12px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; -ms-overflow-style:none;">
-            <sc-for list="{{ cartUpsell }}" as="u" hint-placeholder-count="2">
-              <div style="min-width:110px;background:#fff;border:1px solid rgba(1,68,33,.16);border-radius:6px;padding:10px;text-align:center;flex-shrink:0;">
-                {{ u.imgElSm }}
-                <div style="font-size:12px;font-weight:600;color:#1B241C;margin:6px 0 2px;line-height:1.2;">{{ u.name }}</div>
-                <div style="font-size:11px;color:#7C8472;margin-bottom:8px;">{{ u.priceFmt }}</div>
-                <button onclick="{{ u.add }}" style="cursor:pointer;background:#014421;color:#F5F1E8;border:none;border-radius:4px;padding:6px 10px;font-size:11px;font-weight:600;font-family:inherit;">+ Add</button>
+        <div id="bh-upsell-section" style="padding:0 22px 16px; border-top:1px solid rgba(1,68,33,.08);">
+          <div style="font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:#9C7A4D; font-weight:700; padding:12px 0 10px;">Psst… this goes well with these too!</div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <button onclick="{{ upsellPrev }}" style="cursor:pointer;background:#fff;border:1px solid rgba(1,68,33,.22);border-radius:50%;width:34px;height:34px;color:#014421;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1;padding:0;">&#8249;</button>
+            <div style="flex:1;display:flex;align-items:center;gap:12px;background:#fff;border:1px solid rgba(1,68,33,.10);border-radius:10px;padding:10px 12px;min-width:0;">
+              <div style="width:68px;height:68px;flex-shrink:0;border-radius:8px;overflow:hidden;background:radial-gradient(ellipse 90% 80% at 60% 35%, #ece1cd, #d2c4a8);">{{ currentUpsell.imgElSm }}</div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:13px;font-weight:700;color:#1B241C;line-height:1.25;margin-bottom:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ currentUpsell.name }}</div>
+                <button onclick="{{ currentUpsell.add }}" style="cursor:pointer;background:#014421;color:#F5F1E8;border:none;border-radius:9999px;padding:8px 16px;font-size:12px;font-weight:700;font-family:'Jost',sans-serif;white-space:nowrap;">Add to Cart {{ currentUpsell.priceFmt }}</button>
               </div>
-            </sc-for>
+            </div>
+            <button onclick="{{ upsellNext }}" style="cursor:pointer;background:#fff;border:1px solid rgba(1,68,33,.22);border-radius:50%;width:34px;height:34px;color:#014421;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1;padding:0;">&#8250;</button>
           </div>
         </div>
         </sc-if>
@@ -2626,7 +2656,7 @@
 </script>
 <script type="text/x-dc" data-dc-script="">
 class Component extends DCLogic {
-  state = { page:'home', productId:null, qty:1, cart:[], cartOpen:false, subGate:false, coSummaryOpen:false, orderNum:null, orderTotal:0, orderEmail:'', orderItems:[], contactSent:false, contactFirstErr:false, contactLastErr:false, contactEmailErr:false, contactSending:false, contactError:false, partnerSent:false, navOpen:false, sizeSel:{}, filter:null, acctTab:'signin', transitioning:false, legalTopic:'terms', authMode:'signin', isMember:false, memberAuthed:false, memberEmail:'', memberJoin:'', acctLoginErr:'', acctRegErr:'', subMode:true, subFreq:'Monthly', coaQ:'', checkoutAgeOk:false, stackIds:[], stackCat:'all', stackSearchQ:'', catalogCat:'all', catalogSearchQ:'', catalogSort:'popular', stackDrawer:false, discountInput:'', discountApplied:null, discountError:false, coaModal:false, subStep:1 };
+  state = { page:'home', productId:null, qty:1, cart:[], cartOpen:false, subGate:false, coSummaryOpen:false, orderNum:null, orderTotal:0, orderEmail:'', orderItems:[], contactSent:false, contactFirstErr:false, contactLastErr:false, contactEmailErr:false, contactSending:false, contactError:false, partnerSent:false, navOpen:false, sizeSel:{}, filter:null, acctTab:'signin', transitioning:false, legalTopic:'terms', authMode:'signin', isMember:false, memberAuthed:false, memberEmail:'', memberJoin:'', acctLoginErr:'', acctRegErr:'', subMode:true, subFreq:'Monthly', coaQ:'', checkoutAgeOk:false, stackIds:[], stackCat:'all', stackSearchQ:'', catalogCat:'all', catalogSearchQ:'', catalogSort:'popular', stackDrawer:false, discountInput:'', discountApplied:null, discountError:false, coaModal:false, subStep:1, upsellIdx:0 };
 
   get catalog() {
     return [
@@ -3537,7 +3567,7 @@ class Component extends DCLogic {
 
     const _sa=this.state.subMode===true;
     return {
-      products:searched, noResults:(searched.length===0), catalogCards, catalogPills, catAllCls:(this.state.catalogCat==='best'?'':'bh-catfp--on'), catBestCls:(this.state.catalogCat==='best'?'bh-catfp--on':''), setCatAll:()=>this.setState({catalogCat:'all'}), setCatBest:()=>this.setState({catalogCat:'best'}), catalogSearchVal:this.state.catalogSearchQ, onCatalogSearch:(e)=>this.setState({catalogSearchQ:e.target.value}), catalogSortVal:(this.state.catalogSort||'popular'), onCatalogSort:(e)=>this.setState({catalogSort:e.target.value}), onSearch:(e)=>this.setState({searchQ:e.target.value}), openLightbox:()=>this.openLightbox(), filters, featured:all.slice(0,4), stkReta, stkMela, stkGhk, stkBpc, addStackA:()=>this.addStackToCart(['ipamorelin','cjc1295']), addStackB:()=>this.addStackToCart(['ghkcu','bpc157']), stackAtotal:this.fmt(stkReta.price0+stkMela.price0), stackBtotal:this.fmt(stkGhk.price0+stkBpc.price0), isStack:page==='stack', goStack:()=>this.go('shop'), goCatalogLink:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.setState({filter:null, catalogCat:'all'}); this.go('shop');}, goStackLink:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('shop');}, stackPills, stackCards, stackSearchVal:this.state.stackSearchQ, onStackSearch:(e)=>this.setState({stackSearchQ:e.target.value}), stackSelected, stackTitle, stackMobLabel, stackTitleStyle:(this.state.stackIds.length===0?'color:#5A6356;font-style:italic;':'color:#14241A;'), stackTitleMuted:(this.state.stackIds.length===0), stackEmpty:(this.state.stackIds.length===0), stackHasItems:(this.state.stackIds.length>0), stackCount:this.state.stackIds.length, stackSubtotalFmt:this.fmt(_sbSub), addAllStack:()=>this.addAllStack(), stackDrawer:this.state.stackDrawer, toggleStackDrawer:()=>this.toggleStackDrawer(), scrollGridTop:()=>{try{var g=document.getElementById('sb-grid');if(g)window.scrollTo(0,g.getBoundingClientRect().top+window.scrollY-90);}catch(e){}}, goQuizFromStack:()=>{this.go('quiz');}, bestSellers:['bpc157','ghkcu','melanotanii','retatrutide'].map(id=>all.find(x=>x.id===id)).filter(Boolean), bestSellersCarousel:(()=>{ const ids=['bpc157','ghkcu','melanotanii','retatrutide','cjc1295']; const badgeMap={bpc157:[{t:'NEW',bg:'#014421'}], ghkcu:[{t:'15% OFF',bg:'#014421'}]}; const saleMap={ghkcu:0.15}; return ids.map(id=>all.find(x=>x.id===id)).filter(Boolean).map(p=>{ const sel=this.state.sizeSel[p.id]??0; const priceNum=+p.fromNum; const pct=saleMap[p.id]||0; const priceOut=pct?+(priceNum*(1-pct)).toFixed(2):priceNum; const badges=badgeMap[p.id]||[]; return Object.assign({}, p, { badges:badges, hasBadges:badges.length>0, onSale:pct>0, priceFmt:this.fmt(priceOut), origFmt:this.fmt(priceNum), hasDots:p.sizes.length>1, dots:p.sizes.map((s,i)=>({ label:s.label, select:s.select, style:'width:16px;height:16px;border-radius:50%;cursor:pointer;padding:0;'+(i===sel?'background:#014421;border:1.5px solid #014421;box-shadow:0 0 0 2px rgba(1,68,33,.18);':'background:#fff;border:1.5px solid rgba(1,68,33,.35);') })) }); }); })(), bsScrollPrev:()=>{ var c=document.getElementById('bh-bscar'); if(c) c.scrollBy({left:-322,behavior:'smooth'}); }, bsScrollNext:()=>{ var c=document.getElementById('bh-bscar'); if(c) c.scrollBy({left:322,behavior:'smooth'}); }, featuredCompound:(()=>{ const d=this.decorate(this.catalog.find(x=>x.id==='ghkcu')||this.catalog[0]); return { id:d.id, name:d.name, chemName:d.chemName, desc:d.desc, pills:d.pills, priceFmt:this.fmt(+d.fromNum), curDose:d.curDose, open:()=>this.openProduct(d.id), add:(e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); this.addStackToCart([d.id]); } }; })(), researchAreas:[ {name:'Tissue Remodeling', open:()=>this.goCatalogFilter('repair')}, {name:'Neuropeptide', open:()=>this.goCatalogFilter('brain')}, {name:'GH Axis', open:()=>this.goCatalogFilter('growth')}, {name:'Geroscience', open:()=>this.goCatalogFilter('aging')} ], raCards:[ {name:'Repair', bg:'#DCE9D5', img:'assets/tile-repair-bpc.webp', imgStyle:'', open:()=>this.goCatalogFilter('repair')}, {name:'Aging', bg:'#D7E7F2', img:'assets/tile-aging-ghkcu.webp', imgStyle:'', open:()=>this.goCatalogFilter('aging')}, {name:'Brain', bg:'#F6DCE6', img:'assets/tile-brain-retatrutide.webp', imgStyle:'', open:()=>this.goCatalogFilter('brain')}, {name:'Hormones', bg:'#DCE9D5', img:'assets/tile-hormones-cjc.webp', imgStyle:'', open:()=>{ this.setState({filter:null, catalogCat:'all'}); this.go('shop'); }} ], goSubscribe:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.setState({subMode:true, filter:null, catalogCat:'all'}); this.go('shop');}, product:selected, displayPrice:(this.state.subMode?selected.subNum:selected.curNum), groups, filters, legal:this.legalData, legalDoc:this.legalDocs[this.state.legalTopic||'terms'], isAccount:page==='account', acctEmailErr:this.state.acctEmailErr||'', acctResetErr:this.state.acctResetErr||'', acctSignin:(this.state.authMode||'signin')==='signin', acctCreate:this.state.authMode==='create', acctSubmitLabel:(this.state.authMode==='create')?'Become a member':'Sign in', acctFootNote:(this.state.authMode==='create')?'By creating an account you agree to our terms & privacy policy.':'New here? Create an account to unlock a members-only welcome offer.', acctTabSignin:'flex:1;cursor:pointer;border:none;padding:12px;font-family:inherit;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;border-radius:2px;'+((this.state.authMode||'signin')==='signin'?'background:#014421;color:#F5F1E8;':'background:transparent;color:#54604F;'), acctTabCreate:'flex:1;cursor:pointer;border:none;padding:12px;font-family:inherit;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;border-radius:2px;'+(this.state.authMode==='create'?'background:#014421;color:#F5F1E8;':'background:transparent;color:#54604F;'),acctSubmitStyle:'width:100%;background:#014421;border:none;padding:16px;font-family:Jost,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;border-radius:2px;cursor:pointer;color:'+((this.state.authMode==='create')?'#C8B083':'#F5F1E8'), acctTabs:(!this.state.memberAuthed && ((this.state.authMode||'signin')==='signin'||this.state.authMode==='create')), acctForgot:this.state.authMode==='forgot', acctSent:this.state.authMode==='sent', acctReset:this.state.authMode==='reset', acctDone:this.state.authMode==='done',
+      products:searched, noResults:(searched.length===0), catalogCards, catalogPills, catAllCls:(this.state.catalogCat==='best'?'':'bh-catfp--on'), catBestCls:(this.state.catalogCat==='best'?'bh-catfp--on':''), setCatAll:()=>this.setState({catalogCat:'all'}), setCatBest:()=>this.setState({catalogCat:'best'}), catalogSearchVal:this.state.catalogSearchQ, onCatalogSearch:(e)=>this.setState({catalogSearchQ:e.target.value}), catalogSortVal:(this.state.catalogSort||'popular'), onCatalogSort:(e)=>this.setState({catalogSort:e.target.value}), onSearch:(e)=>this.setState({searchQ:e.target.value}), openLightbox:()=>this.openLightbox(), filters, featured:all.slice(0,4), stkReta, stkMela, stkGhk, stkBpc, addStackA:()=>this.addStackToCart(['ipamorelin','cjc1295']), addStackB:()=>this.addStackToCart(['ghkcu','bpc157']), stackAtotal:this.fmt(stkReta.price0+stkMela.price0), stackBtotal:this.fmt(stkGhk.price0+stkBpc.price0), isStack:page==='stack', goStack:()=>this.go('shop'), goCatalogLink:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.setState({filter:null, catalogCat:'all'}); this.go('shop');}, goStackLink:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('shop');}, stackPills, stackCards, stackSearchVal:this.state.stackSearchQ, onStackSearch:(e)=>this.setState({stackSearchQ:e.target.value}), stackSelected, stackTitle, stackMobLabel, stackTitleStyle:(this.state.stackIds.length===0?'color:#5A6356;font-style:italic;':'color:#14241A;'), stackTitleMuted:(this.state.stackIds.length===0), stackEmpty:(this.state.stackIds.length===0), stackHasItems:(this.state.stackIds.length>0), stackCount:this.state.stackIds.length, stackSubtotalFmt:this.fmt(_sbSub), addAllStack:()=>this.addAllStack(), stackDrawer:this.state.stackDrawer, toggleStackDrawer:()=>this.toggleStackDrawer(), scrollGridTop:()=>{try{var g=document.getElementById('sb-grid');if(g)window.scrollTo(0,g.getBoundingClientRect().top+window.scrollY-90);}catch(e){}}, goQuizFromStack:()=>{this.go('quiz');}, bestSellers:['bpc157','ghkcu','melanotanii','retatrutide'].map(id=>all.find(x=>x.id===id)).filter(Boolean), bestSellersCarousel:(()=>{ const ids=['retatrutide','ghkcu','bpc157','melanotanii','motsc']; const badgeMap={bpc157:[{t:'NEW',bg:'#014421'}], ghkcu:[{t:'15% OFF',bg:'#014421'}]}; const saleMap={ghkcu:0.15}; return ids.map(id=>all.find(x=>x.id===id)).filter(Boolean).map(p=>{ const sel=this.state.sizeSel[p.id]??0; const priceNum=+p.fromNum; const pct=saleMap[p.id]||0; const priceOut=pct?+(priceNum*(1-pct)).toFixed(2):priceNum; const badges=badgeMap[p.id]||[]; return Object.assign({}, p, { badges:badges, hasBadges:badges.length>0, onSale:pct>0, priceFmt:this.fmt(priceOut), origFmt:this.fmt(priceNum), hasDots:p.sizes.length>1, dots:p.sizes.map((s,i)=>({ label:s.label, select:s.select, style:'width:16px;height:16px;border-radius:50%;cursor:pointer;padding:0;'+(i===sel?'background:#014421;border:1.5px solid #014421;box-shadow:0 0 0 2px rgba(1,68,33,.18);':'background:#fff;border:1.5px solid rgba(1,68,33,.35);') })) }); }); })(), bsScrollPrev:()=>{ var c=document.getElementById('bh-bscar'); if(!c) return; if(c.scrollLeft<=20){ c.scrollTo({left:c.scrollWidth-c.clientWidth,behavior:'smooth'}); }else{ c.scrollBy({left:-322,behavior:'smooth'}); }}, bsScrollNext:()=>{ var c=document.getElementById('bh-bscar'); if(!c) return; if(c.scrollLeft>=c.scrollWidth-c.clientWidth-20){ c.scrollTo({left:0,behavior:'smooth'}); }else{ c.scrollBy({left:322,behavior:'smooth'}); }}, featuredCompound:(()=>{ const d=this.decorate(this.catalog.find(x=>x.id==='ghkcu')||this.catalog[0]); return { id:d.id, name:d.name, chemName:d.chemName, desc:d.desc, pills:d.pills, priceFmt:this.fmt(+d.fromNum), curDose:d.curDose, open:()=>this.openProduct(d.id), add:(e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); this.addStackToCart([d.id]); } }; })(), researchAreas:[ {name:'Tissue Remodeling', open:()=>this.goCatalogFilter('repair')}, {name:'Neuropeptide', open:()=>this.goCatalogFilter('brain')}, {name:'GH Axis', open:()=>this.goCatalogFilter('growth')}, {name:'Geroscience', open:()=>this.goCatalogFilter('aging')} ], raCards:[ {name:'Repair', bg:'#DCE9D5', img:'assets/tile-repair-bpc.webp', imgStyle:'', open:()=>this.goCatalogFilter('repair')}, {name:'Aging', bg:'#D7E7F2', img:'assets/tile-aging-ghkcu.webp', imgStyle:'', open:()=>this.goCatalogFilter('aging')}, {name:'Brain', bg:'#F6DCE6', img:'assets/tile-brain-retatrutide.webp', imgStyle:'', open:()=>this.goCatalogFilter('brain')}, {name:'Hormones', bg:'#DCE9D5', img:'assets/tile-hormones-cjc.webp', imgStyle:'', open:()=>{ this.setState({filter:null, catalogCat:'all'}); this.go('shop'); }} ], goSubscribe:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.setState({subMode:true, filter:null, catalogCat:'all'}); this.go('shop');}, product:selected, displayPrice:(this.state.subMode?selected.subNum:selected.curNum), groups, filters, legal:this.legalData, legalDoc:this.legalDocs[this.state.legalTopic||'terms'], isAccount:page==='account', acctEmailErr:this.state.acctEmailErr||'', acctResetErr:this.state.acctResetErr||'', acctSignin:(this.state.authMode||'signin')==='signin', acctCreate:this.state.authMode==='create', acctSubmitLabel:(this.state.authMode==='create')?'Become a member':'Sign in', acctFootNote:(this.state.authMode==='create')?'By creating an account you agree to our terms & privacy policy.':'New here? Create an account to unlock a members-only welcome offer.', acctTabSignin:'flex:1;cursor:pointer;border:none;padding:12px;font-family:inherit;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;border-radius:2px;'+((this.state.authMode||'signin')==='signin'?'background:#014421;color:#F5F1E8;':'background:transparent;color:#54604F;'), acctTabCreate:'flex:1;cursor:pointer;border:none;padding:12px;font-family:inherit;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;border-radius:2px;'+(this.state.authMode==='create'?'background:#014421;color:#F5F1E8;':'background:transparent;color:#54604F;'),acctSubmitStyle:'width:100%;background:#014421;border:none;padding:16px;font-family:Jost,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;border-radius:2px;cursor:pointer;color:'+((this.state.authMode==='create')?'#C8B083':'#F5F1E8'), acctTabs:(!this.state.memberAuthed && ((this.state.authMode||'signin')==='signin'||this.state.authMode==='create')), acctForgot:this.state.authMode==='forgot', acctSent:this.state.authMode==='sent', acctReset:this.state.authMode==='reset', acctDone:this.state.authMode==='done',
       qty:this.state.qty, bundles,
       coaModal:this.state.coaModal, openCoaModal:()=>this.setState({coaModal:true}), closeCoaModal:()=>this.setState({coaModal:false}), stopProp:(e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); },
       isHome:page==='home', isProduct:page==='product', navHome:page==='home'?'bh-on':'', isShop:page==='shop', isAbout:page==='about', isScience:page==='science', isCompliance:page==='compliance', isTerms:page==='terms', isPrivacy:page==='privacy', isQuiz:page==='quiz', isFaq:page==='faq', termsSections:this.termsSections, privacySections:this.privacySections, returnsSections:this.returnsSections, shippingSections:this.shippingSections, isPartners:page==='partners',
@@ -3546,7 +3576,7 @@ class Component extends DCLogic {
       cart, cartCount, hasItems:cartCount>0, cartHasSub, cartOpen:this.state.cartOpen, subGate:this.state.subGate, coSummaryOpen:this.state.coSummaryOpen, coSummaryClosed:!this.state.coSummaryOpen, toggleCoSummary:()=>this.setState(s=>({coSummaryOpen:!s.coSummaryOpen})),
       subStep1:(this.state.subStep!==2), subStep2:(this.state.subStep===2),
       cartEmpty:cart.length===0, cartNotEmpty:cart.length>0,
-      cartUpsell, hasCartUpsell:cartUpsell.length>0,
+      cartUpsell, hasCartUpsell:cartUpsell.length>0, upsellTotal:cartUpsell.length, upsellIdx:Math.min(this.state.upsellIdx,Math.max(0,cartUpsell.length-1)), currentUpsell:(()=>{ var idx=Math.min(this.state.upsellIdx,Math.max(0,cartUpsell.length-1)); return cartUpsell[idx]||null; })(), upsellPrev:(()=>{ var len=cartUpsell.length; return ()=>{ if(len<1) return; var cur=Math.min(this.state.upsellIdx,len-1); this.setState({upsellIdx:(cur-1+len)%len}); }; })(), upsellNext:(()=>{ var len=cartUpsell.length; return ()=>{ if(len<1) return; var cur=Math.min(this.state.upsellIdx,len-1); this.setState({upsellIdx:(cur+1)%len}); }; })(),
       openVenmo:(e)=>{ if(e&&e.preventDefault) e.preventDefault(); var handle='BHARE_VENMO_HANDLE_PLACEHOLDER'; var note=encodeURIComponent(this.state.orderNum||'bhare order'); var amount=(this.state.orderTotal||0).toFixed(2); var url='https://venmo.com/u/'+handle+'?txn=pay&amount='+amount+'&note='+note; window.open(url,'_blank'); },
       subtotalFmt:this.fmt(subtotal), shippingFmt:_shipAfter===0?'Free':this.fmt(_shipAfter), totalFmt:this.fmt(_total),
       discountInputVal:this.state.discountInput, onDiscountInput:(e)=>this.setState({discountInput:e.target.value, discountError:false}), applyDiscount:()=>this.applyDiscount(), discountError:this.state.discountError,
@@ -3589,4 +3619,45 @@ class Component extends DCLogic {
 (function(){var API="https://bhare-affiliate-api.bharewell.workers.dev";window.bhareProducts=[];window.bhareGetProduct=function(s){for(var i=0;i<window.bhareProducts.length;i++){var p=window.bhareProducts[i];for(var j=0;j<(p.variants||[]).length;j++){if(p.variants[j].sku===s.toUpperCase())return{product:p,variant:p.variants[j]};}}return null;};window.bhareGetPrice=function(s){var r=window.bhareGetProduct(s);return r?r.variant.price:null;};function fmt$(n){return"$"+parseFloat(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,",");}function applyPrices(){document.querySelectorAll("[data-bhare-sku]").forEach(function(el){var s=el.getAttribute("data-bhare-sku"),r=window.bhareGetProduct(s);if(!r)return;if(el.hasAttribute("data-bhare-price"))el.textContent=fmt$(r.variant.price);if(el.hasAttribute("data-bhare-name"))el.textContent=r.product.name;});}function loadStock(){fetch(API+"/products/stock").then(function(r){return r.json();}).then(function(m){document.querySelectorAll("[data-bhare-sku]").forEach(function(el){var s=el.getAttribute("data-bhare-sku"),q=m[s];var btn=el.querySelector("[data-bhare-buy]")||(el.hasAttribute("data-bhare-buy")?el:null);if(btn&&q!==undefined&&q<=0){btn.disabled=true;btn.textContent="Out of Stock";}});}).catch(function(){});}function init(){fetch(API+"/products").then(function(r){return r.json();}).then(function(p){window.bhareProducts=p||[];applyPrices();loadStock();document.dispatchEvent(new CustomEvent("bhare:products-loaded",{detail:{products:window.bhareProducts}}));}).catch(function(e){console.warn("[bhare] product load failed",e);});}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",init);}else{init();}})();
 </script>
 
+<script>
+(function(){
+  function initBsCarInfinite(){
+    var car=document.getElementById('bh-bscar');
+    if(!car||car._bsInited) return;
+    car._bsInited=true;
+    // Clone all current children and append to make 3x loop
+    var kids=Array.prototype.slice.call(car.children);
+    if(kids.length<2) return;
+    kids.forEach(function(k){ car.appendChild(k.cloneNode(true)); });
+    kids.forEach(function(k){ car.insertBefore(k.cloneNode(true), car.firstChild); });
+    // Scroll to second set (the middle)
+    var oneW=kids.reduce(function(a,k){ return a+k.offsetWidth+22; },0);
+    car.scrollLeft=oneW;
+    var ticking=false;
+    car.addEventListener('scroll',function(){
+      if(ticking) return;
+      ticking=true;
+      requestAnimationFrame(function(){
+        ticking=false;
+        var max=car.scrollWidth-car.clientWidth;
+        if(car.scrollLeft<oneW*0.4){ car.scrollLeft+=oneW; }
+        else if(car.scrollLeft>oneW*1.6){ car.scrollLeft-=oneW; }
+      });
+    },{passive:true});
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',function(){
+      setTimeout(initBsCarInfinite,800);
+    });
+  } else {
+    setTimeout(initBsCarInfinite,800);
+  }
+  // Re-init if carousel gets re-rendered (watch for new cards)
+  var obs=new MutationObserver(function(){
+    var car=document.getElementById('bh-bscar');
+    if(car&&!car._bsInited) setTimeout(initBsCarInfinite,400);
+  });
+  obs.observe(document.body,{childList:true,subtree:true});
+})();
+</script>
 </body></html>
