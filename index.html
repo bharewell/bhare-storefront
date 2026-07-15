@@ -994,9 +994,9 @@
     .bh-mn-top{display:flex; flex-direction:column; gap:14px; padding:0 24px; margin-bottom:6px;}
     .bh-mobnav .bh-mn-bs{display:flex; align-items:center; justify-content:center; background:#F5F1E8; color:#014421; font-family:'Jost',sans-serif; font-size:14px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; text-decoration:none; padding:18px; border-radius:9999px; cursor:pointer; min-height:56px; box-sizing:border-box;}
     .bh-mobnav .bh-mn-bs:active{background:#EDE6D6;}
-    .bh-mn-search{display:flex; align-items:center; gap:10px; border:1px solid rgba(245,241,232,.32); border-radius:9999px; padding:13px 20px; color:rgba(245,241,232,.65);}
-    .bh-mn-search > svg{flex:none;}
-    .bh-mn-search input{flex:1; min-width:0; background:transparent; border:none; outline:none; color:#F5F1E8; font-family:'Jost',sans-serif; font-size:15px;}
+    .bh-mn-search{display:flex; align-items:center; gap:8px; border:1px solid rgba(245,241,232,.25); border-radius:9999px; padding:9px 16px; color:rgba(245,241,232,.65);}
+    .bh-mn-search > svg{flex:none; width:16px; height:16px;}
+    .bh-mn-search input{flex:1; min-width:0; background:transparent; border:none; outline:none; color:#F5F1E8; font-family:'Jost',sans-serif; font-size:14px;}
     .bh-mn-search input::placeholder{color:rgba(245,241,232,.5);}
     .bh-mn-search input::-webkit-search-cancel-button{-webkit-appearance:none; appearance:none; height:15px; width:15px; cursor:pointer; background:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='15'%20height='15'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23C2A878'%20stroke-width='2.4'%20stroke-linecap='round'%3E%3Cline%20x1='18'%20y1='6'%20x2='6'%20y2='18'/%3E%3Cline%20x1='6'%20y1='6'%20x2='18'%20y2='18'/%3E%3C/svg%3E") no-repeat center; background-size:contain;}
     .bh-mn-results{margin-top:2px; border:1px solid rgba(245,241,232,.16); border-radius:14px; overflow:hidden; max-height:44vh; overflow-y:auto; background:rgba(245,241,232,.04);}
@@ -1010,7 +1010,7 @@
     .bh-mobnav .bh-mn-tab{flex:1; text-align:center; padding:14px 6px 15px; font-family:'Jost',sans-serif; font-size:12.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:rgba(245,241,232,.6); text-decoration:none; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; white-space:nowrap;}
     .bh-mobnav .bh-mn-tab--on{color:#C2A878; border-bottom-color:#C2A878;}
     .bh-mobnav .bh-mn-tab:active{color:#F5F1E8;}
-    .bh-mn-plist{display:flex; flex-direction:column; flex:1!important; min-height:0!important; max-height:380px!important; overflow-y:scroll!important; overflow-x:hidden; -webkit-overflow-scrolling:touch!important; padding:8px 12px; gap:6px;}
+    .bh-mn-plist{display:flex; flex-direction:column; flex:1!important; min-height:0!important; max-height:228px!important; overflow-y:scroll!important; overflow-x:hidden; -webkit-overflow-scrolling:touch!important; padding:8px 12px; gap:6px;}
     .bh-mobnav .bh-mn-top{flex-shrink:0!important;}
     .bh-mobnav .bh-mn-tabs, .bh-mobnav .bh-mn-top{flex:none;}
     .bh-mobnav .bh-mn-wordmark{flex:none;}
@@ -1441,7 +1441,7 @@
     <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
     <div class="bh-fade">
       <!-- Hero -->
-      <section class="bh-hero" style="position:relative; width:100%; height:max(100vh,56.25vw); min-height:600px; max-height:none; overflow:hidden; background:#EAE4D6;">
+      <section class="bh-hero" style="position:relative; width:100%; height:56.25vw; min-height:560px; max-height:none; overflow:hidden; background:#EAE4D6;">
         <img class="bh-heroimg-d" src="assets/hero-desktop.webp" alt="bhare research peptide vials — GHK-Cu and BPC-157" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:right top;">
         <img class="bh-heroimg-m" src="assets/hero-mobile-new.webp" alt="bhare research peptide vials" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center bottom; display:none;">
         <div class="bh-hero-ov" onClick="{{ goShop }}" style="position:absolute; inset:0; cursor:pointer; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; text-align:left; padding:0 clamp(28px,6vw,80px); z-index:2;">
@@ -2843,7 +2843,7 @@ class Component extends DCLogic {
   componentDidMount(){
     var self=this; if(self._fxInit) return; self._fxInit=true;
     try{ if(self.state.cartOpen||self.state.subGate) self.setState({cartOpen:false, subGate:false}); }catch(e){}
-    try{ var setMenuTop=function(){ var n=document.getElementById('bh-nav'); if(n){ var b=Math.round(n.getBoundingClientRect().bottom); if(b>0) document.documentElement.style.setProperty('--bh-menu-top', b+'px'); } }; setMenuTop(); [120,400,1000].forEach(function(d){ setTimeout(setMenuTop,d); }); window.addEventListener('resize', setMenuTop); window.addEventListener('scroll', setMenuTop, {passive:true}); }catch(e){}
+    try{ var setMenuTop=function(){ var n=document.getElementById('bh-nav'); if(n){ var b=Math.round(n.getBoundingClientRect().bottom); if(b>0) document.documentElement.style.setProperty('--bh-menu-top', b+'px'); } }; setMenuTop(); [120,400,1000].forEach(function(d){ setTimeout(setMenuTop,d); }); window.addEventListener('resize', setMenuTop); window.addEventListener('scroll', function(){ if(!document.querySelector('.bh-mobnav.bh-open')) setMenuTop(); }, {passive:true}); }catch(e){}
     try{ var onPdpScroll=function(){ var bar=document.getElementById('bh-pdp-topbar'); if(!bar) return; var btn=document.querySelector('.bh-pdp-buyrow [data-bhare-buy]'); if(!btn){ bar.classList.remove('bh-show'); return; } var top=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--bh-menu-top'))||88; var r=btn.getBoundingClientRect(); bar.classList.toggle('bh-show', r.bottom < top+6); }; window.addEventListener('scroll', onPdpScroll, {passive:true}); window.addEventListener('resize', onPdpScroll); self._onPdpScroll=onPdpScroll; }catch(e){}
     try{ var atcIO=new IntersectionObserver(function(ents){ ents.forEach(function(en){ if(en.isIntersecting) en.target.classList.add('atc-revealed'); }); }, {threshold:0.2, rootMargin:'0px 0px -10% 0px'}); self._atcIO=atcIO; self._observeAtc=function(){ var b=document.querySelector('.bh-pdp-buyrow'); if(b && !b._atcObs){ b._atcObs=true; atcIO.observe(b); } }; self._observeAtc(); }catch(e){}
     try{ document.addEventListener('click', function(e){ var t=e.target&&e.target.closest?e.target.closest('a,button'):null; if(!t) return; if(t.closest('.bh-press,.bh-burger,.bh-mobnav-close,.bh-dosetabs,.bh-bscar-arrow,.bh-purchase-grid,.bh-catsort,.bh-catfp,.bh-catbar,.bh-mn-search,.bh-co-mobsum-row,.bhq-opt,.bhq-back,.bh-padd,.bh-bs-addfull,.bhq-radd,.bhq-addall,summary,[data-bhare-buy],[data-noscroll]')) return; setTimeout(function(){ try{ window.scrollTo({top:0,left:0,behavior:'smooth'}); }catch(_){ window.scrollTo(0,0); } }, 70); }, false); }catch(e){}
