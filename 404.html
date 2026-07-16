@@ -41,6 +41,15 @@
 #bhare-agegate a:hover{color:#014421;}
 #bhare-agegate ::-webkit-scrollbar{width:8px;}
 #bhare-agegate ::-webkit-scrollbar-thumb{background:#DDD6C7;border-radius:4px;}
+@supports (height: 100dvh) {
+  #bhare-agegate > div { max-height: min(calc(100dvh - 32px), 88dvh) !important; }
+}
+#bhare-agegate > div { -webkit-overflow-scrolling: touch; }
+@media (max-width: 480px) {
+  #bhare-agegate { padding: max(env(safe-area-inset-top, 16px), 16px) 14px 14px !important; }
+  #bhare-agegate > div { border-radius: 14px !important; }
+  #bhare-ag-account { padding: 22px 20px 28px !important; }
+}
 </style>
 <div id="bhare-agegate" role="dialog" aria-modal="true" style="position:fixed;inset:0;z-index:2147483600;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(18,24,18,.86);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);font-family:'Jost',-apple-system,BlinkMacSystemFont,sans-serif;">
   <div style="position:relative;width:100%;max-width:480px;max-height:calc(100vh - 48px);overflow-y:auto;background:#F5F1E8;border:1px solid rgba(1,68,33,.16);box-shadow:0 40px 90px rgba(0,0,0,.45);border-radius:16px;">
@@ -312,7 +321,7 @@
   var DISMISS='bhare_age_dismiss';
   function setCk(n,v,mins){var e=new Date(Date.now()+mins*60000).toUTCString();document.cookie=n+'='+v+';expires='+e+';path=/;SameSite=Lax';}
   function hasCk(n){return document.cookie.split('; ').some(function(c){return c.indexOf(n+'=')===0;});}
-  function closeGate(){ if(gate) gate.style.display='none'; unlock(); armMp(50000); }
+  function closeGate(){ if(gate) gate.style.display='none'; unlock(); armMp(); }
   function undim(){ var a=el('bhare-ag-account'); if(a){ a.style.opacity='1'; a.style.pointerEvents='auto'; } }
   var ok=false; try{ok=sessionStorage.getItem(KEY)==='yes';}catch(e){}
   if(hasCk(DISMISS)) ok=true;
@@ -403,7 +412,7 @@
   function mpExit(e){ if(mpShown||mpSeen()) return; if(!e.relatedTarget && (e.clientY==null||e.clientY<=0)){ showMembersPop(); } }
   function mpEsc(e){ if((e.key==='Escape'||e.keyCode===27)&&mpShown){ hideMembersPop(); } }
   function disarmMp(){ if(mpTimer){ clearTimeout(mpTimer); mpTimer=null; } document.removeEventListener('mouseout',mpExit); }
-  function armMp(delay){ if(mpArmed||!membersPop||mpSeen()) return; mpArmed=true; mpTimer=setTimeout(showMembersPop,delay||50000); document.addEventListener('mouseout',mpExit); document.addEventListener('keydown',mpEsc); }
+  function armMp(delay){ if(mpArmed||!membersPop||mpSeen()) return; mpArmed=true; mpTimer=setTimeout(showMembersPop,delay||4000); document.addEventListener('mouseout',mpExit); document.addEventListener('keydown',mpEsc); }
   if(membersPop){
     var mpClose=el('bmp-close'); if(mpClose) mpClose.addEventListener('click',hideMembersPop);
     var mpDecline=el('bmp-decline'); if(mpDecline) mpDecline.addEventListener('click',hideMembersPop);
@@ -427,7 +436,7 @@
 </script>
 <script>
 (function(){
-  var P={"bpc157":{"name":"BPC-157","sub":"Regenerative","size":"5 MG","price":49.99,"blurb":"Studied for tissue repair and gut healing."},"tb500":{"name":"TB-500","sub":"Regenerative","size":"5 MG","price":54.99,"blurb":"Studied for recovery and muscle repair."},"ghkcu":{"name":"GHK-Cu","sub":"Regenerative","size":"50 MG","price":54.99,"blurb":"Studied for collagen production and skin health."},"ta1":{"name":"Thymosin Alpha-1","sub":"Immune","size":"10 MG","price":84.99,"blurb":"Studied for immune system regulation."},"epitalon":{"name":"Epitalon","sub":"Genomic","size":"10 MG","price":44.99,"blurb":"Studied for cellular aging and longevity."},"nad":{"name":"NAD+","sub":"Cellular","size":"100 MG","price":96.99,"blurb":"Studied for energy production and cellular health."},"motsc":{"name":"MOTS-c","sub":"Mitochondrial","size":"10 MG","price":94.99,"blurb":"Studied for metabolism and energy balance."},"semax":{"name":"Semax","sub":"Nootropic","size":"30 MG","price":64.99,"blurb":"Studied for focus and cognitive performance."},"selank":{"name":"Selank","sub":"Nootropic","size":"30 MG","price":62.99,"blurb":"Studied for stress and mood balance."},"ipamorelin":{"name":"Ipamorelin","sub":"Endocrine","size":"5 MG","price":42.99,"blurb":"Studied for growth hormone support."},"cjc1295":{"name":"CJC-1295","sub":"Endocrine","size":"5 MG","price":64.99,"blurb":"Studied for growth hormone production."},"pt141":{"name":"PT-141","sub":"Endocrine","size":"10 MG","price":59.99,"blurb":"Studied for sexual function and desire."},"melanotanii":{"name":"MT-2","sub":"Melanocortin","size":"10 MG","price":59.99,"blurb":"Studied for skin pigmentation and tanning."},"glutathione":{"name":"Glutathione","sub":"Antioxidant","size":"600 MG","price":64.99,"blurb":"Studied for antioxidant support and detox."},"aod9604":{"name":"AOD-9604","sub":"Metabolic","size":"5 MG","price":54.99,"blurb":"Studied for fat metabolism and body composition."},"tesamorelin":{"name":"Tesamorelin","sub":"Endocrine","size":"5 MG","price":89.99,"blurb":"Studied for fat reduction and metabolic health."},"sermorelin":{"name":"Sermorelin","sub":"Endocrine","size":"5 MG","price":52.99,"blurb":"Studied for growth hormone stimulation."},"kisspeptin":{"name":"Kisspeptin-10","sub":"Endocrine","size":"5 MG","price":69.99,"blurb":"Studied for reproductive hormone signaling."},"dsip":{"name":"DSIP","sub":"Neuro","size":"5 MG","price":49.99,"blurb":"Studied for sleep quality and stress response."},
+  var P={"bpc157":{"name":"BPC-157","sub":"Regenerative","size":"5 MG","price":49.99,"blurb":"Studied for tissue repair and gut healing."},"tb500":{"name":"TB-500","sub":"Regenerative","size":"5 MG","price":54.99,"blurb":"Studied for recovery and muscle repair."},"ghkcu":{"name":"GHK-Cu","sub":"Regenerative","size":"50 MG","price":54.99,"blurb":"Studied for collagen production and skin health."},"ta1":{"name":"Thymosin Alpha-1","sub":"Immune","size":"10 MG","price":84.99,"blurb":"Studied for immune system regulation."},"epitalon":{"name":"Epitalon","sub":"Genomic","size":"10 MG","price":44.99,"blurb":"Studied for cellular aging and longevity."},"nad":{"name":"NAD+","sub":"Cellular","size":"100 MG","price":96.99,"blurb":"Studied for energy production and cellular health."},"motsc":{"name":"MOTS-c","sub":"Mitochondrial","size":"10 MG","price":94.99,"blurb":"Studied for metabolism and energy balance."},"semax":{"name":"Semax","sub":"Nootropic","size":"30 MG","price":64.99,"blurb":"Studied for focus and cognitive performance."},"selank":{"name":"Selank","sub":"Nootropic","size":"30 MG","price":62.99,"blurb":"Studied for stress and mood balance."},"ipamorelin":{"name":"Ipamorelin","sub":"Endocrine","size":"5 MG","price":42.99,"blurb":"Studied for growth hormone support."},"cjc1295":{"name":"CJC-1295","sub":"Endocrine","size":"5 MG","price":64.99,"blurb":"Studied for growth hormone production."},"pt141":{"name":"PT-141","sub":"Endocrine","size":"10 MG","price":59.99,"blurb":"Studied for sexual function and desire."},"melanotanii":{"name":"Melanotan II","sub":"Melanocortin","size":"10 MG","price":59.99,"blurb":"Studied for skin pigmentation and tanning."},"glutathione":{"name":"Glutathione","sub":"Antioxidant","size":"600 MG","price":64.99,"blurb":"Studied for antioxidant support and detox."},"aod9604":{"name":"AOD-9604","sub":"Metabolic","size":"5 MG","price":54.99,"blurb":"Studied for fat metabolism and body composition."},"tesamorelin":{"name":"Tesamorelin","sub":"Endocrine","size":"5 MG","price":89.99,"blurb":"Studied for fat reduction and metabolic health."},"sermorelin":{"name":"Sermorelin","sub":"Endocrine","size":"5 MG","price":52.99,"blurb":"Studied for growth hormone stimulation."},"kisspeptin":{"name":"Kisspeptin-10","sub":"Endocrine","size":"5 MG","price":69.99,"blurb":"Studied for reproductive hormone signaling."},"dsip":{"name":"DSIP","sub":"Neuro","size":"5 MG","price":49.99,"blurb":"Studied for sleep quality and stress response."},
 "ss31":{"name":"SS-31","sub":"Mitochondrial","size":"10 MG","price":139.99,"blurb":"Studied for mitochondrial membrane protection and bioenergetics."},
 "foxo4dri":{"name":"FOXO4-DRI","sub":"Genomic","size":"10 MG","price":189.99,"blurb":"Studied for senescent cell pathways and longevity research."},
 "igf1lr3":{"name":"IGF-1 LR3","sub":"Endocrine","size":"1 MG","price":109.99,"blurb":"Studied for growth factor signaling and tissue development."},
@@ -882,6 +891,26 @@
   .bh-hl2{opacity:0;animation:bhHeroIn .7s cubic-bezier(.16,.84,.3,1) .25s forwards;}
   .bh-hl3{opacity:0;animation:bhHeroIn .7s cubic-bezier(.16,.84,.3,1) .5s forwards;}
   @keyframes bhDrawerIn { from { transform: translateX(100%);} to { transform: translateX(0);} }
+  @keyframes bhCartUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  @media (max-width: 768px) {
+    #bh-cart-drawer {
+      position: absolute !important;
+      top: auto !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      max-height: 92dvh !important;
+      border-radius: 20px 20px 0 0 !important;
+      animation: bhCartUp .42s cubic-bezier(.22,1,.36,1) both !important;
+      overflow: hidden;
+    }
+    #bh-cart-drawer > div:first-child {
+      border-radius: 20px 20px 0 0 !important;
+    }
+  }
   @keyframes bhBackdropIn { from { opacity:0;} to { opacity:1;} }
   @keyframes bhItemIn { from { opacity:0; transform: translateY(16px);} to { opacity:1; transform:none;} }
   .bh-citem { animation: bhItemIn .45s cubic-bezier(.2,.9,.3,1) both; max-height:240px; transition: opacity 200ms ease, max-height 250ms ease, padding 250ms ease; }
@@ -1225,6 +1254,10 @@
     .bh-pdp-buyrow .bh-btn{ min-height:52px!important; border-radius:9999px!important; }
     .bh-pdp-topbar{ display:flex!important; }
   }
+  /* Sticky ATC morph: hide with slide-down when the static ATC button is in view */
+  .bh-pdp-sticky{ transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease; }
+  .bh-pdp-sticky.bh-atc-anim{ transform:translateY(100%); opacity:0; }
+  .bh-pdp-sticky.bh-atc-off{ display:none!important; }
   /* ===================== ANIMATION SYSTEM ===================== */
   @keyframes bhUp20 { from { opacity:0; transform:translateY(20px);} to { opacity:1; transform:none;} }
   .bh-rv { opacity:0; transform:translateY(20px); transition:opacity .4s ease-out, transform .4s ease-out; }
@@ -1463,7 +1496,7 @@
     <div class="bh-fade">
       <!-- Hero -->
       <section class="bh-hero" style="position:relative; width:100%; height:56.25vw; min-height:560px; max-height:none; overflow:hidden; background:#EAE4D6;">
-        <img class="bh-heroimg-d" src="assets/hero-desktop.jpg" alt="bhare research peptide vials — GHK-Cu and BPC-157" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:right top;">
+        <img class="bh-heroimg-d" src="assets/hero-desktop.webp" alt="bhare research peptide vials — GHK-Cu and BPC-157" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:right top;">
         <img class="bh-heroimg-m" src="assets/hero-mobile-new.webp" alt="bhare research peptide vials" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center bottom; display:none;">
         <div class="bh-hero-ov" onClick="{{ goShop }}" style="position:absolute; inset:0; cursor:pointer; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; text-align:left; padding:0 clamp(28px,6vw,80px); z-index:2;">
           <div class="bh-hero-in" style="display:flex; flex-direction:column; align-items:center; text-align:center; max-width:460px;">
@@ -1485,7 +1518,7 @@
           <button class="bh-bscar-arrow bh-bscar-prev" type="button" onClick="{{ bsScrollPrev }}" aria-label="Scroll left">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </button>
-          <div id="bh-bscar" class="bh-bscar" style="display:flex; gap:22px; overflow-x:scroll; scroll-snap-type:x mandatory; padding:8px 0 22px; scroll-padding-left:0;">
+          <div id="bh-bscar" class="bh-bscar" style="display:flex; gap:22px; overflow-x:scroll; scroll-snap-type:x proximity; padding:8px 0 22px; scroll-padding-left:0;">
             <sc-for list="{{ bestSellersCarousel }}" as="p" hint-placeholder-count="5">
               <div class="bh-bscard" style="flex:0 0 300px; scroll-snap-align:start; background:#fff; border-radius:12px; box-shadow:0 2px 14px rgba(1,68,33,.08); overflow:hidden; display:flex; flex-direction:column; font-family:'Jost',sans-serif;">
                 <div onClick="{{ p.open }}" style="position:relative; cursor:pointer;">
@@ -1558,7 +1591,7 @@
         <div class="bh-precision-grid" style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:clamp(32px,5vw,72px);">
           <div style="display:flex; align-items:center; justify-content:center; min-height:420px;">
             <img src="assets/pvt-ghkcu.webp" alt="bhare GHK-Cu research vial" loading="lazy" style="width:260px; transform:rotate(-12deg) translateY(14px); margin-right:-54px; filter:drop-shadow(0 24px 40px rgba(1,68,33,.22)); position:relative; z-index:1;">
-            <img src="assets/pvt-retatrutide.webp" alt="bhare GLP-3 RT research vial" loading="lazy" style="width:292px; transform:translateY(-10px); filter:drop-shadow(0 30px 46px rgba(1,68,33,.26)); position:relative; z-index:3;">
+            <img src="assets/pvt-retatrutide.webp" alt="bhare Retatrutide research vial" loading="lazy" style="width:292px; transform:translateY(-10px); filter:drop-shadow(0 30px 46px rgba(1,68,33,.26)); position:relative; z-index:3;">
             <img src="assets/pvt-bpc157.webp" alt="bhare BPC-157 research vial" loading="lazy" style="width:260px; transform:rotate(12deg) translateY(14px); margin-left:-54px; filter:drop-shadow(0 24px 40px rgba(1,68,33,.22)); position:relative; z-index:2;">
           </div>
           <div style="text-align:center;">
@@ -1656,6 +1689,10 @@
             <div style="font-family:'Jost',sans-serif; font-size:11.5px; line-height:1.5; letter-spacing:.02em; color:#8A9281; margin:0 0 12px;">For laboratory research use only. Not for human consumption. Not evaluated by the FDA.</div>
             <div style="font-family:'Jost',sans-serif; font-size:14px; letter-spacing:.02em; color:#54604F; margin-bottom:18px;">{{ product.chemName }}</div>
 
+            <sc-if value="{{ product.headline }}" hint-placeholder-val="{{ false }}">
+              <h2 style="font-family:'Jost',sans-serif; font-size:18px; font-weight:500; line-height:1.45; color:#3F4A3C; margin:0 0 22px; letter-spacing:.01em;">{{ product.headline }}</h2>
+            </sc-if>
+
             <div class="bh-pdp-pills" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:28px;">
               <sc-for list="{{ product.pills }}" as="pill" hint-placeholder-count="3">
                 <span style="display:inline-flex; align-items:center; font-family:'Jost',sans-serif; font-size:10px; letter-spacing:.1em; text-transform:uppercase; font-weight:700; color:#014421; border:1px solid rgba(1,68,33,.3); border-radius:999px; padding:6px 13px;">{{ pill }}</span>
@@ -1736,6 +1773,19 @@
                 </summary>
                 <p class="bh-faq-a" style="font-family:'Jost',sans-serif; font-weight:300; font-size:16px; line-height:1.78; color:#54604F; margin:0; padding:0 4px 26px;">{{ product.desc }}</p>
               </details>
+              <sc-if value="{{ product.hasFaq }}" hint-placeholder-val="{{ false }}">
+              <details style="border-top:1px solid rgba(1,68,33,.12); padding:0;">
+                <summary style="cursor:pointer; list-style:none; padding:18px 0; display:flex; justify-content:space-between; align-items:center; font-family:'Jost',sans-serif; font-size:14px; font-weight:600; color:#1B241C; letter-spacing:.02em;">Researcher FAQ<span style="font-size:18px; color:#014421; line-height:1;">+</span></summary>
+                <div style="padding:4px 0 20px;">
+                  <sc-for list="{{ product.faq }}" as="faqItem" hint-placeholder-count="4">
+                    <div style="padding:14px 0; border-bottom:1px solid rgba(1,68,33,.07);">
+                      <div style="font-family:'Jost',sans-serif; font-size:13.5px; font-weight:600; color:#1B241C; margin-bottom:7px;">{{ faqItem.q }}</div>
+                      <div style="font-family:'Jost',sans-serif; font-size:13.5px; line-height:1.65; color:#54604F;">{{ faqItem.a }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </details>
+              </sc-if>
               <details name="prod-acc">
                 <summary style="display:flex; justify-content:space-between; align-items:center; gap:20px; padding:22px 4px;">
                   <span class="bh-faq-q" style="font-family:'Cormorant Garamond',serif; font-weight:400; font-size:23px; line-height:1.2; color:#1B241C; transition:color .2s ease;">Certificate of Analysis</span>
@@ -2368,15 +2418,28 @@
         <div class="bh-co-grid" style="display:grid; grid-template-columns:1.3fr .9fr; gap:54px; align-items:start;">
           <div class="bh-co-form">
             <div style="font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:#014421; font-weight:700; margin-bottom:18px;">Contact &amp; Shipping</div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;"><input id="bh-co-first" placeholder="First name" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><input placeholder="Last name" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"></div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+              <div><input id="bh-co-first" placeholder="First name" style="width:100%; box-sizing:border-box; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><span id="bh-co-first-err" style="display:none; color:#C0392B; font-size:12px; margin-top:4px;">Required</span></div>
+              <div><input id="bh-co-last" placeholder="Last name" style="width:100%; box-sizing:border-box; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><span id="bh-co-last-err" style="display:none; color:#C0392B; font-size:12px; margin-top:4px;">Required</span></div>
+            </div>
             <input placeholder="Institution / Lab name (optional)" style="width:100%; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff; margin-bottom:16px;">
-            <input id="bh-co-email" placeholder="Email address" style="width:100%; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff; margin-bottom:16px;">
-            <input placeholder="Street address" style="width:100%; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff; margin-bottom:16px;">
-            <div style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:16px; margin-bottom:30px;"><input placeholder="City" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><input placeholder="State" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><input placeholder="ZIP" style="padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"></div>
+            <div style="margin-bottom:16px;"><input id="bh-co-email" placeholder="Email address" style="width:100%; box-sizing:border-box; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><span id="bh-co-email-err" style="display:none; color:#C0392B; font-size:12px; margin-top:4px;">Required</span></div>
+            <input id="bh-co-phone" type="tel" placeholder="Phone number" style="width:100%; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff; margin-bottom:8px; box-sizing:border-box;">
+            <label style="display:flex; align-items:flex-start; gap:8px; font-size:12px; color:#54604F; margin-bottom:16px; cursor:pointer;"><input id="bh-co-sms" type="checkbox" style="margin-top:2px; accent-color:#014421; flex-shrink:0;"> <span>I agree to receive SMS order updates. Message &amp; data rates may apply. Reply STOP to opt out.</span></label>
+            <div style="margin-bottom:16px;"><input id="bh-co-street" placeholder="Street address" style="width:100%; box-sizing:border-box; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><span id="bh-co-street-err" style="display:none; color:#C0392B; font-size:12px; margin-top:4px;">Required</span></div>
+            <div style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:16px; margin-bottom:30px;">
+              <div><input id="bh-co-city" placeholder="City" style="width:100%; box-sizing:border-box; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><span id="bh-co-city-err" style="display:none; color:#C0392B; font-size:12px; margin-top:4px;">Required</span></div>
+              <div><input id="bh-co-state" placeholder="State" style="width:100%; box-sizing:border-box; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><span id="bh-co-state-err" style="display:none; color:#C0392B; font-size:12px; margin-top:4px;">Required</span></div>
+              <div><input id="bh-co-zip" placeholder="ZIP" style="width:100%; box-sizing:border-box; padding:13px 14px; border:1px solid rgba(1,68,33,.22); border-radius:2px; font-family:inherit; font-size:15px; background:#fff;"><span id="bh-co-zip-err" style="display:none; color:#C0392B; font-size:12px; margin-top:4px;">Required</span></div>
+            </div>
             <div style="font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:#014421; font-weight:700; margin-bottom:18px;">Payment</div>
-            <div style="background:#F5F9F5; border:1px solid rgba(1,68,33,.2); border-radius:4px; padding:16px 18px; display:flex; align-items:center; gap:14px;">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#014421" stroke-width="1.5" style="flex:none;"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
-              <div><div style="font-family:'Jost',sans-serif; font-size:13px; font-weight:600; color:#014421; margin-bottom:3px;">PayPal &amp; Venmo</div><div style="font-family:'Jost',sans-serif; font-size:12px; color:#54604F; line-height:1.5;">Payment buttons appear on the next screen. No card required.</div></div>
+            <div style="background:#F5F9F5; border:1px solid rgba(1,68,33,.2); border-radius:4px; padding:16px 18px;">
+              <div style="display:flex; align-items:center; gap:14px; margin-bottom:7px;">
+                <span aria-label="PayPal" style="font-family:Verdana,Arial,sans-serif; font-size:20px; font-weight:bold; font-style:italic; letter-spacing:-.5px; line-height:1;"><span style="color:#003087;">Pay</span><span style="color:#009cde;">Pal</span></span>
+                <span style="width:1px; height:22px; background:rgba(1,68,33,.18); flex:none;"></span>
+                <span aria-label="Venmo" style="font-family:Verdana,Arial,sans-serif; font-size:20px; font-weight:bold; color:#3D95CE; letter-spacing:-.5px; line-height:1;">venmo</span>
+              </div>
+              <div style="font-family:'Jost',sans-serif; font-size:12px; color:#54604F; line-height:1.5;">Payment buttons appear on the next screen. No card required.</div>
             </div>
           </div>
           <div class="bh-co-summary" style="background:#FCFAF4; border:1px solid rgba(1,68,33,.14); border-radius:4px; padding:28px;">
@@ -2402,6 +2465,11 @@
     <sc-if value="{{ isConfirm }}" hint-placeholder-val="{{ true }}">
     <div class="bh-fade">
       <section style="max-width:660px; margin:0 auto; padding:72px 24px 100px;">
+        <div style="display:flex;justify-content:center;margin-bottom:24px;">
+          <div style="width:72px;height:72px;border-radius:50%;background:rgba(1,68,33,.1);border:2px solid rgba(1,68,33,.25);display:flex;align-items:center;justify-content:center;">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#014421" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+        </div>
         <div style="font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:#9C7A4D; font-weight:700; margin-bottom:10px;">Thank you</div>
         <h1 style="font-family:'Cormorant Garamond',serif; font-weight:500; font-size:40px; line-height:1.05; margin:0 0 16px; color:#1B241C;">Your order was received.</h1>
         <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:24px; gap:16px; flex-wrap:wrap;">
@@ -2521,7 +2589,7 @@
   <sc-if value="{{ cartOpen }}" hint-placeholder-val="{{ false }}">
   <div style="position:fixed; inset:0; z-index:60;">
     <div onclick="{{ closeCart }}" style="position:absolute; inset:0; background:rgba(1,46,23,.4); backdrop-filter:blur(2px); animation:bhBackdropIn .3s ease both;"></div>
-    <div style="position:absolute; top:0; right:0; height:100%; width:430px; max-width:92vw; background:#F5F1E8; box-shadow:-30px 0 70px -30px rgba(1,46,23,.5); display:flex; flex-direction:column; animation:bhDrawerIn .42s cubic-bezier(.3,1.1,.4,1) both;">
+    <div id="bh-cart-drawer" style="position:absolute; top:0; right:0; height:100%; width:430px; max-width:92vw; background:#F5F1E8; box-shadow:-30px 0 70px -30px rgba(1,46,23,.5); display:flex; flex-direction:column; animation:bhDrawerIn .42s cubic-bezier(.3,1.1,.4,1) both;">
       <div style="padding:26px 28px; border-bottom:1px solid rgba(1,68,33,.14); display:flex; justify-content:space-between; align-items:center;"><span style="font-family:'Jost',sans-serif; font-size:28px; font-weight:600; color:#014421;">Your Cart</span><button class="bh-press" onclick="{{ closeCart }}" style="cursor:pointer; background:none; border:none; font-size:22px; color:#54604F; line-height:1;">×</button></div>
       <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ false }}"><div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px; text-align:center;"><p style="font-size:16px; color:#7C8472; margin:0 0 22px;">Your cart is empty.</p><a class="bh-btn" onclick="{{ goShop }}" style="cursor:pointer; background:#014421; color:#F5F1E8; padding:14px 28px; font-size:12px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; text-decoration:none; border-radius:2px;">Browse Peptides</a></div></sc-if>
       <sc-if value="{{ cartNotEmpty }}" hint-placeholder-val="{{ true }}">
@@ -2542,6 +2610,22 @@
             </div>
           </sc-for>
         </div>
+        <sc-if value="{{ hasCartUpsell }}" hint-placeholder-val="{{ false }}">
+        <div id="bh-upsell-section" style="padding:0 22px 16px; border-top:1px solid rgba(1,68,33,.08);">
+          <div style="font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:#9C7A4D; font-weight:700; padding:12px 0 10px;">Psst… this goes well with these too!</div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <button onclick="{{ upsellPrev }}" style="cursor:pointer;background:#fff;border:1px solid rgba(1,68,33,.22);border-radius:50%;width:34px;height:34px;color:#014421;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1;padding:0;">&#8249;</button>
+            <div style="flex:1;display:flex;align-items:center;gap:12px;background:#fff;border:1px solid rgba(1,68,33,.10);border-radius:10px;padding:10px 12px;min-width:0;">
+              <div style="width:68px;height:68px;flex-shrink:0;border-radius:8px;overflow:hidden;background:radial-gradient(ellipse 90% 80% at 60% 35%, #ece1cd, #d2c4a8);">{{ currentUpsell.imgEl }}</div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:13px;font-weight:700;color:#1B241C;line-height:1.25;margin-bottom:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ currentUpsell.name }}</div>
+                <button onclick="{{ currentUpsell.add }}" style="cursor:pointer;background:#014421;color:#F5F1E8;border:none;border-radius:9999px;padding:8px 16px;font-size:12px;font-weight:700;font-family:'Jost',sans-serif;white-space:nowrap;">Add to Cart {{ currentUpsell.priceFmt }}</button>
+              </div>
+            </div>
+            <button onclick="{{ upsellNext }}" style="cursor:pointer;background:#fff;border:1px solid rgba(1,68,33,.22);border-radius:50%;width:34px;height:34px;color:#014421;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1;padding:0;">&#8250;</button>
+          </div>
+        </div>
+        </sc-if>
         <div style="padding:22px 28px; border-top:1px solid rgba(1,68,33,.14);"><div style="display:flex; justify-content:space-between; margin-bottom:16px;"><span style="font-size:15px; color:#54604F;">Subtotal</span><span style="font-size:18px; font-weight:700; color:#014421;">{{ subtotalFmt }}</span></div><div style="font-size:11px; line-height:1.55; color:#7C8472; text-align:center; margin:14px 0 2px;">For research use only · Not for human or veterinary consumption.</div><sc-if value="{{ cartHasSub }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px; line-height:1.6; color:#54604F; text-align:left; margin:0 0 14px; padding:12px 14px; background:rgba(1,68,33,.05); border:1px solid rgba(1,68,33,.12); border-radius:4px; overflow-wrap:break-word;">Subscribe &amp; Save orders are billed automatically every 30 days at the discounted price. Cancel anytime from your account.</div></sc-if><button class="bh-btn" onclick="{{ goCheckout }}" style="width:100%; cursor:pointer; background:#014421; color:#F5F1E8; border:none; padding:16px; font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; font-weight:600; border-radius:2px;">Checkout</button></div>
       </div>
       </sc-if>
@@ -2589,192 +2673,262 @@
 </script>
 <script type="text/x-dc" data-dc-script="">
 class Component extends DCLogic {
-  state = { page:'home', productId:null, qty:1, cart:[], cartOpen:false, subGate:false, coSummaryOpen:false, orderNum:null, orderTotal:0, orderEmail:'', orderItems:[], contactSent:false, contactFirstErr:false, contactLastErr:false, contactEmailErr:false, contactSending:false, contactError:false, partnerSent:false, navOpen:false, sizeSel:{}, filter:null, acctTab:'signin', transitioning:false, legalTopic:'terms', authMode:'signin', isMember:false, memberAuthed:false, memberEmail:'', memberJoin:'', acctLoginErr:'', acctRegErr:'', subMode:true, subFreq:'Monthly', coaQ:'', checkoutAgeOk:false, stackIds:[], stackCat:'all', stackSearchQ:'', catalogCat:'all', catalogSearchQ:'', catalogSort:'popular', stackDrawer:false, discountInput:'', discountApplied:null, discountError:false, coaModal:false, subStep:1 };
+  state = { page:'home', productId:null, qty:1, cart:[], cartOpen:false, subGate:false, coSummaryOpen:false, orderNum:null, orderTotal:0, orderEmail:'', orderItems:[], contactSent:false, contactFirstErr:false, contactLastErr:false, contactEmailErr:false, contactSending:false, contactError:false, partnerSent:false, navOpen:false, sizeSel:{}, filter:null, acctTab:'signin', transitioning:false, legalTopic:'terms', authMode:'signin', isMember:false, memberAuthed:false, memberEmail:'', memberJoin:'', acctLoginErr:'', acctRegErr:'', subMode:true, subFreq:'Monthly', coaQ:'', checkoutAgeOk:false, stackIds:[], stackCat:'all', stackSearchQ:'', catalogCat:'all', catalogSearchQ:'', catalogSort:'popular', stackDrawer:false, discountInput:'', discountApplied:null, discountError:false, coaModal:false, subStep:1, upsellIdx:0 };
 
   get catalog() {
     return [
       { id:'bpc157', name:'BPC-157', sub:'Regenerative', group:'recovery', tagline:'Body Protection Compound',
-        sizes:[{label:'5 MG',price:84.99},{label:'10 MG',price:114.99},{label:'20 MG',price:199.99}],
+        sizes:[{label:'5 MG',price:49.99},{label:'10 MG',price:84.99}],
         blurb:'Studied for tissue repair, angiogenesis, and gut-lining integrity.',
         desc:'BPC-157 is a synthetic 15-amino acid peptide derived from a protein found in gastric juice. It is among the most studied repair peptides in preclinical research, with documented roles in tendon and muscle repair via VEGF-mediated angiogenesis, gut-lining integrity through upregulation of growth factors in the GI tract, and nitric oxide system modulation. Research uses BPC-157 to study angiogenesis, gut-lining integrity, and nitric oxide system modulation across a range of tissue repair models. Each vial is lyophilized for stability and ships with a batch-specific certificate of analysis confirmed by HPLC and LC-MS identity verification.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Sequence',value:'GEPPPGKPADDAGLV'}] },
       { id:'tb500', name:'TB-500', sub:'Regenerative', group:'recovery', tagline:'Thymosin Beta-4 Fragment',
-        sizes:[{label:'5 MG',price:94.99},{label:'10 MG',price:164.99}],
+        sizes:[{label:'5 MG',price:54.99},{label:'10 MG',price:94.99}],
         blurb:'Studied for recovery and muscle repair.',
         desc:'TB-500 is a synthetic fragment of the naturally occurring protein Thymosin Beta-4, investigated in research for its influence on actin regulation, cell migration, and tissue flexibility. Mass-spec verified per batch.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
       { id:'ghkcu', name:'GHK-Cu', sub:'Regenerative', group:'recovery', tagline:'Copper Tripeptide-1',
-        sizes:[{label:'50 MG',price:79.99},{label:'100 MG',price:129.99},{label:'200 MG',price:229.99}],
-        blurb:'Studied for collagen synthesis, fibroblast activation, and skin remodeling.',
-        desc:'GHK-Cu is a naturally occurring copper-binding tripeptide found in human plasma that declines with age — from approximately 200 ng/mL at age 20 to under 80 ng/mL by age 60. It is studied for its role in activating fibroblasts, upregulating collagen Types I, III, and IV synthesis, and stimulating tissue remodeling. GHK-Cu research focuses on the fibroblast-activation pathway and its role in studying age-related collagen synthesis decline. Each batch is independently verified for copper elemental composition by ICP-MS in addition to standard HPLC purity and LC-MS identity confirmation.',
+        sizes:[{label:'50 MG',price:54.99},{label:'100 MG',price:99.99}],
+        catTag: 'Regenerative Research',
+        headline: 'The copper peptide with 40 years of research. Finally contextualized for female biology.',
+        blurb: 'Studied for collagen synthesis, fibroblast activation, and skin remodeling. GHK-Cu declines with age — the biology it governs doesn\'t have to.',
+        pills: ['Fibroblast Activation & Collagen Synthesis','DNA Repair & Anti-Inflammatory Signaling','Extracellular Matrix Remodeling'],
+        desc: 'GHK-Cu (glycyl-L-histidyl-L-lysine copper) is a naturally occurring tripeptide found in human plasma that declines with age — from approximately 200 ng/mL at age 20 to under 80 ng/mL by age 60. A landmark body of research by Loren Pickart demonstrated GHK-Cu\'s influence on over 4,000 human genes, including those governing collagen and elastin synthesis, DNA repair, anti-inflammatory signaling, and tissue regeneration.<br><br>Mechanistically, GHK-Cu stimulates fibroblast proliferation and upregulates collagen Types I, III, and IV — the structural proteins behind skin tensile strength and wound repair. It also activates matrix metalloproteinases (MMPs) for remodeling while simultaneously upregulating TIMP-1 and TIMP-2 to regulate breakdown. This dual activation/inhibition profile makes it relevant for studying tissue remodeling dynamics in aging biology.<br><br>In the perimenopausal context: women lose approximately 1% of skin collagen per year after 30, with that rate accelerating to 2–3% annually for the first five years post-menopause. Estrogen plays a direct role in fibroblast activation — its decline removes a key upstream signal for collagen production. GHK-Cu\'s fibroblast pathway is estrogen-independent, making it a relevant research tool for studying collagen support mechanisms in the post-estrogen environment.<br><br>Each vial is lyophilized to ≥99% HPLC-verified purity with full LC-MS identity confirmation. Batch COA ships with every order.',
+        faq: [
+          {q:'Why is GHK-Cu studied specifically in women\'s biology?',a:'Collagen decline accelerates sharply post-menopause due to loss of estrogen-driven fibroblast signaling. GHK-Cu\'s activation of collagen synthesis through fibroblast receptor binding provides a research framework for studying estrogen-independent repair pathways — particularly relevant for researchers focused on the hormonal transition window.'},
+          {q:'Why 50mg vs the 2mg formulations I see elsewhere?',a:'Higher concentration enables research protocols requiring precise micro-dosing with stable stock solutions. Most 2mg vials are topical-grade dilutions or cosmetic-tier manufacturing — not the same as lyophilized research-grade GHK-Cu. Our 50mg formulation is intended for in vitro and pre-clinical research.'},
+          {q:'Is the copper component stable in lyophilized form?',a:'Yes. The copper-peptide bond in GHK-Cu is stable under lyophilization conditions. Store at −20°C, shielded from light. Once reconstituted, stability window is documented per batch COA.'},
+          {q:'Is this the same GHK-Cu used in skincare products?',a:'The peptide sequence is the same, but concentration, purity standard, and formulation are categorically different. Cosmetic GHK-Cu is typically in parts-per-million dilution. Research-grade lyophilized GHK-Cu enables controlled study of the mechanism at concentrations relevant to published literature.'}
+        ],
+        pairWith: ['nad','ta1'],
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Sequence',value:'GHK · Cu²⁺'}] },
-      { id:'pt141', name:'PT-141', sub:'Endocrine', group:'vitality', tagline:'Bremelanotide',
-        sizes:[{label:'10 MG',price:79.99}],
-        blurb:'Studied for sexual function and desire.',
-        desc:'PT-141 (Bremelanotide) is a melanocortin-receptor agonist studied in research for its effects on central nervous system and melanocortin-receptor pathways.',
-        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
-      { id:'retatrutide', name:'GLP-3 RT', sub:'Metabolic', group:'vitality', tagline:'Triple-Agonist Peptide',
-        sizes:[{label:'10 MG',price:234.99},{label:'20 MG',price:369.99},{label:'30 MG',price:599.99}],
-        blurb:'Studied for weight management and metabolic health.',
-        desc:'GLP-3 RT is a synthetic triple-agonist peptide studied in research models for its activity across GLP-1, GIP, and glucagon receptor pathways and its role in metabolic and energy-balance research. Each vial is lyophilized for stability and ships with a batch-specific certificate of analysis.',
-        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
-      { id:'ipamorelin', name:'Ipamorelin', sub:'Endocrine', group:'vitality', tagline:'Selective GH Secretagogue',
-        sizes:[{label:'5 MG',price:64.99},{label:'10 MG',price:124.99}],
-        blurb:'Studied for growth hormone support.',
-        desc:'Ipamorelin is a selective growth-hormone secretagogue studied for its targeted stimulation of GH release with minimal effect on cortisol and prolactin in research models.',
-        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
-      { id:'melanotanii', name:'MT-2', sub:'Melanocortin', group:'vitality', tagline:'Melanocyte-Stimulating Peptide',
-        sizes:[{label:'10 MG',price:69.99}],
-        blurb:'Studied for skin pigmentation and tanning.',
-        desc:'MT-2 is a synthetic analog of α-MSH studied in research for its stimulation of melanogenesis (skin pigmentation) and related melanocortin-receptor pathways.',
-        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
-      { id:'cjc1295', name:'CJC-1295', sub:'Endocrine', group:'vitality', tagline:'GHRH Analog',
-        sizes:[{label:'5 MG',price:104.99},{label:'10 MG',price:189.99}],
-        blurb:'Studied for growth hormone production.',
-        desc:'CJC-1295 is a synthetic analog of growth-hormone-releasing hormone, studied for its extended half-life and sustained influence on the GH/IGF-1 axis in research.',
-        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
-      { id:'sermorelin', name:'Sermorelin', sub:'Endocrine', group:'vitality', tagline:'GHRH (1-29)',
-        sizes:[{label:'5 MG',price:104.99},{label:'10 MG',price:184.99}],
-        blurb:'Studied for growth hormone stimulation.',
-        desc:'Sermorelin is a synthetic fragment (1-29) of growth-hormone-releasing hormone studied for its stimulation of endogenous GH release and influence on sleep architecture.',
-        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
-      { id:'tesamorelin', name:'Tesamorelin', sub:'Endocrine', group:'vitality', tagline:'GHRH Analog',
-        sizes:[{label:'10 MG',price:134.99},{label:'20 MG',price:164.99}],
-        blurb:'Studied for fat reduction and metabolic health.',
-        desc:'Tesamorelin is a stabilized analog of growth-hormone-releasing hormone studied for its influence on the GH/IGF-1 axis and visceral adipose tissue in research models.',
-        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
-      { id:'nad', name:'NAD+', sub:'Cellular', group:'longevity', tagline:'Nicotinamide Adenine Dinucleotide',
-        sizes:[{label:'500 MG',price:149.99},{label:'1000 MG',price:239.99}],
-        blurb:'Studied for mitochondrial function, DNA repair pathways, and sirtuin activation.',
-        desc:'NAD+ (Nicotinamide Adenine Dinucleotide) is a coenzyme present in every living cell and the central molecule in research on cellular energy production, DNA repair, and longevity signaling. It declines approximately 50% between ages 20 and 50. Research on NAD+ focuses on its role as a substrate for sirtuins (longevity-associated deacetylases), PARP enzymes (DNA repair), and mitochondrial Complex I activity. Each vial is lyophilized and verified by HPLC purity and LC-MS identity confirmation.',
+      { id:'ta1', name:'Thymosin Alpha-1', sub:'Immune', group:'recovery', tagline:'Immunomodulatory Peptide',
+        sizes:[{label:'10 MG',price:84.99}],
+        catTag: 'Immune Research',
+        headline: 'Approved as a pharmaceutical in 35 countries. Research the immune compound that actually has a track record.',
+        blurb: 'Studied for T-cell activation, immune modulation, and immune senescence research. The most clinically validated immune-modulating peptide in the literature.',
+        pills: ['T-Cell Activation & NK Cell Upregulation','Immune Senescence Research','Thymic Peptide Signaling (Post-Thymic Involution)'],
+        desc: 'Thymosin Alpha-1 is a 28-amino acid peptide derived from thymosin fraction 5, isolated from thymic tissue. It is approved as a pharmaceutical in 35+ countries under the brand name Zadaxin (SciClone Pharmaceuticals) for the treatment of chronic hepatitis B, hepatitis C, and as an immunotherapy adjuvant. This clinical history gives Thymosin Alpha-1 one of the most extensively characterized safety and mechanism profiles of any research peptide.<br><br>Research has documented T-cell activation (including CD4+ and CD8+ proliferation), natural killer (NK) cell upregulation, dendritic cell maturation, and systemic immune modulation — particularly in aged and immunocompromised models where baseline immune function is depressed. Its mechanism operates through TLR signaling pathways, with documented upregulation of Th1 cytokines (IL-2, IFN-γ) while avoiding the Th2 inflammatory cascade.<br><br>In the perimenopausal context: immune senescence — the gradual decline in immune surveillance capacity with age — accelerates after menopause. Estrogen has direct immunomodulatory effects; its decline alters cytokine balance, reduces NK cell activity, and shifts the immune system toward a pro-inflammatory baseline (inflammaging). Research into peptide-based immune support in the context of hormonal transition represents an underexplored frontier in women\'s longevity biology.<br><br>The thymus begins involuting at puberty. By age 45, most thymic tissue has been replaced by fat. By 60, thymic output has dropped by roughly 95%. Thymosin Alpha-1 was developed in direct response to this biology.<br><br>Lyophilized, ≥99% HPLC-verified purity, LC-MS identity confirmed. Batch COA included.',
+        faq: [
+          {q:'What makes Thymosin Alpha-1 different from other immune research compounds?',a:'It has clinical approval in 35+ countries and a documented mechanism at the TLR/Th1 level. Most immune-adjacent compounds in the research space lack this clinical validation. TA-1 is not a nutraceutical — it\'s a pharmaceutical in active global use.'},
+          {q:'How does immune senescence connect to hormonal transition research?',a:'Estrogen has well-documented immunomodulatory effects — particularly on NK cells, T-cell populations, and cytokine balance. Post-menopausal immune profiles shift toward higher IL-6, lower NK activity, and reduced adaptive immune response. TA-1\'s T-cell activation mechanism is directly relevant to this research context.'},
+          {q:'Is there human data on Thymosin Alpha-1?',a:'Yes — decades of clinical trial data exist across hepatitis, oncology, and immune support applications in human subjects. Zadaxin\'s approval in multiple regulatory jurisdictions reflects the depth of this clinical database.'},
+          {q:'How should it be stored?',a:'Lyophilized: −20°C, away from light and moisture. Once reconstituted per your research protocol: 2–8°C, use within documented stability window.'}
+        ],
+        pairWith: ['ghkcu','nad','kisspeptin'],
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
       { id:'epitalon', name:'Epitalon', sub:'Genomic', group:'longevity', tagline:'Telomerase Research Peptide',
-        sizes:[{label:'10 MG',price:64.99}],
+        sizes:[{label:'10 MG',price:44.99},{label:'20 MG',price:79.99},{label:'50 MG',price:169.99}],
         blurb:'Studied for cellular aging and longevity.',
         desc:'Epitalon (Epithalon) is a synthetic tetrapeptide investigated for its proposed effects on telomerase activity, telomere length, and circadian regulation in longevity research models.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Sequence',value:'AEDG'}] },
+      { id:'nad', name:'NAD+', sub:'Cellular', group:'longevity', tagline:'Nicotinamide Adenine Dinucleotide',
+        sizes:[{label:'100 MG',price:96.99},{label:'500 MG',price:399.99}],
+        catTag: 'Cellular & Mitochondrial Research',
+        headline: 'The coenzyme behind every cell\'s energy. Research what happens when it drops — and what happens when it doesn\'t.',
+        blurb: 'Studied for mitochondrial function, DNA repair pathways, and sirtuin activation. NAD+ declines approximately 50% between ages 20 and 50. Estrogen plays a direct role in NAD+ biosynthesis — making the menopausal transition a critical research window.',
+        pills: ['Sirtuin Activation (SIRT1–SIRT7 Pathway)','Mitochondrial Membrane Potential & Biogenesis','PARP-Mediated DNA Repair Research'],
+        desc: 'NAD+ (nicotinamide adenine dinucleotide) is the coenzyme substrate for three critical cellular enzyme classes: sirtuins (SIRT1–SIRT7, governing gene expression, metabolism, and longevity signaling), PARPs (poly ADP-ribose polymerases, the primary DNA repair enzymes activated by strand breaks), and CD38 (a cyclic ADP-ribose hydrolase involved in calcium signaling and immune function that consumes NAD+ at high rates during inflammatory activity).<br><br>Cellular NAD+ declines approximately 50% between ages 20 and 50. At the cellular level this translates to: reduced sirtuin activity (and the downstream loss of PGC-1α activation and mitochondrial biogenesis), reduced PARP capacity (slower DNA repair after oxidative damage), and disrupted circadian gene expression through the SIRT1/CLOCK interaction.<br><br>The estrogen-NAD+ interaction is one of the most active areas in women\'s longevity biology. Estrogen directly upregulates NAMPT — the rate-limiting enzyme in the NAD+ salvage pathway (the primary route through which cells recycle NAD+ rather than synthesizing it de novo). As estrogen declines in perimenopause, NAMPT activity drops, NAD+ availability decreases faster than baseline aging predicts, and CD38 activity increases in the context of elevated inflammatory signaling — creating a compounding depletion effect.<br><br>Research into NAD+ precursors (NMN, NR) and direct NAD+ has documented improvements in mitochondrial function, insulin sensitivity, and sirtuin-mediated gene regulation in animal models. bhare ships injection-grade NAD+ at 100mg/2ml, HPLC-verified, with batch COA.',
+        faq: [
+          {q:'What is the difference between NAD+ and NMN/NR precursors?',a:'NMN (nicotinamide mononucleotide) and NR (nicotinamide riboside) are oral precursors that convert to NAD+ intracellularly. Direct NAD+ bypasses the conversion step — relevant for in vitro studies and protocols requiring known intracellular NAD+ concentrations. The research literature includes both direct NAD+ and precursor studies; they are not equivalent experimental tools.'},
+          {q:'Why does estrogen loss accelerate NAD+ decline?',a:'Estrogen upregulates NAMPT (nicotinamide phosphoribosyltransferase), the rate-limiting enzyme in the NAD+ salvage pathway. NAMPT converts nicotinamide to NMN, which then converts to NAD+. Without estrogen\'s upregulatory effect on NAMPT, NAD+ recycling slows. Simultaneously, menopause-associated inflammation increases CD38 activity — and CD38 is a major NAD+ consumer. The two effects compound.'},
+          {q:'What does sirtuin activation actually do?',a:'Sirtuins are NAD+-dependent deacylases that regulate protein function by removing acetyl groups. SIRT1 deacetylates PGC-1α (activating mitochondrial biogenesis and fatty acid oxidation), p53 (modulating apoptosis), and the CLOCK/BMAL1 circadian complex. SIRT3 protects mitochondrial proteins from oxidative damage. SIRT6 regulates DNA repair and telomere integrity. NAD+ is the substrate that enables all of these regulatory functions.'},
+          {q:'How should NAD+ be stored?',a:'NAD+ is light-sensitive and moisture-sensitive. Lyophilized: −20°C, away from light and humidity. Once reconstituted: 2–8°C, use within 48 hours per documented stability data for the reconstituted form.'}
+        ],
+        pairWith: ['ghkcu','ta1','kisspeptin'],
+        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
+      { id:'motsc', name:'MOTS-c', sub:'Mitochondrial', group:'longevity', tagline:'Mitochondrial-Derived Peptide',
+        sizes:[{label:'10 MG',price:94.99}],
+        blurb:'Studied for metabolism and energy balance.',
+        desc:'MOTS-c is a mitochondrial-derived peptide studied for its role in metabolic homeostasis, insulin sensitivity, and exercise-related pathways in research settings.',
+        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
       { id:'semax', name:'Semax', sub:'Nootropic', group:'cognition', tagline:'Cognition Research Peptide',
-        sizes:[{label:'10 MG',price:74.99},{label:'30 MG',price:179.99}],
+        sizes:[{label:'30 MG',price:64.99}],
         blurb:'Studied for focus and cognitive performance.',
         desc:'Semax is a synthetic heptapeptide derived from ACTH, investigated in research for its influence on BDNF expression, cognitive function and neuroprotection.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
       { id:'selank', name:'Selank', sub:'Nootropic', group:'cognition', tagline:'Nootropic Research Peptide',
-        sizes:[{label:'10 MG',price:74.99},{label:'30 MG',price:174.99}],
-        blurb:'Studied for HPA axis modulation, GABA receptor activity, and anxiolytic mechanisms.',
-        desc:'Selank is a synthetic heptapeptide analog of the immunomodulatory peptide tuftsin, studied for its modulation of GABA receptor sensitivity, enkephalin degradation inhibition, and HPA axis normalization in research models. Each vial is lyophilized and verified by HPLC purity and LC-MS identity confirmation.',
+        sizes:[{label:'30 MG',price:62.99}],
+        catTag: 'Neuropeptide Research',
+        headline: 'The anxiolytic compound with no sedation and no dependency. Research what calm actually looks like at the cellular level.',
+        blurb: 'Studied for HPA axis modulation, GABA receptor activity, and anxiolytic mechanisms. Registered pharmaceutical in Russia. No sedation. No tolerance.',
+        pills: ['HPA Axis Modulation & Stress Response','GABAergic & Serotonergic Signaling','BDNF Upregulation (Non-Sedating Anxiolytic Model)'],
+        desc: 'Selank is a synthetic heptapeptide analogue of tuftsin (Thr-Lys-Pro-Arg-Pro-Gly-Pro), registered in Russia as a pharmaceutical for generalized anxiety disorder and asthenia under the Institute of Molecular Genetics (RAS). Unlike benzodiazepines — which work through direct GABA-A receptor potentiation and carry dependency, tolerance, and sedation profiles — Selank operates through a more diffuse neuromodulatory mechanism.<br><br>Research has documented GABAergic activity, serotonin metabolism normalization (specifically 5-HT turnover), and BDNF upregulation in limbic structures. Crucially, animal studies have shown no development of tolerance, no withdrawal syndrome, and no sedation at therapeutic doses — making it a pharmacologically distinct tool for studying anxiety biology without the noise of central depression.<br><br>In the perimenopausal context: HPA axis dysregulation is a documented feature of hormonal transition. Cortisol timing shifts. The stress response becomes hyperactive. Sleep fragments. The GABA-ergic tone that normally suppresses anxiety between cortisol peaks is reduced as GABA receptor sensitivity declines with age and estrogen loss. Selank\'s mechanism targets precisely this axis — without sedation, without dependency, and with a published literature supporting its safety profile.<br><br>Lyophilized, ≥99% HPLC-verified purity, LC-MS identity confirmed. Batch COA included.',
+        faq: [
+          {q:'How is Selank different from benzodiazepines mechanistically?',a:'Benzodiazepines bind GABA-A receptors directly and potentiate chloride channel opening — producing sedation, tolerance, and dependence. Selank normalizes GABAergic and serotonergic tone through upstream modulation without direct receptor agonism. In research models this translates to anxiolytic effect without sedation, tolerance, or withdrawal — a categorically different pharmacological profile.'},
+          {q:'What is tuftsin and why does it matter for Selank\'s mechanism?',a:'Tuftsin is an endogenous tetrapeptide that modulates immune and neurological function. Selank is a synthetic extension of tuftsin (Pro-Gly-Pro added to improve stability and CNS penetration). The tuftsin core provides Selank\'s immunomodulatory properties; the PGP extension contributes to its stability and neurotropic profile.'},
+          {q:'Why is HPA dysregulation relevant to perimenopause research?',a:'Estrogen modulates CRH (corticotropin-releasing hormone) and normalizes cortisol timing. As estrogen declines, the HPA axis loses a key regulatory input — cortisol awakening response increases, nighttime cortisol clearance slows, and the anxious baseline many perimenopausal women report can be directly tied to this neuroendocrine shift. Selank\'s HPA modulation mechanism addresses this axis.'},
+          {q:'Is there clinical data on Selank?',a:'Selank has been registered in Russia as a pharmaceutical since 2009. Published preclinical studies exist in English-language literature. Human data comes primarily from Russian clinical trials registered through the Ministry of Health of Russia.'}
+        ],
+        pairWith: ['dsip','nad','kisspeptin'],
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
-      { id:'igf1lr3', name:'IGF-1 LR3', sub:'Endocrine', group:'vitality', tagline:'Long Arg3 IGF-1 Analog',
-        sizes:[{label:'1 MG',price:179.99}],
-        blurb:'Studied for growth factor signaling and tissue development.',
-        desc:'IGF-1 LR3 is a synthetic analog of insulin-like growth factor 1, modified at the N-terminus and with an amino acid substitution at position 3 to extend its half-life compared to native IGF-1. It is studied for its binding to the IGF-1 receptor and downstream signaling through PI3K/AKT and MAPK pathways in cell and tissue research models.',
+      { id:'ipamorelin', name:'Ipamorelin', sub:'Endocrine', group:'vitality', tagline:'Selective GH Secretagogue',
+        sizes:[{label:'5 MG',price:42.99},{label:'10 MG',price:74.99}],
+        blurb:'Studied for growth hormone support.',
+        desc:'Ipamorelin is a selective growth-hormone secretagogue studied for its targeted stimulation of GH release with minimal effect on cortisol and prolactin in research models.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
-      { id:'ghrp6', name:'GHRP-6', sub:'Endocrine', group:'vitality', tagline:'GH-Releasing Hexapeptide',
-        sizes:[{label:'5 MG',price:79.99},{label:'10 MG',price:149.99}],
-        blurb:'Studied for GH secretagogue activity and appetite signaling.',
-        desc:'GHRP-6 (Growth Hormone Releasing Peptide-6) is a synthetic hexapeptide that acts as a functional ghrelin mimetic, binding GHS-R1a to stimulate GH secretion. It is among the most studied growth hormone secretagogues in preclinical research, with well-characterized effects on the GH/IGF-1 axis and gastric motility research.',
+      { id:'cjc1295', name:'CJC-1295', sub:'Endocrine', group:'vitality', tagline:'GHRH Analog',
+        sizes:[{label:'5 MG',price:64.99},{label:'10 MG',price:114.99}],
+        blurb:'Studied for growth hormone production.',
+        desc:'CJC-1295 is a synthetic analog of growth-hormone-releasing hormone, studied for its extended half-life and sustained influence on the GH/IGF-1 axis in research.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
-      { id:'hexarelin', name:'Hexarelin', sub:'Endocrine', group:'vitality', tagline:'Hexapeptide GH Secretagogue',
-        sizes:[{label:'5 MG',price:94.99}],
-        blurb:'Studied for growth hormone release and cardiac tissue research.',
-        desc:'Hexarelin is a synthetic hexapeptide growth hormone secretagogue that binds the ghrelin receptor (GHS-R1a) and is studied for its potent stimulation of GH release in research models. Additionally, research has investigated hexarelin for cardiac receptor activity independent of the GH axis, including GHS-R1b receptor binding in cardiac tissue.',
+      { id:'pt141', name:'PT-141', sub:'Endocrine', group:'vitality', tagline:'Bremelanotide',
+        sizes:[{label:'10 MG',price:59.99}],
+        blurb:'Studied for sexual function and desire.',
+        desc:'PT-141 (Bremelanotide) is a melanocortin-receptor agonist studied in research for its effects on central nervous system and melanocortin-receptor pathways.',
+        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
+      { id:'melanotanii', name:'Melanotan II', sub:'Melanocortin', group:'vitality', tagline:'Melanocyte-Stimulating Peptide',
+        sizes:[{label:'10 MG',price:59.99}],
+        blurb:'Studied for skin pigmentation and tanning.',
+        desc:'Melanotan II is a synthetic analog of α-MSH studied in research for its stimulation of melanogenesis (skin pigmentation) and related melanocortin-receptor pathways.',
+        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
+      { id:'glutathione', name:'Glutathione', sub:'Antioxidant', group:'longevity', tagline:'Antioxidant Tripeptide',
+        sizes:[{label:'600 MG',price:64.99}],
+        catTag: 'Antioxidant & Cellular Research',
+        headline: 'The master antioxidant your body makes less of every year. Research what happens when you stop accepting that.',
+        blurb: 'Studied for cellular redox balance, oxidative stress defense, and detoxification pathways. Glutathione is the primary intracellular antioxidant — and its decline after menopause is both predictable and mechanistically linked to estrogen loss.',
+        pills: ['Cellular Redox Balance & ROS Neutralization','Phase II Liver Detoxification (Glutathione-S-Transferase)','Mitochondrial Oxidative Stress Protection'],
+        desc: 'Glutathione (γ-L-glutamyl-L-cysteinylglycine) is the most abundant intracellular antioxidant in mammalian biology. It exists in reduced (GSH) and oxidized (GSSG) forms — the ratio of GSH:GSSG is one of the primary biomarkers of cellular redox status and oxidative stress burden. As a cofactor for glutathione peroxidase (GPx), it neutralizes hydrogen peroxide and lipid hydroperoxides in the cytoplasm and mitochondria; as the substrate for glutathione-S-transferase (GST), it drives Phase II hepatic detoxification.<br><br>Glutathione levels decline approximately 30% from peak by menopause, with continued decline thereafter. The mechanism is direct: estrogen upregulates glutathione peroxidase activity through estrogen response elements (EREs) on the GPx1 gene promoter. As estrogen declines, GPx transcription decreases, oxidative stress management capacity drops, and the mitochondria — already under increased ROS load from the aging process — lose a key protective substrate.<br><br>Research areas include: oxidative stress in post-menopausal cardiovascular biology (LDL oxidation, endothelial function), neuroinflammation and cognitive aging (glutathione depletion in the prefrontal cortex correlates with cognitive decline markers), and immune cell protection (lymphocytes are among the most glutathione-dependent cells in the body). Melanin synthesis inhibition through tyrosinase suppression has also been documented, providing a mechanistic framework for skin brightness research in post-menopausal populations.<br><br>bhare ships injection-grade reduced glutathione (GSH) at 600mg/2ml, lyophilized, HPLC-verified, batch COA included.',
+        faq: [
+          {q:'What makes glutathione relevant specifically to women in hormonal transition?',a:'Estrogen directly upregulates glutathione peroxidase (GPx1) through ERE-mediated transcription. When estrogen declines, GPx activity drops — reducing the cell\'s primary hydrogen peroxide clearance mechanism. Oxidative stress burden increases post-menopause for multiple reasons (mitochondrial efficiency decline, reduced GPx, chronic low-grade inflammation); glutathione\'s role sits at the center of all three axes.'},
+          {q:'Why inject-grade lyophilized vs oral glutathione?',a:'Oral glutathione has poor systemic bioavailability due to gastrointestinal breakdown of the glycine-cysteine peptide bond. Research protocols requiring consistent, quantifiable glutathione exposure use parenteral-grade lyophilized GSH. The 600mg/2ml concentration is calibrated for research use — not oral supplementation.'},
+          {q:'What is the GSH:GSSG ratio and why does it matter?',a:'Reduced GSH neutralizes reactive oxygen species by donating an electron (becoming oxidized to GSSG). The GPx enzyme then catalyzes this reaction using hydrogen peroxide as the electron acceptor. Cells maintain the GSH:GSSG ratio through glutathione reductase (using NADPH). A falling ratio indicates elevated oxidative load. GSH concentration and GSH:GSSG ratio are the standard oxidative stress biomarkers in published literature.'},
+          {q:'How should it be stored?',a:'GSH is sensitive to oxidation in solution. Lyophilized: −20°C, away from light. Once reconstituted: use immediately per your research protocol. Do not store reconstituted glutathione — it oxidizes rapidly at room temperature.'}
+        ],
+        pairWith: ['nad','ghkcu','bpc157'],
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
       { id:'aod9604', name:'AOD-9604', sub:'Metabolic', group:'vitality', tagline:'hGH Fragment (176-191)',
-        sizes:[{label:'5 MG',price:74.99}],
+        sizes:[{label:'5 MG',price:54.99}],
         blurb:'Studied for hGH fragment 176-191 receptor binding and adipocyte signaling mechanisms.',
         desc:'AOD-9604 is a stabilized synthetic fragment of the C-terminus of human growth hormone, corresponding to the amino acid sequence at positions 176-191. Unlike full-length hGH, this fragment does not bind the primary GH receptor or affect IGF-1 levels, making it a focused research tool for studying the receptor-binding and signaling mechanisms isolated to that fragment. It has been investigated in preclinical models for its effects on adipocyte signaling pathways independent of the growth axis. Each vial is lyophilized and verified by HPLC purity and LC-MS identity confirmation.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
-      { id:'ta1', name:'Thymosin Alpha-1', sub:'Immune', group:'recovery', tagline:'Immunomodulatory Peptide',
-        sizes:[{label:'5 MG',price:99.99},{label:'10 MG',price:174.99}],
-        blurb:'Studied for T-cell activation, immune modulation, and immune senescence research.',
-        desc:'Thymosin Alpha-1 is a 28-amino acid peptide derived from the thymus gland and studied for its roles in T-cell maturation, dendritic cell activation, and toll-like receptor pathway modulation. Immune senescence — the gradual decline of immune function — is a key focus of Thymosin Alpha-1 research, which investigates its role in T-cell maturation and immune aging mechanisms. Each vial is lyophilized and verified by HPLC purity and LC-MS identity confirmation.',
+      { id:'tesamorelin', name:'Tesamorelin', sub:'Endocrine', group:'vitality', tagline:'GHRH Analog',
+        sizes:[{label:'5 MG',price:89.99},{label:'10 MG',price:159.99}],
+        blurb:'Studied for fat reduction and metabolic health.',
+        desc:'Tesamorelin is a stabilized analog of growth-hormone-releasing hormone studied for its influence on the GH/IGF-1 axis and visceral adipose tissue in research models.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
-      { id:'ll37', name:'LL-37', sub:'Immune', group:'recovery', tagline:'Human Cathelicidin Peptide',
-        sizes:[{label:'5 MG',price:109.99}],
-        blurb:'Studied for antimicrobial defense mechanisms and immune signaling.',
-        desc:'LL-37 is the only known human cathelicidin, a 37-amino acid cationic amphipathic peptide processed from the hCAP-18 precursor. It is studied for broad-spectrum antimicrobial activity, immune cell chemotaxis, modulation of TLR signaling, and wound healing research through EGFR and LRP1 receptor interactions.',
-        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
-      { id:'dsip', name:'DSIP', sub:'Neuro', group:'cognition', tagline:'Delta Sleep-Inducing Peptide',
-        sizes:[{label:'5 MG',price:59.99},{label:'15 MG',price:74.99}],
-        blurb:'Studied for sleep quality and stress response.',
-        desc:'DSIP (Delta Sleep-Inducing Peptide) is a neuromodulatory peptide studied for its influence on delta-wave sleep, circadian regulation, and stress-response pathways.',
+      { id:'sermorelin', name:'Sermorelin', sub:'Endocrine', group:'vitality', tagline:'GHRH (1-29)',
+        sizes:[{label:'5 MG',price:52.99}],
+        blurb:'Studied for growth hormone stimulation.',
+        desc:'Sermorelin is a synthetic fragment (1-29) of growth-hormone-releasing hormone studied for its stimulation of endogenous GH release and influence on sleep architecture.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
       { id:'kisspeptin', name:'Kisspeptin-10', sub:'Endocrine', group:'vitality', tagline:'Reproductive-Axis Peptide',
-        sizes:[{label:'5 MG',price:109.99},{label:'8 MG',price:169.99}],
-        blurb:'Studied for HPG axis regulation, GnRH pulse coordination, and thermoregulation research.',
-        desc:'Kisspeptin-10 is the biologically active C-terminal fragment of kisspeptin, the primary upstream regulator of the hypothalamic-pituitary-gonadal (HPG) axis. Kisspeptin neurons in the arcuate nucleus coordinate GnRH pulsatility — the signal that drives LH and FSH release and, downstream, estrogen and progesterone production. During perimenopause, declining estrogen dysregulates kisspeptin neuron firing, resulting in erratic GnRH pulses, unpredictable cycles, and hypothalamic thermostat disruption (the biological mechanism of hot flashes). Kisspeptin-10 is one of the most targeted research tools for studying HPG axis dynamics in the context of hormonal transition. Each vial is lyophilized and verified by HPLC purity and LC-MS identity confirmation.',
+        sizes:[{label:'5 MG',price:69.99}],
+        catTag: 'Neuroendocrine Research',
+        headline: 'The neuropeptide that controls GnRH, LH, and FSH. The master switch of the female HPG axis.',
+        blurb: 'Studied for HPG axis regulation, GnRH pulse coordination, and thermoregulation research. Discovered in 1996. Kisspeptin is the most upstream regulator of the female reproductive endocrine system.',
+        pills: ['GnRH Pulsatility & HPG Axis Regulation','LH/FSH Coordination in Menstrual Cycle Research','Thermoregulatory Disruption Models (Hot Flash Biology)'],
+        desc: 'Kisspeptin-10 is the biologically active C-terminal decapeptide of the KISS1 gene product, encoded by the KISS1 gene on chromosome 1 and first characterized in 1996 as a metastasis suppressor. Its role as the primary upstream regulator of GnRH pulsatility was established in early 2000s research and has fundamentally altered understanding of the hypothalamic-pituitary-gonadal (HPG) axis.<br><br>Kisspeptin neurons in the arcuate nucleus (KNDy neurons, co-expressing kisspeptin, neurokinin B, and dynorphin) coordinate GnRH pulse frequency and amplitude — and thus downstream LH and FSH release. In women, disruption of kisspeptin signaling at any level of this cascade disrupts reproductive endocrinology: erratic LH surges, anovulation, and eventual cessation of GnRH pulsatility.<br><br>The connection to perimenopause is direct and mechanistically central. As estrogen declines, negative feedback on kisspeptin neurons is removed — causing kisspeptin hypersecretion, erratic GnRH pulsatility, and the volatile LH/FSH fluctuations that characterize the perimenopausal transition. Simultaneously, kisspeptin receptor desensitization in aged models explains why GnRH pulsatility eventually ceases entirely.<br><br>There is also a documented role for kisspeptin in thermoregulation: KNDy neurons in the arcuate nucleus interact with the hypothalamic thermostat, and dysregulation of kisspeptin signaling — particularly through neurokinin B crosstalk — is believed to contribute to vasomotor symptoms (hot flashes and night sweats). This places kisspeptin-10 at the intersection of HPG disruption and the most commonly reported perimenopausal symptom.<br><br>Lyophilized, ≥99% HPLC-verified purity, LC-MS identity confirmed. Batch COA included.',
+        faq: [
+          {q:'What does Kisspeptin-10 do that full KISS1 protein doesn\'t?',a:'Kisspeptin-10 is the minimum active fragment retaining full GPR54 receptor binding activity. The full 54-amino acid KISS1 product is processed to Kp-54, Kp-14, Kp-13, and Kp-10 in vivo. Kisspeptin-10 is the predominant active form in the hypothalamus and the most commonly used in research due to its stability and receptor specificity.'},
+          {q:'How does kisspeptin disruption produce hot flashes?',a:'KNDy neurons co-release neurokinin B (NKB) and dynorphin alongside kisspeptin. When estrogen drops and negative feedback is removed, NKB hypersecretion drives aberrant GnRH pulses and also acts on the hypothalamic thermostat — producing the vasomotor response. This is why NK3R antagonists (like fezolinetant) have clinical efficacy for hot flashes without being hormonal therapies.'},
+          {q:'Is bhare one of the few vendors that carries Kisspeptin-10?',a:'Yes. Due to synthesis complexity and limited commercial demand, research-grade Kisspeptin-10 is not widely available. bhare carries it lyophilized with batch-specific COA.'},
+          {q:'Is there human research on Kisspeptin-10?',a:'Yes. Multiple human studies have established kisspeptin\'s pulsatile GnRH-stimulating activity in healthy volunteers. Clinical programs in hypothalamic amenorrhea, polycystic ovary syndrome, and reproductive endocrine research have used kisspeptin infusions in human subjects.'}
+        ],
+        pairWith: ['selank','dsip','nad'],
+        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
+      { id:'dsip', name:'DSIP', sub:'Neuro', group:'cognition', tagline:'Delta Sleep-Inducing Peptide',
+        sizes:[{label:'5 MG',price:49.99}],
+        catTag: 'Sleep & Neuroendocrine Research',
+        headline: 'Isolated from sleep itself. The compound that connects your HPA axis to your slow-wave stage.',
+        blurb: 'Studied for sleep architecture, HPA axis normalization, and neuroendocrine modulation. DSIP sits at the exact intersection of cortisol dysregulation and disrupted slow-wave sleep — the two defining sleep problems of perimenopause.',
+        pills: ['Slow-Wave Sleep Architecture Research','HPA Axis Normalization (CRH/ACTH Modulation)','GnRH & LH Secretion Modulation'],
+        desc: 'Delta sleep-inducing peptide (DSIP) is a nonapeptide (Trp-Ala-Gly-Gly-Asp-Ala-Ser-Gly-Glu) first isolated in 1977 from rabbit cerebral venous blood during studies of sleep-inducing factors conducted at the University of Geneva. It was the first compound identified specifically for its role in promoting slow-wave (delta) sleep induction.<br><br>Research has documented DSIP\'s ability to modulate corticotropin-releasing hormone (CRH) and ACTH secretion — effectively normalizing HPA axis activity. It has also demonstrated modulation of GnRH and LH secretion in animal models, and reduction of oxidative stress markers in aged subjects. These simultaneous axes of action place DSIP at a unique intersection in sleep and reproductive endocrinology research.<br><br>For perimenopause research, DSIP\'s mechanism addresses three converging problems:<br><br><strong>Sleep architecture disruption:</strong> Slow-wave sleep — the stage during which growth hormone peaks, cellular repair runs, and memory consolidates — begins decreasing in the late 30s and is dramatically reduced by perimenopause. DSIP was developed specifically for delta-wave induction.<br><br><strong>HPA hyperactivation:</strong> Elevated cortisol timing is a direct contributor to sleep fragmentation in perimenopausal women. DSIP\'s CRH/ACTH modulation addresses the neuroendocrine driver, not just the symptom.<br><br><strong>Neuroendocrine disruption:</strong> GnRH pulsatility disruption (kisspeptin pathway) is the central mechanism of perimenopause. DSIP\'s documented effect on GnRH and LH secretion places it at the interface of sleep biology and reproductive endocrinology — a research angle with no direct equivalent.<br><br>Lyophilized, ≥99% HPLC-verified purity, LC-MS identity confirmed. Batch COA included.',
+        faq: [
+          {q:'How does DSIP relate to kisspeptin in perimenopause research?',a:'Kisspeptin drives GnRH pulsatility (HPG axis upstream). DSIP modulates GnRH and LH at a different level of the cascade. Researching both provides a multi-point view of HPG disruption in hormonal transition — a more complete picture than single-compound studies.'},
+          {q:'What is the connection between HPA dysregulation and sleep disruption in perimenopause?',a:'Declining estrogen removes a key regulatory input on the HPA axis, causing cortisol timing to shift later into the night. Night sweats and spontaneous arousals in perimenopause are partly driven by this cortisol spike. DSIP\'s CRH/ACTH modulation targets the upstream neuroendocrine driver of this phenomenon.'},
+          {q:'Is there published research on DSIP beyond the initial 1977 discovery?',a:'Yes — a body of preclinical research through the 1980s–2000s documented DSIP\'s sleep-modulating effects, stress response normalization, and antioxidant properties. The human research base is smaller than some research peptides, which makes it an active area for investigation rather than a closed question.'},
+          {q:'How should it be stored?',a:'Lyophilized: −20°C, away from light. Once reconstituted per your research protocol: 2–8°C, use within documented stability window.'}
+        ],
+        pairWith: ['selank','kisspeptin','nad'],
+        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
+      { id:'retatrutide', name:'Retatrutide', sub:'Metabolic', group:'vitality', tagline:'Triple-Agonist Peptide',
+        sizes:[{label:'5 MG',price:159.99},{label:'10 MG',price:269.99}],
+        blurb:'Studied for weight management and metabolic health.',
+        desc:'Retatrutide is a synthetic triple-agonist peptide studied in research models for its activity across GLP-1, GIP, and glucagon receptor pathways and its role in metabolic and energy-balance research. Each vial is lyophilized for stability and ships with a batch-specific certificate of analysis.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
       { id:'ss31', name:'SS-31', sub:'Mitochondrial', group:'longevity', tagline:'Szeto-Schiller Peptide 31',
-        sizes:[{label:'10 MG',price:164.99},{label:'25 MG',price:234.99},{label:'50 MG',price:399.99}],
+        sizes:[{label:'10 MG',price:139.99},{label:'50 MG',price:579.99}],
         blurb:'Studied for mitochondrial membrane protection and bioenergetics.',
         desc:'SS-31 (also known as Elamipretide) is a cell-permeable aromatic-cationic tetrapeptide studied for its selective accumulation in inner mitochondrial membranes. Research focuses on its role in stabilizing cardiolipin — a key phospholipid in mitochondrial cristae architecture — and its effects on electron transport chain efficiency and ATP production. Each vial is lyophilized and verified by HPLC purity and LC-MS identity confirmation.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
+      { id:'foxo4dri', name:'FOXO4-DRI', sub:'Genomic', group:'longevity', tagline:'Senolytic Research Peptide',
+        sizes:[{label:'10 MG',price:189.99}],
+        blurb:'Studied for senescent cell pathways and longevity research.',
+        desc:'FOXO4-DRI is a D-amino acid retro-inverso peptide studied for its proposed role in interfering with the FOXO4–p53 interaction in senescent cells. Research investigates whether disrupting this survival pathway can facilitate selective clearance of senescent cells. Each vial is lyophilized and verified by HPLC purity and LC-MS identity confirmation.',
+        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
+      { id:'igf1lr3', name:'IGF-1 LR3', sub:'Endocrine', group:'vitality', tagline:'Long Arg3 IGF-1 Analog',
+        sizes:[{label:'1 MG',price:109.99}],
+        blurb:'Studied for growth factor signaling and tissue development.',
+        desc:'IGF-1 LR3 is a synthetic analog of insulin-like growth factor 1, modified at the N-terminus and with an amino acid substitution at position 3 to extend its half-life compared to native IGF-1. It is studied for its binding to the IGF-1 receptor and downstream signaling through PI3K/AKT and MAPK pathways in cell and tissue research models.',
+        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
+      { id:'hexarelin', name:'Hexarelin', sub:'Endocrine', group:'vitality', tagline:'Hexapeptide GH Secretagogue',
+        sizes:[{label:'5 MG',price:79.99}],
+        blurb:'Studied for growth hormone release and cardiac tissue research.',
+        desc:'Hexarelin is a synthetic hexapeptide growth hormone secretagogue that binds the ghrelin receptor (GHS-R1a) and is studied for its potent stimulation of GH release in research models. Additionally, research has investigated hexarelin for cardiac receptor activity independent of the GH axis, including GHS-R1b receptor binding in cardiac tissue.',
+        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
+      { id:'ghrp6', name:'GHRP-6', sub:'Endocrine', group:'vitality', tagline:'GH-Releasing Hexapeptide',
+        sizes:[{label:'5 MG',price:64.99},{label:'10 MG',price:109.99}],
+        blurb:'Studied for GH secretagogue activity and appetite signaling.',
+        desc:'GHRP-6 (Growth Hormone Releasing Peptide-6) is a synthetic hexapeptide that acts as a functional ghrelin mimetic, binding GHS-R1a to stimulate GH secretion. It is among the most studied growth hormone secretagogues in preclinical research, with well-characterized effects on the GH/IGF-1 axis and gastric motility research.',
+        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
       { id:'kpv', name:'KPV', sub:'Immune', group:'recovery', tagline:'Anti-Inflammatory Tripeptide',
-        sizes:[{label:'10 MG',price:99.99}],
+        sizes:[{label:'10 MG',price:89.99}],
         blurb:'Studied for anti-inflammatory pathways and gut mucosal research.',
         desc:'KPV is a C-terminal tripeptide of alpha-MSH (Lys-Pro-Val), studied for its anti-inflammatory properties through MC1R-dependent and MC1R-independent pathways. Research focuses on its role in modulating NF-κB signaling, cytokine production, and gut mucosal barrier function in inflammatory research models.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
       { id:'cagrilintide', name:'Cagrilintide', sub:'Metabolic', group:'longevity', tagline:'Long-Acting Amylin Analog',
-        sizes:[{label:'10 MG',price:219.99}],
+        sizes:[{label:'10 MG',price:199.99}],
         blurb:'Studied for amylin receptor signaling and metabolic regulation.',
         desc:'Cagrilintide is a long-acting amylin analog studied for its interaction with amylin receptors (CALCR/RAMP complexes) involved in energy homeostasis regulation. Research investigates its role in amylin pathway activation and its combinatorial effects with GLP-1 receptor agonists in metabolic research models.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
-      { id:'foxo4dri', name:'FOXO4-DRI', sub:'Genomic', group:'longevity', tagline:'Senolytic Research Peptide',
-        sizes:[{label:'10 MG',price:299.99}],
-        blurb:'Studied for senescent cell pathways and longevity research.',
-        desc:'FOXO4-DRI is a D-amino acid retro-inverso peptide studied for its proposed role in interfering with the FOXO4–p53 interaction in senescent cells. Research investigates whether disrupting this survival pathway can facilitate selective clearance of senescent cells. Each vial is lyophilized and verified by HPLC purity and LC-MS identity confirmation.',
-        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
-      { id:'glutathione', name:'Glutathione', sub:'Antioxidant', group:'longevity', tagline:'Antioxidant Tripeptide',
-        sizes:[{label:'600 MG',price:84.99}],
-        blurb:'Studied for cellular redox balance, oxidative stress defense, and detoxification pathways.',
-        desc:'Glutathione is a naturally occurring tripeptide composed of glycine, cysteine, and glutamate — the primary intracellular antioxidant in mammalian cells. It is central to research on redox signaling, xenobiotic detoxification via glutathione S-transferase conjugation, and mitochondrial membrane protection. Oxidative stress increases significantly during the menopausal transition as estrogen — which directly upregulates glutathione peroxidase activity — declines. Glutathione research focuses on these redox-defense mechanisms in the context of cellular aging and hormonal change. Each vial is lyophilized and verified by HPLC purity and LC-MS identity confirmation.',
-        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
-      { id:'motsc', name:'MOTS-c', sub:'Mitochondrial', group:'longevity', tagline:'Mitochondrial-Derived Peptide',
-        sizes:[{label:'10 MG',price:139.99},{label:'40 MG',price:159.99}],
-        blurb:'Studied for metabolism and energy balance.',
-        desc:'MOTS-c is a mitochondrial-derived peptide studied for its role in metabolic homeostasis, insulin sensitivity, and exercise-related pathways in research settings.',
-        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
       { id:'ara290', name:'ARA-290', sub:'Immune', group:'recovery', tagline:'Non-Hematopoietic EPO Peptide',
-        sizes:[{label:'10 MG',price:159.99}],
+        sizes:[{label:'10 MG',price:134.99}],
         blurb:'Studied for erythropoietin receptor signaling and neuroprotection.',
         desc:'ARA-290 is a synthetic 11-amino acid peptide derived from a helical region of erythropoietin (EPO), engineered to engage the innate repair receptor (IRR/EPOR/β-CR heterodimer) without activating hematopoietic EPO receptors. Research investigates its role in tissue protection, anti-inflammatory signaling, and nerve fiber density in pain research models.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
+      { id:'ll37', name:'LL-37', sub:'Immune', group:'recovery', tagline:'Human Cathelicidin Peptide',
+        sizes:[{label:'5 MG',price:94.99}],
+        blurb:'Studied for antimicrobial defense mechanisms and immune signaling.',
+        desc:'LL-37 is the only known human cathelicidin, a 37-amino acid cationic amphipathic peptide processed from the hCAP-18 precursor. It is studied for broad-spectrum antimicrobial activity, immune cell chemotaxis, modulation of TLR signaling, and wound healing research through EGFR and LRP1 receptor interactions.',
+        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
       { id:'thymalin', name:'Thymalin', sub:'Immune', group:'recovery', tagline:'Thymus Gland Peptide Complex',
-        sizes:[{label:'10 MG',price:144.99}],
+        sizes:[{label:'10 MG',price:119.99}],
         blurb:'Studied for thymus-mediated immune restoration and T-cell research.',
         desc:'Thymalin is a peptide bioregulator derived from bovine thymus gland, studied for its role in restoring thymic activity and T-cell differentiation in age-related immune decline research. It is part of the cytamine/cytomax bioregulator class studied extensively in Russian longevity research programs.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
       { id:'pinealon', name:'Pinealon', sub:'Nootropic', group:'cognition', tagline:'Pineal Gland Neuropeptide',
-        sizes:[{label:'20 MG',price:114.99}],
+        sizes:[{label:'20 MG',price:99.99}],
         blurb:'Studied for pineal neuropeptide signaling and cognitive research.',
         desc:'Pinealon is a synthetic tripeptide (Glu-Asp-Arg) derived from the pineal gland, studied as a peptide bioregulator for its proposed role in epigenetic modulation of gene expression in neural tissue. Research investigates its effects on p53 pathway activity and neuronal survival in brain aging models.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
       { id:'snap8', name:'Snap-8', sub:'Cosmetic', group:'longevity', tagline:'SNARE Complex Research Peptide',
-        sizes:[{label:'10 MG',price:89.99}],
+        sizes:[{label:'10 MG',price:79.99}],
         blurb:'Studied for SNARE complex modulation and neurotransmitter research.',
         desc:'Snap-8 is an octapeptide (Acetyl Glutamyl Heptapeptide-3) studied as a longer analog of Argireline, proposed to modulate SNARE complex formation in neuromuscular junction research models. Research investigates its competitive inhibition of SNAP-25 as a tool for studying acetylcholine vesicle release mechanisms.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
-      { id:'aicar', name:'AICAR', sub:'Cellular', group:'longevity', tagline:'AMPK Activator Research',
-        sizes:[{label:'50 MG',price:129.99}],
-        blurb:'Studied for AMPK pathway activation and metabolic enzyme regulation.',
-        desc:'AICAR (5-Aminoimidazole-4-carboxamide ribonucleoside) is a cell-permeable adenosine analog studied as a pharmacological activator of AMP-activated protein kinase (AMPK), a master energy-sensing enzyme. Research investigates AICAR in models of mitochondrial biogenesis, glucose oxidation, fatty acid metabolism, and insulin sensitivity pathways.',
-        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
       { id:'gdf8', name:'GDF-8', sub:'Metabolic', group:'longevity', tagline:'Myostatin Inhibitor Research',
-        sizes:[{label:'1 MG',price:189.99}],
+        sizes:[{label:'1 MG',price:159.99}],
         blurb:'Studied for myostatin pathway inhibition and muscle tissue research.',
         desc:'GDF-8 (Growth Differentiation Factor 8), also known as Myostatin, is a TGF-β superfamily member studied as both a research target and tool. As an endogenous negative regulator of skeletal muscle mass, research uses GDF-8 to study myostatin signaling through ActRIIB, SMAD2/3, and downstream muscle hypertrophy pathways.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
       { id:'ace031', name:'ACE-031', sub:'Metabolic', group:'longevity', tagline:'ActRIIB Decoy Receptor',
-        sizes:[{label:'1 MG',price:249.99}],
+        sizes:[{label:'1 MG',price:219.99}],
         blurb:'Studied for ActRIIB signaling and skeletal muscle development pathways.',
         desc:'ACE-031 is a fusion protein combining the extracellular domain of the activin receptor type IIB (ActRIIB) with a human IgG Fc domain, studied as a decoy receptor for myostatin and related TGF-β ligands. Research investigates its suppression of ActRIIB signaling as a tool for studying muscle mass regulation.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
+      { id:'aicar', name:'AICAR', sub:'Cellular', group:'longevity', tagline:'AMPK Activator Research',
+        sizes:[{label:'50 MG',price:114.99}],
+        blurb:'Studied for AMPK pathway activation and metabolic enzyme regulation.',
+        desc:'AICAR (5-Aminoimidazole-4-carboxamide ribonucleoside) is a cell-permeable adenosine analog studied as a pharmacological activator of AMP-activated protein kinase (AMPK), a master energy-sensing enzyme. Research investigates AICAR in models of mitochondrial biogenesis, glucose oxidation, fatty acid metabolism, and insulin sensitivity pathways.',
+        specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
       { id:'aminomq', name:'5-Amino-1MQ', sub:'Cellular', group:'longevity', tagline:'NNMT Inhibitor Research',
-        sizes:[{label:'5 MG',price:99.99},{label:'50 MG',price:649.99}],
+        sizes:[{label:'5 MG',price:84.99},{label:'50 MG',price:649.99}],
         blurb:'Studied for NNMT enzyme inhibition and metabolic reprogramming.',
         desc:'5-Amino-1MQ (5-Amino-1-methylquinolinium) is a small-molecule inhibitor of nicotinamide N-methyltransferase (NNMT), an enzyme overexpressed in adipose tissue that regulates NAD+ availability and one-carbon metabolism. Research investigates NNMT inhibition for its effects on SAM/SAH ratios, methylation capacity, and adipogenic signaling pathways.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] },
       { id:'pnc27', name:'PNC-27', sub:'Cellular', group:'longevity', tagline:'Membrane-Active Research Peptide',
-        sizes:[{label:'10 MG',price:179.99}],
+        sizes:[{label:'10 MG',price:149.99}],
         blurb:'Studied for membrane-active peptide research and cell biology.',
         desc:'PNC-27 is a synthetic peptide consisting of a p53 HDM-2 binding domain fused to a membrane-resident peptide sequence, studied for its proposed selective interaction with membranes exhibiting elevated MDM-2 surface expression. Research investigates PNC-27 as a tool for studying p53-MDM2 interactions and membrane-targeted peptide biology.',
         specs:[{label:'Purity',value:'≥99% (HPLC)'},{label:'Form',value:'Lyophilized powder'},{label:'Storage',value:'−20°C, lyophilized'}] }
@@ -2955,7 +3109,24 @@ class Component extends DCLogic {
     try{ if(self.state.cartOpen||self.state.subGate) self.setState({cartOpen:false, subGate:false}); }catch(e){}
     try{ var setMenuTop=function(){ var n=document.getElementById('bh-nav'); if(n){ var b=Math.round(n.getBoundingClientRect().bottom); if(b>0) document.documentElement.style.setProperty('--bh-menu-top', b+'px'); } }; setMenuTop(); [120,400,1000].forEach(function(d){ setTimeout(setMenuTop,d); }); window.addEventListener('resize', setMenuTop); window.addEventListener('scroll', function(){ if(!document.querySelector('.bh-mobnav.bh-open')) setMenuTop(); }, {passive:true}); }catch(e){}
     try{ var onPdpScroll=function(){ var bar=document.getElementById('bh-pdp-topbar'); if(!bar) return; var btn=document.querySelector('.bh-pdp-buyrow [data-bhare-buy]'); if(!btn){ bar.classList.remove('bh-show'); return; } var top=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--bh-menu-top'))||88; var r=btn.getBoundingClientRect(); bar.classList.toggle('bh-show', r.bottom < top+6); }; window.addEventListener('scroll', onPdpScroll, {passive:true}); window.addEventListener('resize', onPdpScroll); self._onPdpScroll=onPdpScroll; }catch(e){}
-    try{ var atcIO=new IntersectionObserver(function(ents){ ents.forEach(function(en){ if(en.isIntersecting) en.target.classList.add('atc-revealed'); }); }, {threshold:0.2, rootMargin:'0px 0px -10% 0px'}); self._atcIO=atcIO; self._observeAtc=function(){ var b=document.querySelector('.bh-pdp-buyrow'); if(b && !b._atcObs){ b._atcObs=true; atcIO.observe(b); } }; self._observeAtc(); }catch(e){}
+    try{ var atcIO=new IntersectionObserver(function(ents){ ents.forEach(function(en){ if(en.isIntersecting) en.target.classList.add('atc-revealed'); }); }, {threshold:0.2, rootMargin:'0px 0px -10% 0px'}); self._atcIO=atcIO;
+      // Sticky ATC morph: when the static ATC button is visible, slide the sticky bar out; when scrolled past, slide it back in.
+      var stickyIO=new IntersectionObserver(function(ents){
+        var stickyEl=document.querySelector('.bh-pdp-sticky'); if(!stickyEl) return;
+        ents.forEach(function(en){
+          if(en.isIntersecting){
+            stickyEl.classList.add('bh-atc-anim');
+            clearTimeout(stickyEl._bhAtcT);
+            stickyEl._bhAtcT=setTimeout(function(){ stickyEl.classList.add('bh-atc-off'); }, 300);
+          } else {
+            clearTimeout(stickyEl._bhAtcT);
+            stickyEl.classList.remove('bh-atc-off');
+            requestAnimationFrame(function(){ stickyEl.classList.remove('bh-atc-anim'); });
+          }
+        });
+      }, {threshold:0.05});
+      self._stickyAtcIO=stickyIO;
+      self._observeAtc=function(){ var b=document.querySelector('.bh-pdp-buyrow'); if(b && !b._atcObs){ b._atcObs=true; atcIO.observe(b); } var sb=document.querySelector('.bh-pdp-buyrow [data-bhare-buy]'); if(sb && !sb._stkObs){ sb._stkObs=true; stickyIO.observe(sb); } }; self._observeAtc(); }catch(e){}
     try{ document.addEventListener('click', function(e){ var t=e.target&&e.target.closest?e.target.closest('a,button'):null; if(!t) return; if(t.closest('.bh-press,.bh-burger,.bh-mobnav-close,.bh-dosetabs,.bh-bscar-arrow,.bh-purchase-grid,.bh-catsort,.bh-catfp,.bh-catbar,.bh-mn-search,.bh-co-mobsum-row,.bhq-opt,.bhq-back,.bh-padd,.bh-bs-addfull,.bhq-radd,.bhq-addall,summary,[data-bhare-buy],[data-noscroll]')) return; setTimeout(function(){ try{ window.scrollTo({top:0,left:0,behavior:'smooth'}); }catch(_){ window.scrollTo(0,0); } }, 70); }, false); }catch(e){}
     try{ self.checkMemberAuth(); }catch(e){}
     try{ document.addEventListener('click', function(e){ var a=(e.target&&e.target.closest)?e.target.closest('.ftr-acc .ftr-links a'):null; if(a){ var d=a.closest('.ftr-acc'); if(d) d.open=false; } }); }catch(e){}
@@ -3169,20 +3340,34 @@ class Component extends DCLogic {
   isMemberLoggedIn(){ try{ return !!localStorage.getItem('bhare-member-token'); }catch(e){ return false; } }
   placeOrder(){
     var self=this;
+    var EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    var required=['bh-co-first','bh-co-last','bh-co-email','bh-co-street','bh-co-city','bh-co-state','bh-co-zip'];
+    var firstBad=null;
+    required.forEach(function(id){
+      var el=document.getElementById(id);
+      var err=document.getElementById(id+'-err');
+      if(!el) return;
+      var v=(el.value||'').trim();
+      var bad=!v;
+      if(!bad && id==='bh-co-email' && !EMAIL_RE.test(v)){ bad=true; if(err) err.textContent='Enter a valid email address'; }
+      else if(err) err.textContent='Required';
+      if(bad){
+        el.style.borderColor='#C0392B'; el.style.outline='none';
+        if(err){ err.style.display='block'; }
+        if(!firstBad) firstBad=el;
+      } else {
+        el.style.borderColor='rgba(1,68,33,.22)';
+        if(err){ err.style.display='none'; }
+      }
+    });
+    if(firstBad){
+      try{ firstBad.scrollIntoView({behavior:'smooth', block:'center'}); }catch(e){}
+      try{ firstBad.focus({preventScroll:true}); }catch(e){ try{ firstBad.focus(); }catch(_){} }
+      return;
+    }
     var firstEl=document.getElementById('bh-co-first');
     var emailEl=document.getElementById('bh-co-email');
-    var first=(firstEl?(firstEl.value||'').trim():'');
     var email=(emailEl?(emailEl.value||'').trim():'');
-    if(!first){
-      if(firstEl){firstEl.style.borderColor='#C0392B';firstEl.style.outline='none';firstEl.focus();}
-      return;
-    }
-    if(!email||email.indexOf('@')<1){
-      if(emailEl){emailEl.style.borderColor='#C0392B';emailEl.style.outline='none';emailEl.focus();}
-      return;
-    }
-    if(firstEl) firstEl.style.borderColor='rgba(1,68,33,.22)';
-    if(emailEl) emailEl.style.borderColor='rgba(1,68,33,.22)';
     var cart=this.state.cart;
     var disc=this.state.discountApplied;
     var subtotal=cart.reduce(function(a,c){return a+c.price*c.qty;},0);
@@ -3203,6 +3388,52 @@ class Component extends DCLogic {
     window._bhOrderItems=items.map(function(i){return {name:i.name,size:i.size,qty:i.qty,unit_price:i.lineFmt?0:0};});
     var rawItems=cart.map(function(ci){var p=cat.find(function(x){return x.id===ci.id;});return {name:p?p.name:ci.id,size:ci.size,qty:ci.qty,unit_price:ci.price};});
     window._bhOrderItems=rawItems;
+    // Create Medusa cart asynchronously (non-blocking) so payment capture can be linked to a backend cart
+    (async function createMedusaCart(){
+      try {
+        var VARIANT_MAP = {
+          bpc157: {'5 MG':'variant_01KXFGRWD019CJNRYRD16166X7'},
+          ghkcu:  {'50 MG':'variant_01KXFGWCD2SK3T3080CYNQJV7Y','100 MG':'variant_01KXFGWCD2CK6C2BPV03NN3A1F'},
+          ta1:    {'10 MG':'variant_01KXFGWCG6WA58NYCDEP1HFYV7'},
+          epitalon:{'10 MG':'variant_01KXFGWCKBM2339P40KB43689B','20 MG':'variant_01KXFGWCKBEFA5R1DHGK7DYMGW','50 MG':'variant_01KXFGWCKB3BB9ZVVT9R8DA7V5'},
+          nad:    {'100 MG':'variant_01KXFGWCQ9W6ANQAEA90TNH2GQ','500 MG':'variant_01KXFGWCQ9PQ0QE3P6M26ZPWV3'},
+          semax:  {'30 MG':'variant_01KXFGWCXVJMFSRSNPD7P2RKV6'},
+          selank: {'30 MG':'variant_01KXFGWD0MM6GTZX9FGY12KMJ0'},
+          ipamorelin:{'5 MG':'variant_01KXFGWD3DMEY0Q4TJCJXT8VFT','10 MG':'variant_01KXFGWD3D0J4W2AX7HJFGW6B4'},
+          glutathione:{'600 MG':'variant_01KXFGWDJYJBRR84143FSRXM6E'},
+          aod9604:{'5 MG':'variant_01KXFGWDNDRAA9RT14WMRD24FZ'},
+          sermorelin:{'5 MG':'variant_01KXFGWDV15W5BN8R47TYVHNWY'},
+          kisspeptin:{'5 MG':'variant_01KXFGWDXNPDH68ANWFK48CAQB'},
+          dsip:   {'5 MG':'variant_01KXFGWE09T70PY46K9X3063TA'}
+        };
+        var PK='pk_0ab22d51049894f8909c0671c8a406a0c113bd2c28fa3a46789cefba5a0a7f8f';
+        var REGION='reg_01KXFGR5Q0J2W5BEQHTMMBG6Z3';
+        var MEDUSA_BASE='https://api.bharewell.com';
+        // 1. Create cart
+        var cartRes = await fetch(MEDUSA_BASE+'/store/carts', {
+          method:'POST',
+          headers:{'Content-Type':'application/json','x-publishable-api-key':PK},
+          body: JSON.stringify({region_id: REGION, email: email})
+        });
+        var cartData = await cartRes.json();
+        var cartId = cartData.cart && cartData.cart.id;
+        if(!cartId) return;
+        // 2. Add line items for known variants (skip products with no Medusa variant yet)
+        for(var k=0;k<cart.length;k++){
+          var ci=cart[k];
+          var vm=VARIANT_MAP[ci.id];
+          var vid=vm && vm[ci.size];
+          if(!vid) continue;
+          await fetch(MEDUSA_BASE+'/store/carts/'+cartId+'/line-items', {
+            method:'POST',
+            headers:{'Content-Type':'application/json','x-publishable-api-key':PK},
+            body: JSON.stringify({variant_id:vid, quantity:ci.qty})
+          });
+        }
+        // Store cart ID for the paypal-order endpoint
+        window._bhMedusaCartId = cartId;
+      } catch(e) {}
+    })();
     this.transitionTo(function(){
       self.setState({page:'confirm', orderNum:ref, orderTotal:total, orderEmail:email, orderItems:items, cart:[], cartOpen:false});
       self._loadPayPal(ref,total);
@@ -3224,7 +3455,7 @@ class Component extends DCLogic {
             var c2=document.getElementById('bh-paypal-container');
             if(c2){c2.innerHTML='<div style="background:rgba(1,68,33,.1);border:1px solid rgba(1,68,33,.3);border-radius:6px;padding:20px 22px;text-align:center;"><div style="font-family:Jost,sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#014421;font-weight:700;margin-bottom:8px;">Payment Confirmed</div><div style="font-size:15px;color:#1B241C;line-height:1.5;">Thank you'+(details.payer&&details.payer.name?', '+details.payer.name.given_name:'')+'. Your order is confirmed and will ship within 1–2 business days.</div></div>';}
             var firstEl=document.getElementById('bh-co-first');
-            try{fetch('https://api.bharewell.com/store/paypal-order',{method:'POST',headers:{'Content-Type':'application/json','x-publishable-api-key':'pk_0ab22d51049894f8909c0671c8a406a0c113bd2c28fa3a46789cefba5a0a7f8f'},body:JSON.stringify({paypal_order_id:data.orderID,paypal_capture_id:(details.purchase_units&&details.purchase_units[0]&&details.purchase_units[0].payments&&details.purchase_units[0].payments.captures&&details.purchase_units[0].payments.captures[0]?details.purchase_units[0].payments.captures[0].id:''),ref:ref,email:(details.payer&&details.payer.email_address?details.payer.email_address:''),first_name:(firstEl?firstEl.value.trim():(details.payer&&details.payer.name?details.payer.name.given_name:'')),total:total,items:window._bhOrderItems||[]})});}catch(e){}
+            try{fetch('https://api.bharewell.com/store/paypal-order',{method:'POST',headers:{'Content-Type':'application/json','x-publishable-api-key':'pk_0ab22d51049894f8909c0671c8a406a0c113bd2c28fa3a46789cefba5a0a7f8f'},body:JSON.stringify({paypal_order_id:data.orderID,paypal_capture_id:(details.purchase_units&&details.purchase_units[0]&&details.purchase_units[0].payments&&details.purchase_units[0].payments.captures&&details.purchase_units[0].payments.captures[0]?details.purchase_units[0].payments.captures[0].id:''),ref:ref,email:(details.payer&&details.payer.email_address?details.payer.email_address:''),first_name:(firstEl?firstEl.value.trim():(details.payer&&details.payer.name?details.payer.name.given_name:'')),total:total,items:window._bhOrderItems||[],cart_id:window._bhMedusaCartId||''})});}catch(e){}
           });
         },
         onError:function(){
@@ -3294,7 +3525,7 @@ class Component extends DCLogic {
     const _sa=this.state.subMode!==false;
     const _pillMap={recovery:'Tissue Remodeling',longevity:'Cellular Longevity',cognition:'Cognitive Research',vitality:'Endocrine Support'};
     const _pills=[_pillMap[p.group]||'Research Compound','COA Verified','Research Grade'];
-    return { ...p, pvImg:'assets/pv-'+p.id+'.webp', catTag:(_tagMap[p.group]||'RESEARCH COMPOUND'), chemName:(p.tagline), profile, slotId:'bh-prod-'+p.id, area:({recovery:'Repair',longevity:'Aging',cognition:'Brain',vitality:'Hormones'})[p.group]||'', pills:_pills, sizes, curNum:cur.price.toFixed(2), fromNum:Math.min.apply(null, p.sizes.map(function(s){return s.price;})).toFixed(2), subNum:(cur.price*0.85).toFixed(2), subSaveFmt:(cur.price*0.15).toFixed(2), curPrice:cur.price, curSize:cur.label, sku:this.skuFor(p.id,cur.label), curDose:cur.label+' / 2 ML', proof:(function(){var _pop={bpc157:1,tb500:1,ghkcu:1,melanotanii:1,cjc1295:1,ipamorelin:1,pt141:1,semax:1};if(!_pop[p.id])return '';var seed=0;for(var i=0;i<p.id.length;i++){seed=(seed*31+p.id.charCodeAt(i))>>>0;}var day=Math.floor(Date.now()/86400000);var h=(seed^(day*2654435761))>>>0;h=((h^(h>>>13))*1274126177)>>>0;h=(h^(h>>>16))>>>0;var n=32+(h%56);return 'Ordered '+n+' times in the past week';})(),
+    return { ...p, pvImg:'assets/pv-'+p.id+'.webp', catTag:(p.catTag||_tagMap[p.group]||'RESEARCH COMPOUND'), chemName:(p.tagline), headline:(p.headline||''), hasFaq:!!(p.faq&&p.faq.length), faq:(p.faq||[]).map(function(item){return {q:item.q,a:item.a};}), profile, slotId:'bh-prod-'+p.id, area:({recovery:'Repair',longevity:'Aging',cognition:'Brain',vitality:'Hormones'})[p.group]||'', pills:(p.pills&&p.pills.length?p.pills:_pills), sizes, curNum:cur.price.toFixed(2), fromNum:Math.min.apply(null, p.sizes.map(function(s){return s.price;})).toFixed(2), subNum:(cur.price*0.85).toFixed(2), subSaveFmt:(cur.price*0.15).toFixed(2), curPrice:cur.price, curSize:cur.label, sku:this.skuFor(p.id,cur.label), curDose:cur.label+' / 2 ML', proof:(function(){var _pop={bpc157:1,tb500:1,ghkcu:1,melanotanii:1,cjc1295:1,ipamorelin:1,pt141:1,semax:1};if(!_pop[p.id])return '';var seed=0;for(var i=0;i<p.id.length;i++){seed=(seed*31+p.id.charCodeAt(i))>>>0;}var day=Math.floor(Date.now()/86400000);var h=(seed^(day*2654435761))>>>0;h=((h^(h>>>13))*1274126177)>>>0;h=(h^(h>>>16))>>>0;var n=32+(h%56);return 'Ordered '+n+' times in the past week';})(),
       open:()=>this.openProduct(p.id),
       add:(e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); this.flyToCart(e); var s=this; setTimeout(function(){ s.addToCart(p.id, cur.label, cur.price, 1); }, 600); } };
   }
@@ -3367,6 +3598,38 @@ class Component extends DCLogic {
         inc:()=>this.changeQty(ci.id,ci.size,1), dec:()=>this.changeQty(ci.id,ci.size,-1), remove:(e)=>this.removeCartItem(e,ci.id,ci.size) };
     });
     const cartCount = cart.reduce((a,c)=>a+c.qty,0);
+    // --- Cart cross-sell ("Psst…" upsell carousel) ---
+    const _CROSS_SELL = {
+      retatrutide: ['ghkcu','bpc157','cjc1295'],
+      bpc157:      ['ghkcu','tb500','ipamorelin'],
+      ghkcu:       ['bpc157','epitalon','semax'],
+      tb500:       ['bpc157','ipamorelin','cjc1295'],
+      cjc1295:     ['ipamorelin','bpc157','ghkcu'],
+      ipamorelin:  ['cjc1295','bpc157','ghkcu'],
+      semax:       ['selank','ghkcu','dsip'],
+      selank:      ['semax','ghkcu','dsip'],
+      epitalon:    ['ghkcu','motsc','ta1'],
+      nad:         ['glutathione','ta1','ghkcu'],
+      motsc:       ['epitalon','nad','ta1'],
+      ta1:         ['epitalon','motsc','nad'],
+      glutathione: ['nad','ta1','ghkcu'],
+      aod9604:     ['cjc1295','ipamorelin','bpc157'],
+      sermorelin:  ['ipamorelin','cjc1295','ghkcu'],
+      kisspeptin:  ['ta1','ghkcu','epitalon'],
+      dsip:        ['semax','selank','ghkcu']
+    };
+    const cartUpsell = (()=>{
+      const inCart={}; this.state.cart.forEach(c=>{ inCart[c.id]=1; });
+      const sug=[];
+      this.state.cart.forEach(c=>{ (_CROSS_SELL[c.id]||[]).forEach(id=>{ if(!inCart[id] && sug.indexOf(id)<0 && cat.some(x=>x.id===id)) sug.push(id); }); });
+      return sug.slice(0,4).map(id=>{
+        const p=cat.find(x=>x.id===id);
+        const _src='assets/pv-'+id+'.webp';
+        return { id, name:p.name, priceFmt:this.fmt(p.sizes[0].price),
+          imgElSm: React.createElement('img',{src:_src, alt:p.name, style:{width:'48px',height:'48px',borderRadius:'4px',border:'1px solid #E8E2D6',objectFit:'cover',background:'#ECE1CD'}}),
+          add:(e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); this.addToCart(id, p.sizes[0].label, p.sizes[0].price, 1); } };
+      });
+    })();
     const cartHasSub = this.state.cart.some(c=>c.sub);
     const subtotal = this.state.cart.reduce((a,c)=>a+c.price*c.qty,0);
     const shipping = subtotal>=200 || subtotal===0 ? 0 : 18;
@@ -3391,7 +3654,7 @@ class Component extends DCLogic {
 
     const _sa=this.state.subMode===true;
     return {
-      products:searched, noResults:(searched.length===0), catalogCards, catalogPills, catAllCls:(this.state.catalogCat==='best'?'':'bh-catfp--on'), catBestCls:(this.state.catalogCat==='best'?'bh-catfp--on':''), setCatAll:()=>this.setState({catalogCat:'all'}), setCatBest:()=>this.setState({catalogCat:'best'}), catalogSearchVal:this.state.catalogSearchQ, onCatalogSearch:(e)=>this.setState({catalogSearchQ:e.target.value}), catalogSortVal:(this.state.catalogSort||'popular'), onCatalogSort:(e)=>this.setState({catalogSort:e.target.value}), onSearch:(e)=>this.setState({searchQ:e.target.value}), openLightbox:()=>this.openLightbox(), filters, featured:all.slice(0,4), stkReta, stkMela, stkGhk, stkBpc, addStackA:()=>this.addStackToCart(['ipamorelin','cjc1295']), addStackB:()=>this.addStackToCart(['ghkcu','bpc157']), stackAtotal:this.fmt(stkReta.price0+stkMela.price0), stackBtotal:this.fmt(stkGhk.price0+stkBpc.price0), isStack:page==='stack', goStack:()=>this.go('shop'), goCatalogLink:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.setState({filter:null, catalogCat:'all'}); this.go('shop');}, goStackLink:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('shop');}, stackPills, stackCards, stackSearchVal:this.state.stackSearchQ, onStackSearch:(e)=>this.setState({stackSearchQ:e.target.value}), stackSelected, stackTitle, stackMobLabel, stackTitleStyle:(this.state.stackIds.length===0?'color:#5A6356;font-style:italic;':'color:#14241A;'), stackTitleMuted:(this.state.stackIds.length===0), stackEmpty:(this.state.stackIds.length===0), stackHasItems:(this.state.stackIds.length>0), stackCount:this.state.stackIds.length, stackSubtotalFmt:this.fmt(_sbSub), addAllStack:()=>this.addAllStack(), stackDrawer:this.state.stackDrawer, toggleStackDrawer:()=>this.toggleStackDrawer(), scrollGridTop:()=>{try{var g=document.getElementById('sb-grid');if(g)window.scrollTo(0,g.getBoundingClientRect().top+window.scrollY-90);}catch(e){}}, goQuizFromStack:()=>{this.go('quiz');}, bestSellers:['bpc157','ghkcu','melanotanii','retatrutide'].map(id=>all.find(x=>x.id===id)).filter(Boolean), bestSellersCarousel:(()=>{ const ids=['bpc157','ghkcu','melanotanii','retatrutide','cjc1295']; const badgeMap={bpc157:[{t:'NEW',bg:'#014421'}], ghkcu:[{t:'15% OFF',bg:'#014421'}]}; const saleMap={ghkcu:0.15}; return ids.map(id=>all.find(x=>x.id===id)).filter(Boolean).map(p=>{ const sel=this.state.sizeSel[p.id]??0; const priceNum=+p.fromNum; const pct=saleMap[p.id]||0; const priceOut=pct?+(priceNum*(1-pct)).toFixed(2):priceNum; const badges=badgeMap[p.id]||[]; return Object.assign({}, p, { badges:badges, hasBadges:badges.length>0, onSale:pct>0, priceFmt:this.fmt(priceOut), origFmt:this.fmt(priceNum), hasDots:p.sizes.length>1, dots:p.sizes.map((s,i)=>({ label:s.label, select:s.select, style:'width:16px;height:16px;border-radius:50%;cursor:pointer;padding:0;'+(i===sel?'background:#014421;border:1.5px solid #014421;box-shadow:0 0 0 2px rgba(1,68,33,.18);':'background:#fff;border:1.5px solid rgba(1,68,33,.35);') })) }); }); })(), bsScrollPrev:()=>{ var c=document.getElementById('bh-bscar'); if(c) c.scrollBy({left:-322,behavior:'smooth'}); }, bsScrollNext:()=>{ var c=document.getElementById('bh-bscar'); if(c) c.scrollBy({left:322,behavior:'smooth'}); }, featuredCompound:(()=>{ const d=this.decorate(this.catalog.find(x=>x.id==='ghkcu')||this.catalog[0]); return { id:d.id, name:d.name, chemName:d.chemName, desc:d.desc, pills:d.pills, priceFmt:this.fmt(+d.fromNum), curDose:d.curDose, open:()=>this.openProduct(d.id), add:(e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); this.addStackToCart([d.id]); } }; })(), researchAreas:[ {name:'Tissue Remodeling', open:()=>this.goCatalogFilter('repair')}, {name:'Neuropeptide', open:()=>this.goCatalogFilter('brain')}, {name:'GH Axis', open:()=>this.goCatalogFilter('growth')}, {name:'Geroscience', open:()=>this.goCatalogFilter('aging')} ], raCards:[ {name:'Repair', bg:'#DCE9D5', img:'assets/tile-repair-bpc.webp', imgStyle:'', open:()=>this.goCatalogFilter('repair')}, {name:'Aging', bg:'#D7E7F2', img:'assets/tile-aging-ghkcu.webp', imgStyle:'', open:()=>this.goCatalogFilter('aging')}, {name:'Brain', bg:'#F6DCE6', img:'assets/tile-brain-retatrutide.webp', imgStyle:'', open:()=>this.goCatalogFilter('brain')}, {name:'Hormones', bg:'#DCE9D5', img:'assets/tile-hormones-cjc.webp', imgStyle:'', open:()=>{ this.setState({filter:null, catalogCat:'all'}); this.go('shop'); }} ], goSubscribe:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.setState({subMode:true, filter:null, catalogCat:'all'}); this.go('shop');}, product:selected, displayPrice:(this.state.subMode?selected.subNum:selected.curNum), groups, filters, legal:this.legalData, legalDoc:this.legalDocs[this.state.legalTopic||'terms'], isAccount:page==='account', acctEmailErr:this.state.acctEmailErr||'', acctResetErr:this.state.acctResetErr||'', acctSignin:(this.state.authMode||'signin')==='signin', acctCreate:this.state.authMode==='create', acctSubmitLabel:(this.state.authMode==='create')?'Become a member':'Sign in', acctFootNote:(this.state.authMode==='create')?'By creating an account you agree to our terms & privacy policy.':'New here? Create an account to unlock a members-only welcome offer.', acctTabSignin:'flex:1;cursor:pointer;border:none;padding:12px;font-family:inherit;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;border-radius:2px;'+((this.state.authMode||'signin')==='signin'?'background:#014421;color:#F5F1E8;':'background:transparent;color:#54604F;'), acctTabCreate:'flex:1;cursor:pointer;border:none;padding:12px;font-family:inherit;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;border-radius:2px;'+(this.state.authMode==='create'?'background:#014421;color:#F5F1E8;':'background:transparent;color:#54604F;'),acctSubmitStyle:'width:100%;background:#014421;border:none;padding:16px;font-family:Jost,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;border-radius:2px;cursor:pointer;color:'+((this.state.authMode==='create')?'#C8B083':'#F5F1E8'), acctTabs:(!this.state.memberAuthed && ((this.state.authMode||'signin')==='signin'||this.state.authMode==='create')), acctForgot:this.state.authMode==='forgot', acctSent:this.state.authMode==='sent', acctReset:this.state.authMode==='reset', acctDone:this.state.authMode==='done',
+      products:searched, noResults:(searched.length===0), catalogCards, catalogPills, catAllCls:(this.state.catalogCat==='best'?'':'bh-catfp--on'), catBestCls:(this.state.catalogCat==='best'?'bh-catfp--on':''), setCatAll:()=>this.setState({catalogCat:'all'}), setCatBest:()=>this.setState({catalogCat:'best'}), catalogSearchVal:this.state.catalogSearchQ, onCatalogSearch:(e)=>this.setState({catalogSearchQ:e.target.value}), catalogSortVal:(this.state.catalogSort||'popular'), onCatalogSort:(e)=>this.setState({catalogSort:e.target.value}), onSearch:(e)=>this.setState({searchQ:e.target.value}), openLightbox:()=>this.openLightbox(), filters, featured:all.slice(0,4), stkReta, stkMela, stkGhk, stkBpc, addStackA:()=>this.addStackToCart(['ipamorelin','cjc1295']), addStackB:()=>this.addStackToCart(['ghkcu','bpc157']), stackAtotal:this.fmt(stkReta.price0+stkMela.price0), stackBtotal:this.fmt(stkGhk.price0+stkBpc.price0), isStack:page==='stack', goStack:()=>this.go('shop'), goCatalogLink:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.setState({filter:null, catalogCat:'all'}); this.go('shop');}, goStackLink:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('shop');}, stackPills, stackCards, stackSearchVal:this.state.stackSearchQ, onStackSearch:(e)=>this.setState({stackSearchQ:e.target.value}), stackSelected, stackTitle, stackMobLabel, stackTitleStyle:(this.state.stackIds.length===0?'color:#5A6356;font-style:italic;':'color:#14241A;'), stackTitleMuted:(this.state.stackIds.length===0), stackEmpty:(this.state.stackIds.length===0), stackHasItems:(this.state.stackIds.length>0), stackCount:this.state.stackIds.length, stackSubtotalFmt:this.fmt(_sbSub), addAllStack:()=>this.addAllStack(), stackDrawer:this.state.stackDrawer, toggleStackDrawer:()=>this.toggleStackDrawer(), scrollGridTop:()=>{try{var g=document.getElementById('sb-grid');if(g)window.scrollTo(0,g.getBoundingClientRect().top+window.scrollY-90);}catch(e){}}, goQuizFromStack:()=>{this.go('quiz');}, bestSellers:['bpc157','ghkcu','melanotanii','retatrutide'].map(id=>all.find(x=>x.id===id)).filter(Boolean), bestSellersCarousel:(()=>{ const ids=['retatrutide','ghkcu','bpc157','melanotanii','motsc']; const badgeMap={bpc157:[{t:'NEW',bg:'#014421'}], ghkcu:[{t:'15% OFF',bg:'#014421'}]}; const saleMap={ghkcu:0.15}; return ids.map(id=>all.find(x=>x.id===id)).filter(Boolean).map(p=>{ const sel=this.state.sizeSel[p.id]??0; const priceNum=+p.fromNum; const pct=saleMap[p.id]||0; const priceOut=pct?+(priceNum*(1-pct)).toFixed(2):priceNum; const badges=badgeMap[p.id]||[]; return Object.assign({}, p, { badges:badges, hasBadges:badges.length>0, onSale:pct>0, priceFmt:this.fmt(priceOut), origFmt:this.fmt(priceNum), hasDots:p.sizes.length>1, dots:p.sizes.map((s,i)=>({ label:s.label, select:s.select, style:'width:16px;height:16px;border-radius:50%;cursor:pointer;padding:0;'+(i===sel?'background:#014421;border:1.5px solid #014421;box-shadow:0 0 0 2px rgba(1,68,33,.18);':'background:#fff;border:1.5px solid rgba(1,68,33,.35);') })) }); }); })(), bsScrollPrev:()=>{ var c=document.getElementById('bh-bscar'); if(!c) return; if(c.scrollLeft<=20){ c.scrollTo({left:c.scrollWidth-c.clientWidth,behavior:'smooth'}); }else{ c.scrollBy({left:-322,behavior:'smooth'}); }}, bsScrollNext:()=>{ var c=document.getElementById('bh-bscar'); if(!c) return; if(c.scrollLeft>=c.scrollWidth-c.clientWidth-20){ c.scrollTo({left:0,behavior:'smooth'}); }else{ c.scrollBy({left:322,behavior:'smooth'}); }}, featuredCompound:(()=>{ const d=this.decorate(this.catalog.find(x=>x.id==='ghkcu')||this.catalog[0]); return { id:d.id, name:d.name, chemName:d.chemName, desc:d.desc, pills:d.pills, priceFmt:this.fmt(+d.fromNum), curDose:d.curDose, open:()=>this.openProduct(d.id), add:(e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); this.addStackToCart([d.id]); } }; })(), researchAreas:[ {name:'Tissue Remodeling', open:()=>this.goCatalogFilter('repair')}, {name:'Neuropeptide', open:()=>this.goCatalogFilter('brain')}, {name:'GH Axis', open:()=>this.goCatalogFilter('growth')}, {name:'Geroscience', open:()=>this.goCatalogFilter('aging')} ], raCards:[ {name:'Repair', bg:'#DCE9D5', img:'assets/tile-repair-bpc.webp', imgStyle:'', open:()=>this.goCatalogFilter('repair')}, {name:'Aging', bg:'#D7E7F2', img:'assets/tile-aging-ghkcu.webp', imgStyle:'', open:()=>this.goCatalogFilter('aging')}, {name:'Brain', bg:'#F6DCE6', img:'assets/tile-brain-retatrutide.webp', imgStyle:'', open:()=>this.goCatalogFilter('brain')}, {name:'Hormones', bg:'#DCE9D5', img:'assets/tile-hormones-cjc.webp', imgStyle:'', open:()=>{ this.setState({filter:null, catalogCat:'all'}); this.go('shop'); }} ], goSubscribe:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.setState({subMode:true, filter:null, catalogCat:'all'}); this.go('shop');}, product:selected, displayPrice:(this.state.subMode?selected.subNum:selected.curNum), groups, filters, legal:this.legalData, legalDoc:this.legalDocs[this.state.legalTopic||'terms'], isAccount:page==='account', acctEmailErr:this.state.acctEmailErr||'', acctResetErr:this.state.acctResetErr||'', acctSignin:(this.state.authMode||'signin')==='signin', acctCreate:this.state.authMode==='create', acctSubmitLabel:(this.state.authMode==='create')?'Become a member':'Sign in', acctFootNote:(this.state.authMode==='create')?'By creating an account you agree to our terms & privacy policy.':'New here? Create an account to unlock a members-only welcome offer.', acctTabSignin:'flex:1;cursor:pointer;border:none;padding:12px;font-family:inherit;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;border-radius:2px;'+((this.state.authMode||'signin')==='signin'?'background:#014421;color:#F5F1E8;':'background:transparent;color:#54604F;'), acctTabCreate:'flex:1;cursor:pointer;border:none;padding:12px;font-family:inherit;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;border-radius:2px;'+(this.state.authMode==='create'?'background:#014421;color:#F5F1E8;':'background:transparent;color:#54604F;'),acctSubmitStyle:'width:100%;background:#014421;border:none;padding:16px;font-family:Jost,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;border-radius:2px;cursor:pointer;color:'+((this.state.authMode==='create')?'#C8B083':'#F5F1E8'), acctTabs:(!this.state.memberAuthed && ((this.state.authMode||'signin')==='signin'||this.state.authMode==='create')), acctForgot:this.state.authMode==='forgot', acctSent:this.state.authMode==='sent', acctReset:this.state.authMode==='reset', acctDone:this.state.authMode==='done',
       qty:this.state.qty, bundles,
       coaModal:this.state.coaModal, openCoaModal:()=>this.setState({coaModal:true}), closeCoaModal:()=>this.setState({coaModal:false}), stopProp:(e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); },
       isHome:page==='home', isProduct:page==='product', navHome:page==='home'?'bh-on':'', isShop:page==='shop', isAbout:page==='about', isScience:page==='science', isCompliance:page==='compliance', isTerms:page==='terms', isPrivacy:page==='privacy', isQuiz:page==='quiz', isFaq:page==='faq', termsSections:this.termsSections, privacySections:this.privacySections, returnsSections:this.returnsSections, shippingSections:this.shippingSections, isPartners:page==='partners',
@@ -3400,12 +3663,14 @@ class Component extends DCLogic {
       cart, cartCount, hasItems:cartCount>0, cartHasSub, cartOpen:this.state.cartOpen, subGate:this.state.subGate, coSummaryOpen:this.state.coSummaryOpen, coSummaryClosed:!this.state.coSummaryOpen, toggleCoSummary:()=>this.setState(s=>({coSummaryOpen:!s.coSummaryOpen})),
       subStep1:(this.state.subStep!==2), subStep2:(this.state.subStep===2),
       cartEmpty:cart.length===0, cartNotEmpty:cart.length>0,
+      cartUpsell, hasCartUpsell:cartUpsell.length>0, upsellTotal:cartUpsell.length, upsellIdx:Math.min(this.state.upsellIdx,Math.max(0,cartUpsell.length-1)), currentUpsell:(()=>{ var idx=Math.min(this.state.upsellIdx,Math.max(0,cartUpsell.length-1)); return cartUpsell[idx]||null; })(), upsellPrev:(()=>{ var len=cartUpsell.length; return ()=>{ if(len<1) return; var cur=Math.min(this.state.upsellIdx,len-1); this.setState({upsellIdx:(cur-1+len)%len}); }; })(), upsellNext:(()=>{ var len=cartUpsell.length; return ()=>{ if(len<1) return; var cur=Math.min(this.state.upsellIdx,len-1); this.setState({upsellIdx:(cur+1)%len}); }; })(),
+      openVenmo:(e)=>{ if(e&&e.preventDefault) e.preventDefault(); var handle='BHARE_VENMO_HANDLE_PLACEHOLDER'; var note=encodeURIComponent(this.state.orderNum||'bhare order'); var amount=(this.state.orderTotal||0).toFixed(2); var url='https://venmo.com/u/'+handle+'?txn=pay&amount='+amount+'&note='+note; window.open(url,'_blank'); },
       subtotalFmt:this.fmt(subtotal), shippingFmt:_shipAfter===0?'Free':this.fmt(_shipAfter), totalFmt:this.fmt(_total),
       discountInputVal:this.state.discountInput, onDiscountInput:(e)=>this.setState({discountInput:e.target.value, discountError:false}), applyDiscount:()=>this.applyDiscount(), discountError:this.state.discountError,
       hasDiscount:!!_disc, discountLabel:(_disc?('Discount — '+_disc.code):''), discountAmtFmt:(_disc && _disc.tier==='TSH')?'Free shipping':('-'+this.fmt(_discAmt)),
       orderNum:this.state.orderNum, orderTotalFmt:this.fmt(this.state.orderTotal||0), orderItemsList:this.state.orderItems||[], contactSent:this.state.contactSent, contactNotSent:!this.state.contactSent, contactFirstErr:this.state.contactFirstErr, contactLastErr:this.state.contactLastErr, contactEmailErr:this.state.contactEmailErr, contactSending:this.state.contactSending, contactError:this.state.contactError, contactBtnLabel:(this.state.contactSending?'Sending\u2026':'Send message'), contactBtnCursor:(this.state.contactSending?'wait':'pointer'), contactBtnOpacity:(this.state.contactSending?'.6':'1'), resetContact:()=>this.resetContact(), contactFirstBorder:(this.state.contactFirstErr?'1px solid #C0392B':'1px solid rgba(1,68,33,.22)'), contactLastBorder:(this.state.contactLastErr?'1px solid #C0392B':'1px solid rgba(1,68,33,.22)'), contactEmailBorder:(this.state.contactEmailErr?'1px solid #C0392B':'1px solid rgba(1,68,33,.22)'), partnerSent:this.state.partnerSent, partnerNotSent:!this.state.partnerSent,
-      goHome:()=>this.go('home'), showSigninTab:()=>this.setState({acctTab:'signin',acctLoginErr:'',acctRegErr:''}), showJoinTab:()=>this.setState({acctTab:'join',acctLoginErr:'',acctRegErr:''}), acctTabSignin:((this.state.acctTab||'signin')!=='join'), acctTabJoin:(this.state.acctTab==='join'), acctTabSigninStyle:('flex:1;cursor:pointer;background:none;border:none;outline:none;padding:16px 8px;font-family:\'Jost\',sans-serif;font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;transition:color .2s ease,border-color .2s ease;'+(((this.state.acctTab||'signin')!=='join')?'border-bottom:2px solid #014421;color:#014421;':'border-bottom:2px solid transparent;color:#9AA38E;')), acctTabJoinStyle:('flex:1;cursor:pointer;background:none;border:none;outline:none;padding:16px 8px;font-family:\'Jost\',sans-serif;font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;transition:color .2s ease,border-color .2s ease;'+((this.state.acctTab==='join')?'border-bottom:2px solid #014421;color:#014421;':'border-bottom:2px solid transparent;color:#9AA38E;')), clearAcctEmailErr:(e)=>{ if(e&&e.target) e.target.style.borderColor=''; if(this.state.acctLoginErr||this.state.acctRegErr||this.state.acctEmailErr) this.setState({acctLoginErr:'',acctRegErr:'',acctEmailErr:''}); }, goQuizPage:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('quiz');}, goShop:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.setState({filter:null, catalogCat:'all'}); this.go('shop');}, goBestSellers:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('home'); var tries=0; var run=function(){var el=document.getElementById('bh-bestsellers'); if(el){var stick=document.getElementById('bh-topstick'); var off=(stick?stick.getBoundingClientRect().height:70)+8; window.scrollTo({top:el.getBoundingClientRect().top+(window.pageYOffset||0)-off, behavior:'smooth'});} else if(tries++<25){setTimeout(run,60);}}; setTimeout(run,340);}, menuSearchSubmit:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.setState({filter:null, catalogCat:'all'}); this.go('shop');}, menuSearchKey:(e)=>{if(e&&(e.key==='Enter'||e.keyCode===13)){e.preventDefault(); this.setState({filter:null, catalogCat:'all'}); this.go('shop');}}, toggleNavSearch:(e)=>{if(e&&e.preventDefault)e.preventDefault(); var w=document.getElementById('bh-navsearch-wrap'), inp=document.getElementById('bh-navsearch'); if(!w||!inp) return; var open=w.getAttribute('data-open')==='1'; if(open){ w.style.width='0px'; w.style.opacity='0'; w.setAttribute('data-open','0'); } else { w.style.width='210px'; w.style.opacity='1'; w.setAttribute('data-open','1'); inp.focus(); }}, onNavSearchKey:(e)=>{ if(e&&e.key==='Enter'){ var v=(e.target.value||'').trim(); this.setState({searchQ:v, filter:null, catalogCat:'all'}); this.go('shop'); } }, onNavSearchInput:(e)=>{ var v=e&&e.target?e.target.value:''; clearTimeout(this._navSearchT); this._navSearchT=setTimeout(()=>{ this.setState({navSearchQ:v}); }, 300); }, navSearchResults:(()=>{ var q=(this.state.navSearchQ||'').trim().toLowerCase(); if(!q) return []; var areaMap={recovery:'Repair',longevity:'Aging',cognition:'Brain',vitality:'Hormones'}; return this.catalog.filter(p=>{ var hay=(p.name+' '+p.id+' '+(p.group||'')+' '+(p.tagline||'')+' '+(p.sub||'')).toLowerCase(); return hay.indexOf(q)>=0; }).slice(0,8).map(p=>({ name:p.name, area:areaMap[p.group]||'', priceFmt:this.fmt(Math.min.apply(null,p.sizes.map(function(s){return s.price;}))), open:()=>{ this.setState({searchModal:false, navSearchQ:''}); this.openProduct(p.id); } })); })(), navSearchOpen:((this.state.navSearchQ||'').trim().length>0), searchModal:!!this.state.searchModal, searchEmptyState:((this.state.navSearchQ||'').trim().length===0), openSearchModal:(e)=>{ if(e&&e.preventDefault)e.preventDefault(); this.setState({searchModal:true, navSearchQ:''}); setTimeout(function(){ var i=document.getElementById('bh-searchmodal-input'); if(i) i.focus(); }, 260); }, closeSearchModal:(e)=>{ if(e&&e.preventDefault)e.preventDefault(); this.setState({searchModal:false, navSearchQ:''}); }, onSearchModalKey:(e)=>{ if(e&&e.key==='Escape'){ this.setState({searchModal:false, navSearchQ:''}); } }, searchSuggestions:['GHK-Cu','BPC-157','GLP-3 RT','CJC-1295'].map((term,i)=>({ label:term, notFirst:i>0, pick:()=>{ var el=document.getElementById('bh-searchmodal-input'); if(el) el.value=term; this.setState({navSearchQ:term}); } })), navSearchNoResults:(()=>{ var q=(this.state.navSearchQ||'').trim().toLowerCase(); if(!q) return false; return !this.catalog.some(p=>((p.name+' '+p.id+' '+(p.group||'')+' '+(p.tagline||'')+' '+(p.sub||'')).toLowerCase().indexOf(q)>=0)); })(), ftAll:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.setState({filter:null, catalogCat:'all'}); this.go('shop');}, ftRepair:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.goCatalogFilter('repair');}, ftAging:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.goCatalogFilter('aging');}, ftBrain:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.goCatalogFilter('brain');}, ftHormones:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.goCatalogFilter('growth');}, ftCOA:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('coa');}, ftCompliance:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('compliance');}, ftContact:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('contact');}, ftFaq:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.goFaq();}, ftShipping:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('shipping');}, ftRefunds:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('returns');}, goRecovery:()=>this.openGroup('recovery'), goLongevity:()=>this.openGroup('longevity'), goCognition:()=>this.openGroup('cognition'), goVitality:()=>this.openGroup('vitality'), goAbout:()=>this.go('about'), goScience:()=>this.go('science'), goCompliancePage:()=>this.go('compliance'), goPartners:()=>this.go('partners'), toggleNav:()=>this.setState(s=>({navOpen:!s.navOpen})), navOpenCls:this.state.navOpen?'bh-open':'', mobnavStyle:this.state.navOpen?'transform:translateX(0); pointer-events:auto;':'transform:translateX(-100%); pointer-events:none;', goCOA:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('coa');},
-      goLegal:()=>this.goLegal2('terms'), goTerms:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.goLegal2('terms');}, goPrivacy:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.goLegal2('privacy');}, goShipping:()=>this.go('shipping'), goRefunds:()=>this.go('returns'), goCompliance:()=>this.goLegal2('compliance'), goScience:()=>this.go('science'), goAccount:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('account');}, goJoin:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.setState({acctTab:'join',acctLoginErr:'',acctRegErr:''}); this.go('account');}, memberAuthed:this.state.memberAuthed, memberInitial:((this.state.memberEmail||'').charAt(0).toUpperCase()), notMemberAuthed:!this.state.memberAuthed, memberEmail:this.state.memberEmail, memberJoin:this.state.memberJoin, acctLoginErr:this.state.acctLoginErr||'', acctRegErr:this.state.acctRegErr||'', acctRegEmailErr:this.state.acctRegEmailErr||'', acctRegPhoneErr:this.state.acctRegPhoneErr||'', acctRegUserErr:this.state.acctRegUserErr||'', acctRegFirstErr:this.state.acctRegFirstErr||'', acctRegLastErr:this.state.acctRegLastErr||'', acctRegPwErr:this.state.acctRegPwErr||'', acctRegCb1Err:this.state.acctRegCb1Err||'', acctRegCb2Err:this.state.acctRegCb2Err||'', clearRegField:(ev)=>{ var t=ev&&ev.target; if(!t) return; var map={'acct-reg-first':'acctRegFirstErr','acct-reg-last':'acctRegLastErr','acct-reg-username':'acctRegUserErr','acct-reg-email':'acctRegEmailErr','acct-reg-phone':'acctRegPhoneErr','acct-reg-password':'acctRegPwErr','acct-reg-cb1':'acctRegCb1Err','acct-reg-cb2':'acctRegCb2Err'}; if(t.type==='checkbox'){ var lb=t.closest('label'); var sp=lb&&lb.querySelector('span'); if(sp) sp.style.color='#3F4A3C'; } else { t.style.borderColor='rgba(1,68,33,.22)'; var lb2=t.parentElement&&t.parentElement.querySelector('label'); if(lb2) lb2.style.color='#7C8472'; } var k=map[t.id]; if(k && this.state[k]){ var s={}; s[k]=''; this.setState(s); } }, memberLoginAction:()=>this.memberLogin(), toggleAcctPw:()=>{ var i=document.getElementById('acct-password'), b=document.getElementById('acct-pw-eye'); if(!i) return; var show=i.type==='password'; i.type=show?'text':'password'; if(b){ b.setAttribute('aria-label',show?'Hide password':'Show password'); b.innerHTML=show?'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>':'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg>'; } }, memberRegisterAction:()=>this.memberRegister(), signOut:()=>this.memberSignOut(), setSignin:()=>this.setState({authMode:'signin', acctEmailErr:'', acctResetErr:''}), acctSubmit:()=>{var el=document.getElementById('acct-email');var v=el?el.value:'';if(!this.emOk(v)){this.setState({acctEmailErr:'Please enter a valid email address.'});return;}this.setState({acctEmailErr:'', isMember:true});}, setCreate:()=>this.setState({authMode:'create', acctEmailErr:''}), setForgot:()=>this.setState({authMode:'forgot', acctEmailErr:''}), sendReset:()=>this.memberForgot(), setReset:()=>this.setState({authMode:'reset'}), updatePassword:()=>{var a=document.getElementById('acct-newpass'),b=document.getElementById('acct-newpass2');var pa=a?a.value:'',pb=b?b.value:'';if(pa.length<8){this.setState({acctResetErr:'Password must be at least 8 characters.'});return;}if(pa!==pb){this.setState({acctResetErr:'Passwords do not match.'});return;}var self=this,rt=self._resetToken||'';if(!rt){this.setState({acctResetErr:'Reset link missing. Please request a new one.'});return;}fetch(self.MEMBER_API+'/members/reset-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:rt,password:pa})}).then(function(r){return r.json().then(function(d){if(r.status===200){self.setState({authMode:'done',acctResetErr:''});}else{self.setState({acctResetErr:d.error||'Something went wrong. Try again.'});}});}).catch(function(){self.setState({acctResetErr:'Connection error. Please try again.'});});}, goContact:()=>this.go('contact'), prodBackLabel:this.state.fromQuiz?'← Back to quiz results':'← Back to catalog', prodBack:()=>{if(this.state.fromQuiz&&window.bhareReopenResults){window.bhareReopenResults();}else{this.setState({filter:null});this.go('shop');}}, goShopFromCart:()=>this.go('shop'), goCheckout:()=>{ if(cartHasSub && !this.isMemberLoggedIn()){ this.setState({subGate:true, subStep:1, cartOpen:false}); } else { this.go('checkout'); } }, closeSubGate:()=>this.setState({subGate:false}), subAgree:()=>this.setState({subStep:2}), subGateCancel:()=>this.setState({subGate:false, cartOpen:true}), gateSignIn:(e)=>{ if(e&&e.preventDefault)e.preventDefault(); this.setState({subGate:false, acctTab:'signin', authMode:'signin'}); this.go('account'); }, gateCreate:(e)=>{ if(e&&e.preventDefault)e.preventDefault(); this.setState({subGate:false, acctTab:'join', authMode:'create'}); this.go('account'); }, openCart:()=>this.setState({cartOpen:true}), openCartMenu:()=>this.setState({navOpen:false, cartOpen:true}), menuProducts:(()=>{ var self=this; var list=[{id:'bpc157',name:'BPC-157',badge:true},{id:'ghkcu',name:'GHK-Cu',badge:true},{id:'retatrutide',name:'GLP-3 RT',badge:false},{id:'tb500',name:'TB-500',badge:false},{id:'semaglutide',name:'Semaglutide',badge:false},{id:'ipamorelin',name:'Ipamorelin',badge:false}]; return list.map(function(it){ var img='assets/pv-'+it.id+'.webp'; return { name:it.name, badge:it.badge, el:React.createElement('img',{className:'bh-mn-pimg', src:img, alt:it.name, loading:'lazy'}), open:()=>{ if(self.catalog.find(function(x){return x.id===it.id;})) self.openProduct(it.id); else { self.setState({filter:null, catalogCat:'all'}); self.go('shop'); } } }; }); })(), closeCart:()=>this.setState({cartOpen:false}),
+      goHome:()=>this.go('home'), showSigninTab:()=>this.setState({acctTab:'signin',acctLoginErr:'',acctRegErr:''}), showJoinTab:()=>this.setState({acctTab:'join',acctLoginErr:'',acctRegErr:''}), acctTabSignin:((this.state.acctTab||'signin')!=='join'), acctTabJoin:(this.state.acctTab==='join'), acctTabSigninStyle:('flex:1;cursor:pointer;background:none;border:none;outline:none;padding:16px 8px;font-family:\'Jost\',sans-serif;font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;transition:color .2s ease,border-color .2s ease;'+(((this.state.acctTab||'signin')!=='join')?'border-bottom:2px solid #014421;color:#014421;':'border-bottom:2px solid transparent;color:#9AA38E;')), acctTabJoinStyle:('flex:1;cursor:pointer;background:none;border:none;outline:none;padding:16px 8px;font-family:\'Jost\',sans-serif;font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;transition:color .2s ease,border-color .2s ease;'+((this.state.acctTab==='join')?'border-bottom:2px solid #014421;color:#014421;':'border-bottom:2px solid transparent;color:#9AA38E;')), clearAcctEmailErr:(e)=>{ if(e&&e.target) e.target.style.borderColor=''; if(this.state.acctLoginErr||this.state.acctRegErr||this.state.acctEmailErr) this.setState({acctLoginErr:'',acctRegErr:'',acctEmailErr:''}); }, goQuizPage:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('quiz');}, goShop:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.setState({filter:null, catalogCat:'all'}); this.go('shop');}, goBestSellers:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('home'); var tries=0; var run=function(){var el=document.getElementById('bh-bestsellers'); if(el){var stick=document.getElementById('bh-topstick'); var off=(stick?stick.getBoundingClientRect().height:70)+8; window.scrollTo({top:el.getBoundingClientRect().top+(window.pageYOffset||0)-off, behavior:'smooth'});} else if(tries++<25){setTimeout(run,60);}}; setTimeout(run,340);}, menuSearchSubmit:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.setState({filter:null, catalogCat:'all'}); this.go('shop');}, menuSearchKey:(e)=>{if(e&&(e.key==='Enter'||e.keyCode===13)){e.preventDefault(); this.setState({filter:null, catalogCat:'all'}); this.go('shop');}}, toggleNavSearch:(e)=>{if(e&&e.preventDefault)e.preventDefault(); var w=document.getElementById('bh-navsearch-wrap'), inp=document.getElementById('bh-navsearch'); if(!w||!inp) return; var open=w.getAttribute('data-open')==='1'; if(open){ w.style.width='0px'; w.style.opacity='0'; w.setAttribute('data-open','0'); } else { w.style.width='210px'; w.style.opacity='1'; w.setAttribute('data-open','1'); inp.focus(); }}, onNavSearchKey:(e)=>{ if(e&&e.key==='Enter'){ var v=(e.target.value||'').trim(); this.setState({searchQ:v, filter:null, catalogCat:'all'}); this.go('shop'); } }, onNavSearchInput:(e)=>{ var v=e&&e.target?e.target.value:''; clearTimeout(this._navSearchT); this._navSearchT=setTimeout(()=>{ this.setState({navSearchQ:v}); }, 300); }, navSearchResults:(()=>{ var q=(this.state.navSearchQ||'').trim().toLowerCase(); if(!q) return []; var areaMap={recovery:'Repair',longevity:'Aging',cognition:'Brain',vitality:'Hormones'}; return this.catalog.filter(p=>{ var hay=(p.name+' '+p.id+' '+(p.group||'')+' '+(p.tagline||'')+' '+(p.sub||'')).toLowerCase(); return hay.indexOf(q)>=0; }).slice(0,8).map(p=>({ name:p.name, area:areaMap[p.group]||'', priceFmt:this.fmt(Math.min.apply(null,p.sizes.map(function(s){return s.price;}))), open:()=>{ this.setState({searchModal:false, navSearchQ:''}); this.openProduct(p.id); } })); })(), navSearchOpen:((this.state.navSearchQ||'').trim().length>0), searchModal:!!this.state.searchModal, searchEmptyState:((this.state.navSearchQ||'').trim().length===0), openSearchModal:(e)=>{ if(e&&e.preventDefault)e.preventDefault(); this.setState({searchModal:true, navSearchQ:''}); setTimeout(function(){ var i=document.getElementById('bh-searchmodal-input'); if(i) i.focus(); }, 260); }, closeSearchModal:(e)=>{ if(e&&e.preventDefault)e.preventDefault(); this.setState({searchModal:false, navSearchQ:''}); }, onSearchModalKey:(e)=>{ if(e&&e.key==='Escape'){ this.setState({searchModal:false, navSearchQ:''}); } }, searchSuggestions:['GHK-Cu','BPC-157','Retatrutide','CJC-1295'].map((term,i)=>({ label:term, notFirst:i>0, pick:()=>{ var el=document.getElementById('bh-searchmodal-input'); if(el) el.value=term; this.setState({navSearchQ:term}); } })), navSearchNoResults:(()=>{ var q=(this.state.navSearchQ||'').trim().toLowerCase(); if(!q) return false; return !this.catalog.some(p=>((p.name+' '+p.id+' '+(p.group||'')+' '+(p.tagline||'')+' '+(p.sub||'')).toLowerCase().indexOf(q)>=0)); })(), ftAll:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.setState({filter:null, catalogCat:'all'}); this.go('shop');}, ftRepair:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.goCatalogFilter('repair');}, ftAging:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.goCatalogFilter('aging');}, ftBrain:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.goCatalogFilter('brain');}, ftHormones:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.goCatalogFilter('growth');}, ftCOA:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('coa');}, ftCompliance:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('compliance');}, ftContact:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('contact');}, ftFaq:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.goFaq();}, ftShipping:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('shipping');}, ftRefunds:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('returns');}, goRecovery:()=>this.openGroup('recovery'), goLongevity:()=>this.openGroup('longevity'), goCognition:()=>this.openGroup('cognition'), goVitality:()=>this.openGroup('vitality'), goAbout:()=>this.go('about'), goScience:()=>this.go('science'), goCompliancePage:()=>this.go('compliance'), goPartners:()=>this.go('partners'), toggleNav:()=>this.setState(s=>({navOpen:!s.navOpen})), navOpenCls:this.state.navOpen?'bh-open':'', mobnavStyle:this.state.navOpen?'transform:translateX(0); pointer-events:auto;':'transform:translateX(-100%); pointer-events:none;', goCOA:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('coa');},
+      goLegal:()=>this.goLegal2('terms'), goTerms:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.goLegal2('terms');}, goPrivacy:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.goLegal2('privacy');}, goShipping:()=>this.go('shipping'), goRefunds:()=>this.go('returns'), goCompliance:()=>this.goLegal2('compliance'), goScience:()=>this.go('science'), goAccount:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.go('account');}, goJoin:(e)=>{if(e&&e.preventDefault)e.preventDefault(); this.setState({acctTab:'join',acctLoginErr:'',acctRegErr:''}); this.go('account');}, memberAuthed:this.state.memberAuthed, memberInitial:((this.state.memberEmail||'').charAt(0).toUpperCase()), notMemberAuthed:!this.state.memberAuthed, memberEmail:this.state.memberEmail, memberJoin:this.state.memberJoin, acctLoginErr:this.state.acctLoginErr||'', acctRegErr:this.state.acctRegErr||'', acctRegEmailErr:this.state.acctRegEmailErr||'', acctRegPhoneErr:this.state.acctRegPhoneErr||'', acctRegUserErr:this.state.acctRegUserErr||'', acctRegFirstErr:this.state.acctRegFirstErr||'', acctRegLastErr:this.state.acctRegLastErr||'', acctRegPwErr:this.state.acctRegPwErr||'', acctRegCb1Err:this.state.acctRegCb1Err||'', acctRegCb2Err:this.state.acctRegCb2Err||'', clearRegField:(ev)=>{ var t=ev&&ev.target; if(!t) return; var map={'acct-reg-first':'acctRegFirstErr','acct-reg-last':'acctRegLastErr','acct-reg-username':'acctRegUserErr','acct-reg-email':'acctRegEmailErr','acct-reg-phone':'acctRegPhoneErr','acct-reg-password':'acctRegPwErr','acct-reg-cb1':'acctRegCb1Err','acct-reg-cb2':'acctRegCb2Err'}; if(t.type==='checkbox'){ var lb=t.closest('label'); var sp=lb&&lb.querySelector('span'); if(sp) sp.style.color='#3F4A3C'; } else { t.style.borderColor='rgba(1,68,33,.22)'; var lb2=t.parentElement&&t.parentElement.querySelector('label'); if(lb2) lb2.style.color='#7C8472'; } var k=map[t.id]; if(k && this.state[k]){ var s={}; s[k]=''; this.setState(s); } }, memberLoginAction:()=>this.memberLogin(), toggleAcctPw:()=>{ var i=document.getElementById('acct-password'), b=document.getElementById('acct-pw-eye'); if(!i) return; var show=i.type==='password'; i.type=show?'text':'password'; if(b){ b.setAttribute('aria-label',show?'Hide password':'Show password'); b.innerHTML=show?'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>':'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg>'; } }, memberRegisterAction:()=>this.memberRegister(), signOut:()=>this.memberSignOut(), setSignin:()=>this.setState({authMode:'signin', acctEmailErr:'', acctResetErr:''}), acctSubmit:()=>{var el=document.getElementById('acct-email');var v=el?el.value:'';if(!this.emOk(v)){this.setState({acctEmailErr:'Please enter a valid email address.'});return;}this.setState({acctEmailErr:'', isMember:true});}, setCreate:()=>this.setState({authMode:'create', acctEmailErr:''}), setForgot:()=>this.setState({authMode:'forgot', acctEmailErr:''}), sendReset:()=>this.memberForgot(), setReset:()=>this.setState({authMode:'reset'}), updatePassword:()=>{var a=document.getElementById('acct-newpass'),b=document.getElementById('acct-newpass2');var pa=a?a.value:'',pb=b?b.value:'';if(pa.length<8){this.setState({acctResetErr:'Password must be at least 8 characters.'});return;}if(pa!==pb){this.setState({acctResetErr:'Passwords do not match.'});return;}var self=this,rt=self._resetToken||'';if(!rt){this.setState({acctResetErr:'Reset link missing. Please request a new one.'});return;}fetch(self.MEMBER_API+'/members/reset-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:rt,password:pa})}).then(function(r){return r.json().then(function(d){if(r.status===200){self.setState({authMode:'done',acctResetErr:''});}else{self.setState({acctResetErr:d.error||'Something went wrong. Try again.'});}});}).catch(function(){self.setState({acctResetErr:'Connection error. Please try again.'});});}, goContact:()=>this.go('contact'), prodBackLabel:this.state.fromQuiz?'← Back to quiz results':'← Back to catalog', prodBack:()=>{if(this.state.fromQuiz&&window.bhareReopenResults){window.bhareReopenResults();}else{this.setState({filter:null});this.go('shop');}}, goShopFromCart:()=>this.go('shop'), goCheckout:()=>{ if(cartHasSub && !this.isMemberLoggedIn()){ this.setState({subGate:true, subStep:1, cartOpen:false}); } else { this.go('checkout'); } }, closeSubGate:()=>this.setState({subGate:false}), subAgree:()=>this.setState({subStep:2}), subGateCancel:()=>this.setState({subGate:false, cartOpen:true}), gateSignIn:(e)=>{ if(e&&e.preventDefault)e.preventDefault(); this.setState({subGate:false, acctTab:'signin', authMode:'signin'}); this.go('account'); }, gateCreate:(e)=>{ if(e&&e.preventDefault)e.preventDefault(); this.setState({subGate:false, acctTab:'join', authMode:'create'}); this.go('account'); }, openCart:()=>this.setState({cartOpen:true}), openCartMenu:()=>this.setState({navOpen:false, cartOpen:true}), menuProducts:(()=>{ var self=this; var list=[{id:'bpc157',name:'BPC-157',badge:true},{id:'ghkcu',name:'GHK-Cu',badge:true},{id:'retatrutide',name:'Retatrutide',badge:false},{id:'tb500',name:'TB-500',badge:false},{id:'semaglutide',name:'Semaglutide',badge:false},{id:'ipamorelin',name:'Ipamorelin',badge:false}]; return list.map(function(it){ var img='assets/pv-'+it.id+'.webp'; return { name:it.name, badge:it.badge, el:React.createElement('img',{className:'bh-mn-pimg', src:img, alt:it.name, loading:'lazy'}), open:()=>{ if(self.catalog.find(function(x){return x.id===it.id;})) self.openProduct(it.id); else { self.setState({filter:null, catalogCat:'all'}); self.go('shop'); } } }; }); })(), closeCart:()=>this.setState({cartOpen:false}),
       subActive:_sa,
       subCardStyle:('cursor:pointer;border-radius:10px;padding:16px 18px;background:#fff;display:flex;align-items:flex-start;justify-content:space-between;gap:14px;transition:border-color .2s ease,background .2s ease;'+(_sa?'border:1.5px solid #014421;background:#F6F8F3;':'border:1.5px solid rgba(27,36,28,.18);')),
       subRadioStyle:('flex:none;width:19px;height:19px;border-radius:50%;margin-top:1px;box-sizing:border-box;transition:all .18s ease;'+(_sa?'border:2px solid #014421;background:#014421;box-shadow:inset 0 0 0 3.5px #fff;':'border:2px solid rgba(1,68,33,.4);background:#fff;')),
@@ -3427,7 +3692,7 @@ class Component extends DCLogic {
       pdpDose:selected.curSize,
       pdpThumbs:[],
       pdpAdd:()=>this.pdpAddToCart(),
-      pairWith:(()=>{ const cur=selected.id; const grp=selected.group; let rel=this.catalog.filter(x=>x.id!==cur && x.group===grp); if(rel.length<3){ rel=rel.concat(this.catalog.filter(x=>x.id!==cur && x.group!==grp)); } return rel.slice(0,3).map(pc=>{ const d=this.decorate(pc); return { id:d.id, name:d.name, pvImg:'assets/pv-'+d.id+'.webp', area:d.area, priceFmt:this.fmt(+d.fromNum), curDose:d.curDose, open:()=>this.openProduct(d.id), add:(e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); this.addStackToCart([d.id]); } }; }); })(),
+      pairWith:(()=>{ const cur=selected.id; let pairIds=selected.pairWith&&selected.pairWith.length?selected.pairWith.filter(function(id){return id!==cur;}):null; let rel; if(pairIds){ rel=pairIds.map(id=>this.catalog.find(x=>x.id===id)).filter(Boolean); } else { const grp=selected.group; rel=this.catalog.filter(x=>x.id!==cur && x.group===grp); if(rel.length<3){ rel=rel.concat(this.catalog.filter(x=>x.id!==cur && x.group!==grp)); } rel=rel.slice(0,3); } return rel.map(pc=>{ const d=this.decorate(pc); return { id:d.id, name:d.name, pvImg:'assets/pv-'+d.id+'.webp', area:d.area, priceFmt:this.fmt(+d.fromNum), curDose:d.curDose, open:()=>this.openProduct(d.id), add:(e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); this.addStackToCart([d.id]); } }; }); })(),
       qtyUp:()=>this.setState(s=>({qty:s.qty+1})), qtyDown:()=>this.setState(s=>({qty:Math.max(1,s.qty-1)})),
       addCurrentToCart:()=>{ var base=this.state.subMode?+(selected.curPrice*0.85).toFixed(2):selected.curPrice; var q=this.state.qty; var d=q>=3?0.08:(q===2?0.05:0); var unit=+(base*(1-d)).toFixed(2); this.addToCart(selected.id, selected.curSize, unit, q, this.state.subMode!==false); },
       placeOrder:()=>this.placeOrder(), sendContact:()=>this.sendContactMsg(), submitPartner:()=>this.setState({partnerSent:true})
@@ -3441,4 +3706,38 @@ class Component extends DCLogic {
 (function(){var API="https://bhare-affiliate-api.bharewell.workers.dev";window.bhareProducts=[];window.bhareGetProduct=function(s){for(var i=0;i<window.bhareProducts.length;i++){var p=window.bhareProducts[i];for(var j=0;j<(p.variants||[]).length;j++){if(p.variants[j].sku===s.toUpperCase())return{product:p,variant:p.variants[j]};}}return null;};window.bhareGetPrice=function(s){var r=window.bhareGetProduct(s);return r?r.variant.price:null;};function fmt$(n){return"$"+parseFloat(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,",");}function applyPrices(){document.querySelectorAll("[data-bhare-sku]").forEach(function(el){var s=el.getAttribute("data-bhare-sku"),r=window.bhareGetProduct(s);if(!r)return;if(el.hasAttribute("data-bhare-price"))el.textContent=fmt$(r.variant.price);if(el.hasAttribute("data-bhare-name"))el.textContent=r.product.name;});}function loadStock(){fetch(API+"/products/stock").then(function(r){return r.json();}).then(function(m){document.querySelectorAll("[data-bhare-sku]").forEach(function(el){var s=el.getAttribute("data-bhare-sku"),q=m[s];var btn=el.querySelector("[data-bhare-buy]")||(el.hasAttribute("data-bhare-buy")?el:null);if(btn&&q!==undefined&&q<=0){btn.disabled=true;btn.textContent="Out of Stock";}});}).catch(function(){});}function init(){fetch(API+"/products").then(function(r){return r.json();}).then(function(p){window.bhareProducts=p||[];applyPrices();loadStock();document.dispatchEvent(new CustomEvent("bhare:products-loaded",{detail:{products:window.bhareProducts}}));}).catch(function(e){console.warn("[bhare] product load failed",e);});}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",init);}else{init();}})();
 </script>
 
+<script>
+(function(){
+  function initBsCarInfinite(){
+    var car=document.getElementById('bh-bscar');
+    if(!car||window._bsCarInited) return;
+    window._bsCarInited=true;
+    var kids=Array.prototype.slice.call(car.children);
+    if(kids.length<2) return;
+    kids.forEach(function(k){ car.appendChild(k.cloneNode(true)); });
+    kids.forEach(function(k){ car.insertBefore(k.cloneNode(true), car.firstChild); });
+    var oneW=kids.reduce(function(a,k){ return a+k.offsetWidth+22; },0);
+    car.scrollLeft=oneW;
+    var scrollTimer;
+    car.addEventListener('scroll',function(){
+      clearTimeout(scrollTimer);
+      scrollTimer=setTimeout(function(){
+        if(car.scrollLeft<oneW*0.3){ car.scrollLeft+=oneW; }
+        else if(car.scrollLeft>oneW*1.7){ car.scrollLeft-=oneW; }
+      },150);
+    },{passive:true});
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',function(){
+      setTimeout(initBsCarInfinite,800);
+    });
+  } else {
+    setTimeout(initBsCarInfinite,800);
+  }
+  var obs=new MutationObserver(function(){
+    if(!window._bsCarInited && document.getElementById('bh-bscar')) setTimeout(initBsCarInfinite,400);
+  });
+  obs.observe(document.body,{childList:true,subtree:true});
+})();
+</script>
 </body></html>
