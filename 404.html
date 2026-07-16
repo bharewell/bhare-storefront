@@ -312,11 +312,11 @@
   var DISMISS='bhare_age_dismiss';
   function setCk(n,v,mins){var e=new Date(Date.now()+mins*60000).toUTCString();document.cookie=n+'='+v+';expires='+e+';path=/;SameSite=Lax';}
   function hasCk(n){return document.cookie.split('; ').some(function(c){return c.indexOf(n+'=')===0;});}
-  function closeGate(){ if(gate) gate.style.display='none'; unlock(); armMp(); }
+  function closeGate(){ if(gate) gate.style.display='none'; unlock(); armMp(50000); }
   function undim(){ var a=el('bhare-ag-account'); if(a){ a.style.opacity='1'; a.style.pointerEvents='auto'; } }
   var ok=false; try{ok=sessionStorage.getItem(KEY)==='yes';}catch(e){}
   if(hasCk(DISMISS)) ok=true;
-  if(ok){ if(gate) gate.style.display='none'; armMp(5000+Math.floor(Math.random()*2001)); } else { lock(); }
+  if(ok){ if(gate) gate.style.display='none'; armMp(50000); } else { lock(); }
   var agEnter=el('bhare-ag-enter');
   agEnter.addEventListener('click',function(){if(agEnter.disabled)return;try{sessionStorage.setItem(KEY,'yes');}catch(e){}
     var exitBtn=el('bhare-ag-exit'), merged=el('bhare-ag-verified');
@@ -403,7 +403,7 @@
   function mpExit(e){ if(mpShown||mpSeen()) return; if(!e.relatedTarget && (e.clientY==null||e.clientY<=0)){ showMembersPop(); } }
   function mpEsc(e){ if((e.key==='Escape'||e.keyCode===27)&&mpShown){ hideMembersPop(); } }
   function disarmMp(){ if(mpTimer){ clearTimeout(mpTimer); mpTimer=null; } document.removeEventListener('mouseout',mpExit); }
-  function armMp(delay){ if(mpArmed||!membersPop||mpSeen()) return; mpArmed=true; mpTimer=setTimeout(showMembersPop,delay||4000); document.addEventListener('mouseout',mpExit); document.addEventListener('keydown',mpEsc); }
+  function armMp(delay){ if(mpArmed||!membersPop||mpSeen()) return; mpArmed=true; mpTimer=setTimeout(showMembersPop,delay||50000); document.addEventListener('mouseout',mpExit); document.addEventListener('keydown',mpEsc); }
   if(membersPop){
     var mpClose=el('bmp-close'); if(mpClose) mpClose.addEventListener('click',hideMembersPop);
     var mpDecline=el('bmp-decline'); if(mpDecline) mpDecline.addEventListener('click',hideMembersPop);
@@ -1463,7 +1463,7 @@
     <div class="bh-fade">
       <!-- Hero -->
       <section class="bh-hero" style="position:relative; width:100%; height:56.25vw; min-height:560px; max-height:none; overflow:hidden; background:#EAE4D6;">
-        <img class="bh-heroimg-d" src="assets/hero-desktop.webp" alt="bhare research peptide vials — GHK-Cu and BPC-157" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:right top;">
+        <img class="bh-heroimg-d" src="assets/hero-desktop.jpg" alt="bhare research peptide vials — GHK-Cu and BPC-157" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:right top;">
         <img class="bh-heroimg-m" src="assets/hero-mobile-new.webp" alt="bhare research peptide vials" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center bottom; display:none;">
         <div class="bh-hero-ov" onClick="{{ goShop }}" style="position:absolute; inset:0; cursor:pointer; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; text-align:left; padding:0 clamp(28px,6vw,80px); z-index:2;">
           <div class="bh-hero-in" style="display:flex; flex-direction:column; align-items:center; text-align:center; max-width:460px;">
