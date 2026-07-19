@@ -1,0 +1,14 @@
+name: Preview Deploy — feature branch
+on:
+  push:
+    branches: [feature/perf-image-extraction]
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          wranglerVersion: '4'
+          command: pages deploy . --project-name bhare-storefront --branch feature-perf-image-extraction
