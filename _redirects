@@ -1,1 +1,3 @@
+/api/store/* https://api.bharewell.com/store/:splat 200
+/api/auth/* https://api.bharewell.com/auth/:splat 200
 /* /index.html 200
